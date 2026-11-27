@@ -453,7 +453,8 @@ def board_foot(note, gaps):
         out += f'<p><span class="dd-tag dd-tag-inf">Desk inference</span> {E(note)}</p>'
     g = [s(x) for x in arr(gaps) if s(x)]
     if g:
-        out += f'<p class="dd-gaps">Left blank (not confirmed): {E("; ".join(g))}</p>'
+        out += (f'<details class="dd-gaps" id="gaps"><summary>What we couldn\'t confirm ({len(g)})</summary><ul>'
+                + "".join(f"<li>{E(x)}</li>" for x in g) + "</ul></details>")
     return f'<div class="dd-board-foot">{out}</div>' if out else ""
 
 
@@ -817,7 +818,7 @@ def build():
 <h3>Reported or inference</h3>
 <p>Every line tagged Reported links to the exact page that states it. Lines tagged Desk inference are the desk's own reasoning and are never presented as reporting. If no reporter gave a reason for a move, the read says "no catalyst reported".</p>
 <h3>Numbers</h3>
-<p>Ringgit rates are Bank Negara Malaysia's 5pm middle rates. Other figures carry their time and source. A number that can't be confirmed is left blank and listed under "Left blank". Market prices are shown as reported, not as a live feed.</p>
+<p>Ringgit rates are Bank Negara Malaysia's 5pm middle rates. Other figures carry their time and source. A number that can't be confirmed is left blank and listed under "What we couldn't confirm". Market prices are shown as reported, not as a live feed.</p>
 <h3>Independent check and corrections</h3>
 <p>A separate process, which did not write the reads, re-opens every linked source each morning and flags any line or number that doesn't match, as a bank's maker-checker control would. Flags appear on the read itself. Reads are never quietly edited: a confirmed error is corrected in the next read, under "Corrected from an earlier read", and the history behind the charts is fixed at the same time.</p>
 <h3>Not advice</h3>

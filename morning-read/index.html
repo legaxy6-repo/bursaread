@@ -182,6 +182,9 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-board-foot p { margin: 0; }
 .dd-board-foot .dd-tag-inf { color: var(--board-muted); border-color: var(--board-muted); }
 .dd-gaps { font-size: var(--s-xs); color: var(--board-muted); }
+details.dd-gaps summary { cursor: pointer; width: fit-content; }
+details.dd-gaps summary:hover { color: var(--board-ink); }
+details.dd-gaps ul { margin: 0.5rem 0 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; line-height: 1.5; }
 @media (max-width: 560px) {
   .dd-row { grid-template-columns: minmax(0, 1fr) auto 4.25rem; grid-template-areas: "label level spark" "meta chg spark"; column-gap: 0.75rem; }
   .dd-r-level { font-size: var(--s-md); }
@@ -749,8 +752,8 @@ a:hover { text-decoration-color: var(--ink); }
       p.appendChild(document.createTextNode(" " + str(ed.numbers_note)));
       foot.appendChild(p);
     }
-    var gaps = arr(ed.gaps).map(str).filter(Boolean);
-    if (gaps.length) foot.appendChild(el("p", "dd-gaps", "Left blank (not confirmed): " + gaps.join("; ")));
+    var gd = gapsBlock(ed.gaps);
+    if (gd) foot.appendChild(gd);
     if (foot.childNodes.length) board.appendChild(foot);
     board.appendChild(tip);
     sec.appendChild(board);
@@ -1043,6 +1046,19 @@ a:hover { text-decoration-color: var(--ink); }
     next.disabled = idx <= 0;
   }
 
+  /* What couldn't be confirmed: one line, the list one tap away */
+  function gapsBlock(list) {
+    var g = arr(list).map(str).filter(Boolean);
+    if (!g.length) return null;
+    var d = el("details", "dd-gaps");
+    d.id = "gaps";
+    d.appendChild(el("summary", "", "What we couldn't confirm (" + g.length + ")"));
+    var ul = el("ul", "");
+    g.forEach(function (x) { ul.appendChild(el("li", "", x)); });
+    d.appendChild(ul);
+    return d;
+  }
+
   function boardFoot(board, note, gaps) {
     var foot = el("div", "dd-board-foot");
     if (str(note)) {
@@ -1051,8 +1067,8 @@ a:hover { text-decoration-color: var(--ink); }
       p.appendChild(document.createTextNode(" " + str(note)));
       foot.appendChild(p);
     }
-    var g = arr(gaps).map(str).filter(Boolean);
-    if (g.length) foot.appendChild(el("p", "dd-gaps", "Left blank (not confirmed): " + g.join("; ")));
+    var gd = gapsBlock(gaps);
+    if (gd) foot.appendChild(gd);
     if (foot.childNodes.length) board.appendChild(foot);
   }
 

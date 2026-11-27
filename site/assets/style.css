@@ -176,6 +176,9 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-board-foot p { margin: 0; }
 .dd-board-foot .dd-tag-inf { color: var(--board-muted); border-color: var(--board-muted); }
 .dd-gaps { font-size: var(--s-xs); color: var(--board-muted); }
+details.dd-gaps summary { cursor: pointer; width: fit-content; }
+details.dd-gaps summary:hover { color: var(--board-ink); }
+details.dd-gaps ul { margin: 0.5rem 0 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; line-height: 1.5; }
 @media (max-width: 560px) {
   .dd-row { grid-template-columns: minmax(0, 1fr) auto 4.25rem; grid-template-areas: "label level spark" "meta chg spark"; column-gap: 0.75rem; }
   .dd-r-level { font-size: var(--s-md); }
