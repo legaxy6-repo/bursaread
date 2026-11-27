@@ -270,13 +270,19 @@ def check_panel(aid, rd):
     errs = sum(1 for f in c["flags"] if f.get("severity") == "error")
     notes = len(c["flags"]) - errs
     t = myt(c["at"]) if c["at"] else None
-    line = f"Independently checked{' at ' + t + ' MYT' if t else ''}: {ok} of {items} items match their sources."
+    checkable = max(items - unv, 0)
+    when = f"Independently checked{' at ' + t + ' MYT' if t else ''}: "
+    if checkable:
+        line = when + f"{ok} of {checkable} checkable items match their sources."
+    else:
+        line = when + "none of this read's sources could be opened, so nothing could be confirmed."
+
     if errs:
         line += f" {errs} error{'s' if errs != 1 else ''}."
     if notes:
         line += f" {notes} note{'s' if notes != 1 else ''}."
-    if unv:
-        line += f" {unv} couldn't be opened."
+    if unv and checkable:
+        line += f" {unv} more couldn't be opened."
     inner = f'<p class="dd-check-line">{E(line)}</p>'
     for d in docs:
         uo = rd.get("us_open") if isinstance(rd.get("us_open"), dict) else {}
