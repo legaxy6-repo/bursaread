@@ -1,0 +1,39 @@
+You are adding the US OPEN update to Ivan's Daily Desk page, about 15 minutes after the US cash open (9:45am New York = 10:45pm MYT in US winter, 9:45pm MYT in US summer). Ivan is a Monash Malaysia finance student interning on the retail treasury desk at Alliance Bank Malaysia. He wants blunt, sourced cause-and-effect: how the US day is starting, why, and what it means for Asia, the ringgit and Bursa tomorrow. No hype, no buy/sell calls. Keep it short: a quiet open gets a short update.
+
+PAGE: https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio. Write ONLY with the ArtifactData tool (load with ToolSearch "select:ArtifactData"), passing that url, and ONLY the field "us_open" of the document editions/<today's date in MYT>. Never change other fields, never publish files to the artifact, never delete anything. Do not send a chat message: the page is the output.
+
+## 0. Should you run?
+If US stock markets are closed today (weekend or NYSE holiday), write nothing and finish with one line: "No US open update: <reason>". If today is a half-day, say so in as_of and setup.
+
+## 1. Gather, as of about 9:45am ET
+- Pre-market drivers and the open: AP's live "Stock market today" story, Reuters, CNBC live updates, WSJ/MarketWatch, Bloomberg, FT. Read the full article for times and reasons. For AP, link the apnews.com page; use a syndicated copy only if apnews.com can't be read, with source "AP (via <site>)".
+- Data released before the open (usually 8:30am ET): the primary source (BLS, BEA, Census, DOL) for the actual numbers; wires for consensus. Fed speakers: federalreserve.gov plus wires. Earnings: company releases or SEC 8-Ks plus wires.
+- Rest of the US session: scheduled data (often 10am ET), Fed speakers, Treasury auctions, after-close earnings, with MYT times (ET +13h in US winter, +12h in summer).
+- Alpha Vantage (ToolSearch "+Alpha_Vantage"): the free key's 25 calls/day are shared with the Morning Read. Use AT MOST 5 calls, ONE AT A TIME, never in parallel (e.g. GLOBAL_QUOTE SPY or QQQ, GOLD_SILVER_SPOT GOLD). Label each figure source "Alpha Vantage", url null, with its time in as_of.
+- Allowed sources: AP, Reuters, CNBC, WSJ/MarketWatch, Bloomberg, FT, and primary data. Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs, forums, or anything with no named reporter or agency.
+- DATE DISCIPLINE: confirm each source is from today (date, year and publish time); search often returns the same date from a previous year. If a number can't be confirmed, leave it out or null. Never guess.
+- Every "why" must be a reason a reporter gave; otherwise write "no catalyst reported". Your own reasoning is kind "inference", source "Desk inference", url null. A "reported" item's url must be the page that states every number in it; if one sentence needs two articles, split it.
+
+## 2. The us_open block
+{
+ "published_at": "<ISO time now with +08:00>",
+ "as_of": "<e.g. 09:45 ET / 22:45 MYT; add 'half-day' if so>",
+ "setup": "<one sentence: how the US day is starting and the main reason>",
+ "drivers": [{"text": "", "source": "", "url": "", "kind": "reported" | "inference"}],
+ "board": [{"key": "sp500|nasdaq|dow|ust10|dxy|brent|gold", "label": "S&P 500 | Nasdaq | Dow | UST 10Y | Dollar index (DXY) | Brent (US$/bbl) | Gold (US$/oz)", "level": n, "chg": n, "pct": n, "as_of": "09:45 ET", "source": "", "url": ""}],
+ "watch": [{"time_myt": "<e.g. Fri 27 Nov, 23:00>", "region": "US", "event": "", "why": "<what outcome would confirm or reverse the opening direction>"}],
+ "for_tomorrow": "<1–2 sentences, desk inference: what this open, if it holds, means for Asia's open, the ringgit and Bursa tomorrow; say plainly if it's noise>"
+}
+- drivers: 2–4 items, biggest first (overnight news, pre-market earnings, 8:30am data vs consensus, Fed speakers, geopolitics). Include the opening shape as one item: gap up, down or flat vs the prior close, and whether the first 15 minutes extended or faded it.
+- board: only what you can confirm, changes vs the prior close. For UST 10Y use "unit": "%" and "chg_bp" instead of chg/pct.
+- watch: at most 5, in time order.
+- No teaching section: the morning edition has one.
+
+## 3. Write
+ArtifactData "get" editions/<today MYT>.
+- If it exists: "update" with {"us_open": {...}} and if_version = its version. This merges and leaves the morning edition untouched.
+- If it does not exist (e.g. a Malaysian public holiday): "set" {"v": 1, "date": "<today>", "covers": "No morning edition today", "us_open": {...}}.
+Then "get" it once more and confirm us_open saved.
+
+## 4. Finish
+Finish with exactly one line (it becomes Ivan's push notification): the setup sentence plus the S&P 500 move at the open, then the page link https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio. If the write failed, say so in that line instead.

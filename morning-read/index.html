@@ -174,6 +174,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
   .dd-cal-time { grid-column: 1 / -1; }
 }
 
+.dd-late { border-top: 3px solid var(--accent); padding-top: 1rem; }
+
 /* Rotating sections */
 .dd-trigger { font: 500 var(--s-xs)/1.4 var(--f-mono); color: var(--muted); }
 .dd-points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -247,11 +249,11 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 
   var DP = { usdmyr: 4, sgdmyr: 4, cnymyr: 4, audmyr: 4, eurmyr: 4, gbpmyr: 4, jpymyr100: 4, hkdmyr100: 4, dxy: 2,
     opr: 2, mgs3: 2, mgs5: 2, mgs10: 2, ust2: 2, ust10: 2, spread_bp: 0,
-    klci: 2, sp500: 2, brent: 2, wti: 2, cpo_3m: 0, gold: 2 };
+    klci: 2, sp500: 2, nasdaq: 2, dow: 2, brent: 2, wti: 2, cpo_3m: 0, gold: 2 };
   var MOVE = { usdmyr: { pct: 0.5 }, sgdmyr: { pct: 0.5 }, cnymyr: { pct: 0.5 }, audmyr: { pct: 0.5 }, eurmyr: { pct: 0.5 },
     gbpmyr: { pct: 0.5 }, jpymyr100: { pct: 0.5 }, hkdmyr100: { pct: 0.5 }, dxy: { pct: 0.5 },
     mgs3: { bp: 5 }, mgs5: { bp: 5 }, mgs10: { bp: 5 }, ust2: { bp: 6 }, ust10: { bp: 6 },
-    klci: { pct: 1 }, sp500: { pct: 1 }, gold: { pct: 1.5 }, cpo_3m: { pct: 2 }, brent: { pct: 3 }, wti: { pct: 3 } };
+    klci: { pct: 1 }, sp500: { pct: 1 }, nasdaq: { pct: 1 }, dow: { pct: 1 }, gold: { pct: 1.5 }, cpo_3m: { pct: 2 }, brent: { pct: 3 }, wti: { pct: 3 } };
   var HISTORY_COLS = [
     ["klci", "KLCI", 2], ["usdmyr", "USD/MYR", 4], ["sgdmyr", "SGD/MYR", 4], ["mgs10", "MGS 10Y", 2],
     ["ust10", "UST 10Y", 2], ["spread_bp", "Spread bp", 0], ["brent", "Brent", 2], ["cpo_3m", "CPO", 0], ["gold", "Gold", 2]
@@ -416,11 +418,11 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     var v = isNum(r.pct) ? Number(r.pct) : isNum(r.chg) ? Number(r.chg) : isNum(r.chg_bp) ? Number(r.chg_bp) : 0;
     return v > 0 ? "up" : v < 0 ? "down" : "flat";
   }
-  function boardRow(r, board, tip, upTo) {
+  function boardRow(r, board, tip, upTo, idPrefix, noSpark) {
     var dp = isNum(r.dp) ? Number(r.dp) : (DP[r.key] !== undefined ? DP[r.key] : 2);
     var unit = str(r.unit);
     var row = el("div", "dd-row");
-    row.id = "row-" + str(r.key || r.label).replace(/[^A-Za-z0-9_-]/g, "");
+    row.id = (idPrefix || "row-") + str(r.key || r.label).replace(/[^A-Za-z0-9_-]/g, "");
     var dir = direction(r);
     row.setAttribute("data-dir", dir);
 
@@ -448,7 +450,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     var spark = el("div", "dd-r-spark");
     row.appendChild(spark);
     var key = str(r.key);
-    if (key) {
+    if (key && !noSpark) {
       S.sparks.push(function () { drawSpark(spark, seriesFor(key, upTo), dp, unit, board, tip); });
     }
     return row;
@@ -552,10 +554,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     }
   }
 
-  function renderCalendar(main, ed) {
-    var items = arr(ed.calendar).filter(function (c) { return c && typeof c === "object" && str(c.event); });
-    var sec = sectionHead(main, "calendar", "Today, in MYT", null);
-    if (!items.length) { sec.appendChild(el("p", "dd-note", "Nothing scheduled that matters.")); return; }
+  function calList(items) {
     var ul = el("ul", "dd-cal");
     items.forEach(function (c) {
       var li = el("li");
@@ -567,7 +566,57 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
       li.appendChild(b);
       ul.appendChild(li);
     });
-    sec.appendChild(ul);
+    return ul;
+  }
+  function calItems(list) { return arr(list).filter(function (c) { return c && typeof c === "object" && str(c.event); }); }
+  function renderCalendar(main, ed) {
+    var items = calItems(ed.calendar);
+    var sec = sectionHead(main, "calendar", "Today, in MYT", null);
+    if (!items.length) { sec.appendChild(el("p", "dd-note", "Nothing scheduled that matters.")); return; }
+    sec.appendChild(calList(items));
+  }
+
+  /* US open: written into the same edition at about 10:45pm MYT */
+  function renderUsOpen(main, ed) {
+    var u = ed.us_open;
+    if (!u || typeof u !== "object") return;
+    var t = mytTime(u.published_at);
+    var when = str(u.as_of) || (t ? t + " MYT" : "");
+    var sec = sectionHead(main, "us-open", "US open" + (when ? " \u00b7 " + when : ""), str(u.setup) || "How the US day is starting");
+    sec.classList.add("dd-late");
+    var drivers = arr(u.drivers).filter(function (d) { return d && typeof d === "object" && str(d.text); });
+    if (drivers.length) {
+      var ul = el("ul", "dd-points");
+      drivers.forEach(function (d) {
+        var li = el("li", d.kind === "inference" ? "dd-inf" : "");
+        li.appendChild(el("p", "", str(d.text)));
+        li.appendChild(cite(d));
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+    }
+    var rows = arr(u.board).filter(function (r) { return r && typeof r === "object"; });
+    if (rows.length) {
+      var board = el("div", "dd-board");
+      board.id = "us-open-board";
+      var tip = el("div", "dd-tip"); tip.hidden = true;
+      var grp = el("div", "dd-bgroup");
+      grp.appendChild(el("h3", "", "At the open, vs prior close"));
+      rows.forEach(function (r) { grp.appendChild(boardRow(r, board, tip, null, "uo-", true)); });
+      board.appendChild(grp);
+      board.appendChild(tip);
+      sec.appendChild(board);
+    }
+    var watch = calItems(u.watch);
+    if (watch.length) {
+      sec.appendChild(el("h3", "", "Rest of the US session"));
+      sec.appendChild(calList(watch));
+    }
+    if (str(u.for_tomorrow)) {
+      sec.appendChild(el("h3", "", "For Asia tomorrow"));
+      sec.appendChild(el("p", "", str(u.for_tomorrow)));
+      sec.appendChild(cite({ kind: "inference" }));
+    }
   }
 
   function renderRotating(main, ed) {
@@ -644,6 +693,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     if (str(ed.covers)) { cov.appendChild(el("b", "", "Covers ")); cov.appendChild(document.createTextNode(str(ed.covers))); }
     var t = mytTime(ed.published_at);
     if (t) cov.appendChild(document.createTextNode((str(ed.covers) ? " · " : "") + "Published " + t + " MYT"));
+    var ut = ed.us_open && typeof ed.us_open === "object" ? mytTime(ed.us_open.published_at) : null;
+    if (ut) cov.appendChild(document.createTextNode(" · US open added " + ut + " MYT"));
   }
 
   function renderNav() {
@@ -676,6 +727,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     if (!ed) { setState(["No edition yet.", "The first one is written at about 7:15am MYT on the next Malaysian business day."]); return; }
     if (S.missing) {
       main.appendChild(el("p", "dd-state", "There's no edition for " + dayLabel(S.missing, true) + ". Showing the latest instead."));
+    }
+    renderUsOpen(main, ed);
+    var hasMorning = !!(str(ed.headline) || (ed.one_thing && arr(ed.one_thing.steps).length) || arr(ed.fx).length);
+    if (!hasMorning) {
+      main.appendChild(el("p", "dd-state", "No morning edition for this date (Bursa was closed)."));
+      return;
     }
     renderChain(main, ed);
     renderBoard(main, ed);
