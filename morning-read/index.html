@@ -110,6 +110,27 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .dd-step.dd-sowhat { background: var(--infer-soft); border-radius: var(--r); border: 0; padding: 0.875rem 1rem; margin-top: 0.75rem; }
 .dd-step.dd-sowhat .dd-node { color: var(--infer); }
 
+/* Area tabs */
+.dd-areas { display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); margin-top: 0.5rem; }
+.dd-areas::-webkit-scrollbar { display: none; }
+.dd-areas button { flex: none; min-height: 44px; padding: 0 0.75rem; margin-bottom: -1px; background: none; border: 0; border-bottom: 2px solid transparent; font: 500 var(--s-sm)/1 var(--f-body); color: var(--muted); cursor: pointer; }
+.dd-areas button:hover { color: var(--ink); }
+.dd-areas button[aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
+
+/* Developments + Malaysia lens */
+.dd-devs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.dd-devs li { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.875rem 0; border-top: 1px solid var(--line); }
+.dd-devs li:last-child { border-bottom: 1px solid var(--line); }
+.dd-dev-head { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.dd-dev-title { font-weight: 600; }
+.dd-area-chip { font: 600 0.6875rem/1.5 var(--f-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 4px; padding: 0 0.375rem; }
+.dd-area-chip:hover { border-color: var(--accent); color: var(--accent); }
+.dd-status { font: 600 0.6875rem/1.5 var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 4px; padding: 0 0.375rem; color: var(--muted); }
+.dd-status[data-s="new"] { color: var(--accent); border-color: var(--accent); }
+.dd-devs p { margin: 0; max-width: 65ch; }
+.dd-for-my { background: var(--infer-soft); border-radius: var(--r); padding: 1rem 1.125rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.dd-for-my p { margin: 0; max-width: 65ch; }
+
 /* Rate board */
 .dd-board { position: relative; background: var(--board); color: var(--board-ink); border-radius: 14px; padding: 1rem 1.125rem 1.125rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .dd-bgroup { display: flex; flex-direction: column; }
@@ -207,7 +228,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 <div class="dd-wrap">
   <header class="dd-mast" id="masthead">
     <div class="dd-mast-row">
-      <div class="dd-brand">Daily Desk <span>Morning Read</span></div>
+      <div class="dd-brand">Daily Desk <span>Daily reads</span></div>
       <nav class="dd-nav" aria-label="Editions">
         <button type="button" id="ed-prev" aria-label="Older edition" disabled>&#8249;</button>
         <select id="ed-picker" aria-label="Choose an edition" disabled><option>Loading</option></select>
@@ -215,7 +236,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
       </nav>
     </div>
     <h1 id="ed-title">Morning Read</h1>
-    <p class="dd-covers" id="ed-covers">Malaysia markets, the ringgit and rates, every business day before the open.</p>
+    <p class="dd-covers" id="ed-covers">The world's markets summarised, and what they mean for Malaysia, every business day before the open.</p>
+    <nav class="dd-areas" id="area-tabs" aria-label="Areas"></nav>
   </header>
 
   <main id="edition" class="dd-main" aria-live="polite">
@@ -225,10 +247,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
   <footer class="dd-how" id="how">
     <h2>How this page works</h2>
     <ul>
-      <li>A scheduled task writes one edition each Malaysian business day at about 7:15am MYT. By then the US session has closed and Bursa's prior-day ringgit, CPO and BNM bond figures are out, so the numbers are final.</li>
+      <li>The Malaysia read is written each Malaysian business day at about 7:15am MYT, once the US session has closed and Bursa's prior-day ringgit, CPO and BNM figures are out.</li>
+      <li>The US, China, Japan, Singapore and Europe reads are written each weekday at about 6:45am MYT and cover each market's last completed session. The Global read follows straight after and summarises them. A note on the US open is added to the US read at about 10:45pm MYT.</li>
+      <li>Summaries say what happened and the reasons reporters gave. The desk's own reading is kept to lines marked Desk inference, so you can tell the two apart.</li>
       <li>Every line tagged <b>Reported</b> links to the exact page that states it. Lines tagged <b>Desk inference</b> are the desk's own reasoning, never reporting. A cause no reporter gave reads "no catalyst reported".</li>
       <li>Sources: Bernama, The Star, The Edge, NST, FMT, Business Today, Malay Mail, BNM, AP, Reuters, CNBC, FT, WSJ. Prices taken from Alpha Vantage are labelled with their time. A number that can't be confirmed is left blank.</li>
-      <li>A number is marked <b>moved</b> when it passes the desk's filter: FX and DXY 0.5%, MGS 5bp, UST 6bp, KLCI and S&amp;P 500 1%, gold 1.5%, CPO 2%, Brent 3%.</li>
+      <li>A number is marked <b>moved</b> when it passes the desk's filter: currencies 0.5%, stock indices 1%, MGS and MYOR 5bp, other 10-year yields 5–6bp, gold 1.5%, CPO 2%, oil 3%.</li>
       <li>Analysis and education only. Nothing here is a buy or sell call. Times are Malaysia time (MYT, UTC+8).</li>
     </ul>
     <div class="dd-live" id="live-links">
@@ -245,15 +269,22 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 (function () {
   "use strict";
 
-  var S = { db: null, editions: [], closes: [], limit: 30, unsubEd: null, current: null, sparks: [], width: 0, missing: null };
+  var S = { db: null, area: null, list: [], loaded: false, closes: [], limit: 30, unsubEd: null, current: null, sparks: [], width: 0, missing: null };
 
   var DP = { usdmyr: 4, sgdmyr: 4, cnymyr: 4, audmyr: 4, eurmyr: 4, gbpmyr: 4, jpymyr100: 4, hkdmyr100: 4, dxy: 2,
     opr: 2, mgs3: 2, mgs5: 2, mgs10: 2, ust2: 2, ust10: 2, spread_bp: 0,
-    klci: 2, sp500: 2, nasdaq: 2, dow: 2, brent: 2, wti: 2, cpo_3m: 0, gold: 2 };
+    klci: 2, sp500: 2, nasdaq: 2, dow: 2, brent: 2, wti: 2, cpo_3m: 0, gold: 2,
+    myor: 2, klibor3m: 2, fedfunds: 2, shcomp: 2, hsi: 2, csi300: 2, usdcny: 4, cn10: 2, lpr1y: 2,
+    nikkei: 2, topix: 2, usdjpy: 2, jgb10: 2, boj: 2, sti: 2, usdsgd: 4, sora: 4, sg10: 2,
+    stoxx600: 2, dax: 2, ftse: 2, eurusd: 4, gbpusd: 4, bund10: 2, gilt10: 2, ecb: 2, boe: 2 };
   var MOVE = { usdmyr: { pct: 0.5 }, sgdmyr: { pct: 0.5 }, cnymyr: { pct: 0.5 }, audmyr: { pct: 0.5 }, eurmyr: { pct: 0.5 },
     gbpmyr: { pct: 0.5 }, jpymyr100: { pct: 0.5 }, hkdmyr100: { pct: 0.5 }, dxy: { pct: 0.5 },
     mgs3: { bp: 5 }, mgs5: { bp: 5 }, mgs10: { bp: 5 }, ust2: { bp: 6 }, ust10: { bp: 6 },
-    klci: { pct: 1 }, sp500: { pct: 1 }, nasdaq: { pct: 1 }, dow: { pct: 1 }, gold: { pct: 1.5 }, cpo_3m: { pct: 2 }, brent: { pct: 3 }, wti: { pct: 3 } };
+    klci: { pct: 1 }, sp500: { pct: 1 }, nasdaq: { pct: 1 }, dow: { pct: 1 },
+    myor: { bp: 5 }, shcomp: { pct: 1 }, hsi: { pct: 1 }, csi300: { pct: 1 }, usdcny: { pct: 0.5 }, cn10: { bp: 5 },
+    nikkei: { pct: 1 }, topix: { pct: 1 }, usdjpy: { pct: 0.5 }, jgb10: { bp: 5 }, sti: { pct: 1 }, usdsgd: { pct: 0.5 },
+    sora: { bp: 10 }, sg10: { bp: 5 }, stoxx600: { pct: 1 }, dax: { pct: 1 }, ftse: { pct: 1 }, eurusd: { pct: 0.5 },
+    gbpusd: { pct: 0.5 }, bund10: { bp: 6 }, gilt10: { bp: 6 }, gold: { pct: 1.5 }, cpo_3m: { pct: 2 }, brent: { pct: 3 }, wti: { pct: 3 } };
   var HISTORY_COLS = [
     ["klci", "KLCI", 2], ["usdmyr", "USD/MYR", 4], ["sgdmyr", "SGD/MYR", 4], ["mgs10", "MGS 10Y", 2],
     ["ust10", "UST 10Y", 2], ["spread_bp", "Spread bp", 0], ["brent", "Brent", 2], ["cpo_3m", "CPO", 0], ["gold", "Gold", 2]
@@ -675,43 +706,203 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     main.appendChild(det);
   }
 
+  /* ---------- areas and routing ---------- */
+  var AREAS = [
+    { id: "gl", tab: "Global", name: "Global" },
+    { id: "my", tab: "Malaysia", name: "Malaysia" },
+    { id: "us", tab: "US", name: "United States" },
+    { id: "cn", tab: "China", name: "China & Hong Kong" },
+    { id: "jp", tab: "Japan", name: "Japan" },
+    { id: "sg", tab: "Singapore", name: "Singapore" },
+    { id: "eu", tab: "Europe", name: "Europe & UK" }
+  ];
+  var AREA = {};
+  AREAS.forEach(function (a) { AREA[a.id] = a; });
+
+  function parseHash() {
+    var h = (location.hash || "").slice(1).toLowerCase();
+    if (!h) return { area: "gl", date: null };
+    if (h === "latest") return { area: "my", date: null };
+    if (/^\d{4}-\d{2}-\d{2}$/.test(h)) return { area: "my", date: h };
+    var m = /^([a-z]{2})(?:-(\d{4}-\d{2}-\d{2}))?$/.exec(h);
+    if (m && AREA[m[1]]) return { area: m[1], date: m[2] || null };
+    return { area: "my", date: null };
+  }
+  function hashFor(area, date, latest) {
+    if (area === "my") return latest || !date ? "my" : date;
+    return latest || !date ? area : area + "-" + date;
+  }
+
+  function renderTabs() {
+    var box = $("area-tabs");
+    if (!box.childNodes.length) {
+      AREAS.forEach(function (a) {
+        var b = el("button", "", a.tab);
+        b.type = "button";
+        b.id = "tab-" + a.id;
+        b.addEventListener("click", function () { location.hash = hashFor(a.id, null, true); });
+        box.appendChild(b);
+      });
+    }
+    AREAS.forEach(function (a) {
+      var b = $("tab-" + a.id);
+      if (a.id === S.area) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+  }
+
   /* ---------- page ---------- */
-  function setState(html) {
+  function setState(parts) {
     var main = $("edition");
     main.textContent = "";
     var box = el("div", "dd-state");
     box.id = "ed-state";
-    html.forEach(function (part, i) { box.appendChild(i === 0 ? el("strong", "", part) : document.createTextNode(" " + part)); });
+    parts.forEach(function (part, i) { if (part) box.appendChild(i === 0 ? el("strong", "", part) : document.createTextNode(" " + part)); });
     main.appendChild(box);
+  }
+  function emptyParts() {
+    if (S.area === "my") return ["No Malaysia read yet.", "It is written at about 7:15am MYT on Malaysian business days."];
+    if (S.area === "gl") return ["No global read yet.", "It is written each weekday at about 6:45am MYT, straight after the area reads."];
+    return ["No " + AREA[S.area].name + " read yet.", "Area reads are written each weekday at about 6:45am MYT."];
   }
 
   function renderMast(ed) {
-    $("ed-title").textContent = ed ? dayLabel(ed.date, true) : "Morning Read";
+    $("ed-title").textContent = ed ? dayLabel(ed.date, true) : AREA[S.area || "my"].name;
     var cov = $("ed-covers");
     cov.textContent = "";
-    if (!ed) { cov.textContent = "Malaysia markets, the ringgit and rates, every business day before the open."; return; }
-    if (str(ed.covers)) { cov.appendChild(el("b", "", "Covers ")); cov.appendChild(document.createTextNode(str(ed.covers))); }
+    if (!ed) { cov.textContent = "The world's markets summarised, and what they mean for Malaysia, every business day before the open."; return; }
+    var parts = 0;
+    if (S.area !== "my") { cov.appendChild(el("b", "", AREA[S.area].name)); parts++; }
+    if (str(ed.covers)) {
+      cov.appendChild(document.createTextNode(parts ? " · " : ""));
+      if (S.area === "my") cov.appendChild(el("b", "", "Covers "));
+      cov.appendChild(document.createTextNode(str(ed.covers)));
+      parts++;
+    }
     var t = mytTime(ed.published_at);
-    if (t) cov.appendChild(document.createTextNode((str(ed.covers) ? " · " : "") + "Published " + t + " MYT"));
+    if (t) { cov.appendChild(document.createTextNode((parts ? " · " : "") + "Published " + t + " MYT")); parts++; }
     var ut = ed.us_open && typeof ed.us_open === "object" ? mytTime(ed.us_open.published_at) : null;
-    if (ut) cov.appendChild(document.createTextNode(" · US open added " + ut + " MYT"));
+    if (ut) cov.appendChild(document.createTextNode((parts ? " · " : "") + "US open added " + ut + " MYT"));
   }
 
   function renderNav() {
     var pick = $("ed-picker"), prev = $("ed-prev"), next = $("ed-next");
     pick.textContent = "";
-    if (!S.editions.length) { pick.appendChild(el("option", "", "No editions yet")); pick.disabled = true; prev.disabled = next.disabled = true; return; }
-    S.editions.forEach(function (e, i) {
+    if (!S.list.length) { pick.appendChild(el("option", "", S.loaded ? "No reads yet" : "Loading")); pick.disabled = true; prev.disabled = next.disabled = true; return; }
+    S.list.forEach(function (e, i) {
       var o = el("option", "", dayLabel(e.date) + (i === 0 ? " (latest)" : ""));
       o.value = e.date;
       pick.appendChild(o);
     });
-    if (S.editions.length >= S.limit) { var more = el("option", "", "Load older editions"); more.value = "__more"; pick.appendChild(more); }
+    if (S.list.length >= S.limit) { var more = el("option", "", "Load older reads"); more.value = "__more"; pick.appendChild(more); }
     pick.disabled = false;
-    var idx = S.current ? S.editions.findIndex(function (e) { return e.date === S.current.date; }) : -1;
-    if (idx >= 0) pick.value = S.editions[idx].date;
-    prev.disabled = idx < 0 || idx >= S.editions.length - 1;
+    var idx = S.current ? S.list.findIndex(function (e) { return e.date === S.current.date; }) : -1;
+    if (idx >= 0) pick.value = S.list[idx].date;
+    prev.disabled = idx < 0 || idx >= S.list.length - 1;
     next.disabled = idx <= 0;
+  }
+
+  function boardFoot(board, note, gaps) {
+    var foot = el("div", "dd-board-foot");
+    if (str(note)) {
+      var p = el("p", "");
+      p.appendChild(el("span", "dd-tag dd-tag-inf", "Desk inference"));
+      p.appendChild(document.createTextNode(" " + str(note)));
+      foot.appendChild(p);
+    }
+    var g = arr(gaps).map(str).filter(Boolean);
+    if (g.length) foot.appendChild(el("p", "dd-gaps", "Left blank (not confirmed): " + g.join("; ")));
+    if (foot.childNodes.length) board.appendChild(foot);
+  }
+
+  function renderMalaysia(main, ed) {
+    renderUsOpen(main, ed);
+    var hasMorning = !!(str(ed.headline) || (ed.one_thing && arr(ed.one_thing.steps).length) || arr(ed.fx).length);
+    if (!hasMorning) { main.appendChild(el("p", "dd-state", "No Malaysia read for this date (Bursa was closed).")); return; }
+    renderChain(main, ed);
+    renderBoard(main, ed);
+    renderDesk(main, ed);
+    renderCalendar(main, ed);
+    renderRotating(main, ed);
+    renderLearn(main, ed);
+    renderSources(main, ed);
+  }
+
+  var STATUS = { "new": "New", building: "Building", fading: "Fading" };
+  function renderArea(main, rd) {
+    renderUsOpen(main, rd);
+    var pts = arr(rd.points).filter(function (p) { return p && typeof p === "object" && str(p.text); });
+    if (!str(rd.headline) && !pts.length && !arr(rd.numbers).length) {
+      main.appendChild(el("p", "dd-state", "The morning read for this date isn't written yet."));
+      return;
+    }
+    var sec = sectionHead(main, "worth-reading", S.area === "gl" ? "The day, worldwide" : "Worth reading", str(rd.headline) || null);
+    if (pts.length) {
+      var ul = el("ul", "dd-points");
+      pts.forEach(function (pt) {
+        var li = el("li", pt.kind === "inference" ? "dd-inf" : "");
+        li.appendChild(el("p", "", str(pt.text)));
+        var c = cite(pt);
+        var pa = str(pt.area).toLowerCase();
+        if (S.area === "gl" && AREA[pa] && pa !== "gl") {
+          var chip = el("a", "dd-area-chip", AREA[pa].tab + " read \u2192");
+          chip.href = "#" + pa;
+          c.insertBefore(chip, c.firstChild);
+        }
+        li.appendChild(c);
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+    } else {
+      sec.appendChild(el("p", "dd-note", "A quiet session. Nothing here is worth your time today."));
+    }
+
+    var rows = arr(rd.numbers).filter(function (r) { return r && typeof r === "object"; });
+    if (rows.length) {
+      var nsec = sectionHead(main, "area-numbers", "The numbers", null);
+      var board = el("div", "dd-board");
+      board.id = "area-board";
+      var tip = el("div", "dd-tip"); tip.hidden = true;
+      var grp = el("div", "dd-bgroup");
+      grp.appendChild(el("h3", "", "Closes and rates"));
+      rows.forEach(function (r) { grp.appendChild(boardRow(r, board, tip, null, "an-", true)); });
+      board.appendChild(grp);
+      boardFoot(board, rd.numbers_note, rd.gaps);
+      board.appendChild(tip);
+      nsec.appendChild(board);
+    }
+
+    var devs = arr(rd.developments).filter(function (d) { return d && typeof d === "object" && str(d.title); });
+    if (devs.length) {
+      var dsec = sectionHead(main, "developments", "Developments to watch", null);
+      var dl = el("ul", "dd-devs");
+      devs.forEach(function (d) {
+        var li = el("li");
+        var head = el("div", "dd-dev-head");
+        var st = str(d.status).toLowerCase();
+        if (STATUS[st]) { var chip = el("span", "dd-status", STATUS[st]); chip.setAttribute("data-s", st); head.appendChild(chip); }
+        head.appendChild(el("span", "dd-dev-title", str(d.title)));
+        li.appendChild(head);
+        if (str(d.text)) li.appendChild(el("p", "", str(d.text)));
+        li.appendChild(cite(d));
+        dl.appendChild(li);
+      });
+      dsec.appendChild(dl);
+    }
+
+    var cal = calItems(rd.calendar);
+    if (cal.length) {
+      var csec = sectionHead(main, "area-calendar", "Coming up, in MYT", null);
+      csec.appendChild(calList(cal));
+    }
+
+    if (str(rd.for_malaysia)) {
+      var fsec = sectionHead(main, "for-malaysia", "What it means for Malaysia", null);
+      var box = el("div", "dd-for-my");
+      box.appendChild(el("p", "", str(rd.for_malaysia)));
+      box.appendChild(cite({ kind: "inference" }));
+      fsec.appendChild(box);
+    }
+    renderSources(main, rd);
   }
 
   function render(ed) {
@@ -722,78 +913,83 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     S.current = ed;
     S.sparks = [];
     main.textContent = "";
+    renderTabs();
     renderMast(ed);
     renderNav();
-    if (!ed) { setState(["No edition yet.", "The first one is written at about 7:15am MYT on the next Malaysian business day."]); return; }
+    if (!ed) { setState(S.loaded ? emptyParts() : ["Loading.", ""]); return; }
     if (S.missing) {
-      main.appendChild(el("p", "dd-state", "There's no edition for " + dayLabel(S.missing, true) + ". Showing the latest instead."));
+      main.appendChild(el("p", "dd-state", "There's no " + AREA[S.area].name + " read for " + dayLabel(S.missing, true) + ". Showing the latest instead."));
     }
-    renderUsOpen(main, ed);
-    var hasMorning = !!(str(ed.headline) || (ed.one_thing && arr(ed.one_thing.steps).length) || arr(ed.fx).length);
-    if (!hasMorning) {
-      main.appendChild(el("p", "dd-state", "No morning edition for this date (Bursa was closed)."));
-      return;
-    }
-    renderChain(main, ed);
-    renderBoard(main, ed);
-    renderDesk(main, ed);
-    renderCalendar(main, ed);
-    renderRotating(main, ed);
-    renderLearn(main, ed);
-    renderSources(main, ed);
+    if (S.area === "my") renderMalaysia(main, ed); else renderArea(main, ed);
     if (sameEd) Object.keys(open).forEach(function (id) { var d = document.getElementById(id); if (d) d.open = true; });
     S.width = main.clientWidth;
     S.sparks.forEach(function (f) { f(); });
   }
 
-  function wantedDate() {
-    var h = (location.hash || "").slice(1);
-    return /^\d{4}-\d{2}-\d{2}$/.test(h) ? h : null;
-  }
-
   function choose() {
-    var w = wantedDate();
+    var r = parseHash();
     S.missing = null;
-    if (!w) { render(S.editions[0] || null); return; }
-    var hit = S.editions.find(function (e) { return e.date === w; });
+    if (!r.date) { render(S.list[0] || null); return; }
+    var hit = S.list.find(function (e) { return e.date === r.date; });
     if (hit) { render(hit); return; }
-    S.db.doc("editions/" + w).get().then(function (snap) {
+    var area = S.area;
+    var path = area === "my" ? "editions/" + r.date : "reads/" + area + "-" + r.date;
+    S.db.doc(path).get().then(function (snap) {
+      if (area !== S.area) return;
       if (snap.exists && snap.data()) { render(snap.data()); }
-      else { S.missing = w; render(S.editions[0] || null); }
-    }).catch(function () { S.missing = w; render(S.editions[0] || null); });
+      else { S.missing = r.date; render(S.list[0] || null); }
+    }).catch(function () { if (area === S.area) { S.missing = r.date; render(S.list[0] || null); } });
   }
 
-  function subscribeEditions() {
-    if (S.unsubEd) S.unsubEd();
-    S.unsubEd = S.db.collection("editions").orderBy("date", "desc").limit(S.limit).onSnapshot(function (snap) {
-      S.editions = snap.docs.map(function (d) { return d.data(); }).filter(function (e) { return e && typeof e.date === "string"; });
+  function subscribeList() {
+    if (S.unsubEd) { S.unsubEd(); S.unsubEd = null; }
+    S.list = [];
+    S.loaded = false;
+    S.current = null;
+    render(null);
+    var area = S.area;
+    var q = area === "my"
+      ? S.db.collection("editions").orderBy("date", "desc").limit(S.limit)
+      : S.db.collection("reads").where("area", "==", area).orderBy("date", "desc").limit(S.limit);
+    S.unsubEd = q.onSnapshot(function (snap) {
+      if (area !== S.area) return;
+      S.list = snap.docs.map(function (d) { return d.data(); }).filter(function (e) { return e && typeof e.date === "string"; });
+      S.loaded = true;
       choose();
     }, function (err) {
-      setState(["Editions couldn't load.", "Reload the page to try again." + (err && err.code ? " (" + err.code + ")" : "")]);
+      if (area !== S.area) return;
+      setState(["Reads couldn't load.", "Reload the page to try again." + (err && err.code ? " (" + err.code + ")" : "")]);
     });
+  }
+
+  function route() {
+    if (!S.db) return;
+    var r = parseHash();
+    if (r.area !== S.area || !S.unsubEd) { S.area = r.area; S.limit = 30; subscribeList(); return; }
+    choose();
   }
 
   function subscribeCloses() {
     S.db.collection("closes").orderBy("date", "desc").limit(120).onSnapshot(function (snap) {
       S.closes = snap.docs.map(function (d) { return d.data(); }).filter(function (c) { return c && typeof c.date === "string"; });
-      if (S.current) render(S.current);
+      if (S.current && S.area === "my") render(S.current);
     }, function () { /* sparklines and history stay empty */ });
   }
 
   $("ed-prev").addEventListener("click", function () {
-    var i = S.editions.findIndex(function (e) { return S.current && e.date === S.current.date; });
-    if (i >= 0 && i < S.editions.length - 1) location.hash = S.editions[i + 1].date;
+    var i = S.list.findIndex(function (e) { return S.current && e.date === S.current.date; });
+    if (i >= 0 && i < S.list.length - 1) location.hash = hashFor(S.area, S.list[i + 1].date, false);
   });
   $("ed-next").addEventListener("click", function () {
-    var i = S.editions.findIndex(function (e) { return S.current && e.date === S.current.date; });
-    if (i > 0) location.hash = i - 1 === 0 ? "latest" : S.editions[i - 1].date;
+    var i = S.list.findIndex(function (e) { return S.current && e.date === S.current.date; });
+    if (i > 0) location.hash = hashFor(S.area, S.list[i - 1].date, i - 1 === 0);
   });
   $("ed-picker").addEventListener("change", function (e) {
     var v = e.target.value;
-    if (v === "__more") { S.limit += 30; subscribeEditions(); return; }
-    location.hash = v === (S.editions[0] && S.editions[0].date) ? "latest" : v;
+    if (v === "__more") { S.limit += 30; subscribeList(); return; }
+    location.hash = hashFor(S.area, v, S.list[0] && v === S.list[0].date);
   });
-  window.addEventListener("hashchange", function () { if (S.db) choose(); });
+  window.addEventListener("hashchange", route);
 
   var resizeTimer = null;
   window.addEventListener("resize", function () {
@@ -804,12 +1000,15 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     }, 150);
   });
 
-  var noStore = ["Editions aren't available in this view.", "Open the page on claude.ai while signed in to read them."];
+  S.area = parseHash().area;
+  renderTabs();
+  var noStore = ["Reads aren't available in this view.", "Open the page on claude.ai while signed in to read them."];
   if (!window.claude || typeof window.claude.use !== "function") { setState(noStore); return; }
   window.claude.use("db").then(function (db) {
     if (!db) { setState(noStore); return; }
     S.db = db;
-    subscribeEditions();
+    S.area = null;
+    route();
     subscribeCloses();
   }).catch(function () { setState(noStore); });
 })();

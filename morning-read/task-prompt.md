@@ -30,6 +30,8 @@ A) RINGGIT AND CROSSES (the core for a retail treasury desk)
 - chg = level minus the prior level on the same basis; pct = chg / prior × 100, 2dp. Compute only when both levels are confirmed on the same basis (e.g. both 6pm closes).
 B) RATES
 - OPR: BNM; put the date of the last MPC decision in as_of.
+- MYOR (Malaysia Overnight Rate): BNM's published MYOR for bursa_date; confirm the date. It is the reference rate the market is moving to, so it leads the money-market rates: key "myor", label "MYOR (overnight)", unit "%", chg_bp.
+- KLIBOR is being phased out in favour of MYOR. Include KLIBOR 3M only if BNM or a named outlet still publishes it for bursa_date, as key "klibor3m", label "KLIBOR 3M (legacy)", placed after MYOR. Never lead with it.
 - MGS 3Y, 5Y, 10Y: https://www.bnm.gov.my/government-securities-yield; confirm the trading date is bursa_date; chg in bp.
 - UST 2Y and 10Y at the US close: AP / Reuters / CNBC, or Alpha Vantage TREASURY_YIELD (labelled).
 - spread_bp = round((mgs10 − ust10) × 100) only if both are known; source "Desk calc", url null.
@@ -60,7 +62,7 @@ Plain-text strings, https-only urls, numbers as JSON numbers, null when unconfir
  "headline": "<one sentence: the day in one line>",
  "one_thing": {"title": "<short plain title>", "steps": [{"node": "<market + day, e.g. Bursa Thu, Europe Thu, US Thu, Ringgit, MGS, or So what>", "fact": "<one sentence with the specific number>", "source": "<outlet>", "url": "<exact page>", "kind": "reported" | "inference"}]},
  "fx": [{"key": "usdmyr|sgdmyr|cnymyr|audmyr|eurmyr|gbpmyr|jpymyr100|dxy", "label": "USD/MYR | SGD/MYR | CNY/MYR | AUD/MYR | EUR/MYR | GBP/MYR | JPY/MYR (per 100) | Dollar index (DXY)", "level": n, "chg": n, "pct": n, "as_of": "<e.g. 26 Nov, 6pm close | 26 Nov, BNM 5pm middle>", "source": "", "url": ""}],
- "rates": [{"key": "opr|mgs3|mgs5|mgs10|ust2|ust10|spread_bp", "label": "OPR | MGS 3Y | MGS 5Y | MGS 10Y | UST 2Y | UST 10Y | MGS–UST 10Y spread", "level": n, "unit": "%" or "bp", "chg_bp": n, "as_of": "", "source": "", "url": ""}],
+ "rates": [{"key": "opr|myor|klibor3m|mgs3|mgs5|mgs10|ust2|ust10|spread_bp", "label": "OPR | MYOR (overnight) | KLIBOR 3M (legacy) | MGS 3Y | MGS 5Y | MGS 10Y | UST 2Y | UST 10Y | MGS–UST 10Y spread", "level": n, "unit": "%" or "bp", "chg_bp": n, "as_of": "", "source": "", "url": ""}],
  "markets": [{"key": "klci|sp500|brent|cpo_3m|gold", "label": "FBM KLCI | S&P 500 | Brent (US$/bbl) | CPO 3rd month (RM/t) | Gold (US$/oz)", "level": n, "chg": n, "pct": n, "as_of": "", "source": "", "url": ""}],
  "numbers_note": "<one sentence, desk inference: which numbers passed the move filter and what that says; if none, say it was a quiet session>",
  "gaps": ["<what was left null and why>"],
@@ -71,7 +73,7 @@ Plain-text strings, https-only urls, numbers as JSON numbers, null when unconfir
  "sources": [{"time_myt": "<e.g. 26 Nov, 17:40>", "outlet": "", "title": "<your own paraphrase>", "url": ""}]
 }
 Sizes: one_thing 3–7 steps ending with ONE "So what" step (kind inference) that teaches the cause-and-effect lesson for the ringgit, rates or Bursa. Calendar max 8, in time order (today first, items with no stated time after the timed ones for that day). Sections 0–3, each 2–4 points. Sources = every url used in the edition, newest first.
-Learn: one concept today's story illustrates. Favour what a retail treasury desk uses: cross rates, carry and rate differentials, how US yields reach MGS and the ringgit, the dollar index, FX forwards and hedging, OPR transmission to deposit and loan rates, bond prices vs yields, foreign flows, gold vs real yields, CPO and the ringgit, intraday reversals.
+Learn: one concept today's story illustrates. Favour what a retail treasury desk uses: MYOR replacing KLIBOR, cross rates, carry and rate differentials, how US yields reach MGS and the ringgit, the dollar index, FX forwards and hedging, OPR transmission to deposit and loan rates, bond prices vs yields, foreign flows, gold vs real yields, CPO and the ringgit, intraday reversals.
 
 RULES FOR EVERY LINE
 - VERIFY AGAINST THE EXACT SOURCE. A "reported" item's url must be the page that states every number and claim in that sentence: open it and check. If one sentence needs two articles, split it into two steps or points. A board row's url must show that level for that date.
@@ -80,7 +82,7 @@ RULES FOR EVERY LINE
 - Be blunt: say plainly when a move is noise.
 
 ## 5. The closes row (ArtifactData collection "closes", doc_id = bursa_date)
-{"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "note": "Morning Read <today>"}
+{"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "myor", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "note": "Morning Read <today>"}
 Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (6pm ringgit closes, BNM 5pm middle rates, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. A figure taken at another time (a BNM 9am middle rate, a live spot price) may appear in the edition with its as_of label but must be null here. Keep USD/MYR on the 6pm-close basis every day so the series stays consistent. The US-side numbers belong to the US session that ended overnight; that is expected.
 
 ## 6. Write and confirm

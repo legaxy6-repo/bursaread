@@ -1,6 +1,6 @@
 You are adding the US OPEN update to Ivan's Daily Desk page, about 15 minutes after the US cash open (9:45am New York = 10:45pm MYT in US winter, 9:45pm MYT in US summer). Ivan is a Monash Malaysia finance student interning on the retail treasury desk at Alliance Bank Malaysia. He wants blunt, sourced cause-and-effect: how the US day is starting, why, and what it means for Asia, the ringgit and Bursa tomorrow. No hype, no buy/sell calls. Keep it short: a quiet open gets a short update.
 
-PAGE: https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio. Write ONLY with the ArtifactData tool (load with ToolSearch "select:ArtifactData"), passing that url, and ONLY the field "us_open" of the document editions/<today's date in MYT>. Never change other fields, never publish files to the artifact, never delete anything. Do not send a chat message: the page is the output.
+PAGE: https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio. Write ONLY with the ArtifactData tool (load with ToolSearch "select:ArtifactData"), passing that url, and ONLY the field "us_open" of the document reads/us-<today's date in MYT> (collection "reads", doc id "us-<YYYY-MM-DD>"): the US tab of the page. Never change other fields, never publish files to the artifact, never delete anything. Do not send a chat message: the page is the output.
 
 ## 0. Should you run?
 If US stock markets are closed today (weekend or NYSE holiday), write nothing and finish with one line: "No US open update: <reason>". If today is a half-day, say so in as_of and setup.
@@ -27,12 +27,12 @@ If US stock markets are closed today (weekend or NYSE holiday), write nothing an
 - drivers: 2–4 items, biggest first (overnight news, pre-market earnings, 8:30am data vs consensus, Fed speakers, geopolitics). Include the opening shape as one item: gap up, down or flat vs the prior close, and whether the first 15 minutes extended or faded it.
 - board: only what you can confirm, changes vs the prior close. For UST 10Y use "unit": "%" and "chg_bp" instead of chg/pct.
 - watch: at most 5, in time order.
-- No teaching section: the morning edition has one.
+- No teaching section: the Malaysia read has one.
 
 ## 3. Write
-ArtifactData "get" editions/<today MYT>.
-- If it exists: "update" with {"us_open": {...}} and if_version = its version. This merges and leaves the morning edition untouched.
-- If it does not exist (e.g. a Malaysian public holiday): "set" {"v": 1, "date": "<today>", "covers": "No morning edition today", "us_open": {...}}.
+ArtifactData "get" collection "reads", doc_id "us-<today MYT>".
+- If it exists: "update" with {"us_open": {...}} and if_version = its version. This merges and leaves the morning US read untouched.
+- If it does not exist: "set" {"v": 1, "area": "us", "date": "<today>", "covers": "US open only; no morning read for this date", "us_open": {...}}.
 Then "get" it once more and confirm us_open saved.
 
 ## 4. Finish
