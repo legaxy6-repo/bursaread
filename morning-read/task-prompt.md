@@ -20,7 +20,7 @@ DATE DISCIPLINE: web search often returns the same date from a previous year, an
 Allowed: Bernama (bernama.com/en/market), The Star, The Edge Malaysia, NST, FMT, Business Today, Malay Mail, BNM (bnm.gov.my and its Open API at api.bnm.gov.my), DOSM, Bursa Malaysia announcements, Securities Commission, AP, Reuters, CNBC, FT, WSJ, Bloomberg, and primary data (BLS, BEA, Federal Reserve, US Treasury, SEC filings).
 AP LINKS: link the apnews.com page for an AP story. Use a syndicated copy (a local TV or newspaper site carrying the same AP story) only if apnews.com can't be read, and then set source to "AP (via <site>)".
 Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs (e.g. Rakuten Trade), forums, or anything with no named reporter or agency.
-Alpha Vantage connector (ToolSearch "+Alpha_Vantage"): free key, 25 calls/day, shared with the US Open Brief (which uses 5). Use AT MOST 12 calls, ONE AT A TIME, never in parallel. On rate_limit wait a few seconds and retry once, then fall back to reported figures. Useful: TREASURY_YIELD daily 2year and 10year (read only the latest rows), BRENT daily, GOLD_SILVER_SPOT GOLD, GLOBAL_QUOTE SPY (day's high/low vs close = the session's shape). Label every Alpha Vantage figure: source "Alpha Vantage", url null, and its time in as_of.
+Alpha Vantage connector (ToolSearch "+Alpha_Vantage"): free key, 25 calls/day, shared with the US Open (5 calls), the area reads (3 calls) and Ivan's live prices. Use AT MOST 12 calls, ONE AT A TIME, never in parallel. On rate_limit wait a few seconds and retry once, then fall back to reported figures. Useful: TREASURY_YIELD daily 2year and 10year (read only the latest rows), BRENT daily, GOLD_SILVER_SPOT GOLD, GLOBAL_QUOTE SPY (day's high/low vs close = the session's shape). Label every Alpha Vantage figure: source "Alpha Vantage", url null, and its time in as_of.
 
 ## 3. Gather
 A) RINGGIT AND CROSSES (the core for a retail treasury desk)
@@ -34,7 +34,7 @@ B) RATES
 - MYOR (Malaysia Overnight Rate): BNM's published MYOR for bursa_date from BNM's website; confirm the date. (The API's /public/interest-rate "interbank overnight" figure is a cross-check, not MYOR; never label it MYOR.) It is the reference rate the market is moving to, so it leads the money-market rates: key "myor", label "MYOR (overnight)", unit "%", chg_bp.
 - KLIBOR is being phased out in favour of MYOR. Include KLIBOR 3M only if BNM or a named outlet still publishes it for bursa_date, as key "klibor3m", label "KLIBOR 3M (legacy)", placed after MYOR. Never lead with it.
 - MGS 3Y, 5Y, 10Y: https://www.bnm.gov.my/government-securities-yield; confirm the trading date is bursa_date; chg in bp.
-- UST 2Y and 10Y at the US close: AP / Reuters / CNBC, or Alpha Vantage TREASURY_YIELD (labelled).
+- UST 2Y and 10Y, DXY and the S&P 500: the US read is written at 6:43am. ArtifactData "get" collection "reads", doc_id "us-<today>"; if it has these rows, copy them exactly into your board. Only if it doesn't, gather them yourself from AP / Reuters / CNBC, or Alpha Vantage TREASURY_YIELD (labelled).
 - spread_bp = round((mgs10 − ust10) × 100) only if both are known; source "Desk calc", url null.
 C) MARKETS
 - FBM KLCI close and change: Bernama closing report (also breadth and foreign flows if reported).
@@ -77,13 +77,18 @@ Sizes: one_thing 3–7 steps ending with ONE "So what" step (kind inference) tha
 Learn: one concept today's story illustrates. Favour what a retail treasury desk uses: MYOR replacing KLIBOR, cross rates, carry and rate differentials, how US yields reach MGS and the ringgit, the dollar index, FX forwards and hedging, OPR transmission to deposit and loan rates, bond prices vs yields, foreign flows, gold vs real yields, CPO and the ringgit, intraday reversals.
 
 RULES FOR EVERY LINE
+- ONE NUMBER, ONE OWNER. Each figure is owned by one read and copied exactly by the others (level, chg, pct, chg_bp, as_of, source, url): Malaysia owns the ringgit rates, OPR, MYOR, MGS, the spread, KLCI, CPO, Brent and gold; US owns S&P 500, Nasdaq, Dow, UST 2Y/10Y, DXY, Fed funds and WTI; Japan, China & Hong Kong, Singapore and Europe own their own indices, currencies and rates.
+- WHEN SOURCES DISAGREE on a figure, use the primary source if there is one (BNM, BLS, BEA, a central bank); otherwise show both in the line, e.g. "3.6% (AP) or 3.7% (CNBC)". Never pick one silently.
+- SPREAD YOUR SOURCES: no single outlet may supply more than half of a read's reported lines. Prefer AP, Reuters, Bernama and primary sources; use CNBC and Bloomberg to fill gaps, not as the backbone.
+- GAPS ARE FOR READERS: list missing data in plain terms ("Singapore index close not confirmed"). Never mention tools, sessions, networks or which sites could not be reached.
+- INTRADAY IS LABELLED: a number that is not a closing value must have the word "intraday" in its as_of.
 - VERIFY AGAINST THE EXACT SOURCE. A "reported" item's url must be the page that states every number and claim in that sentence: open it and check. If one sentence needs two articles, split it into two steps or points. A board row's url must show that level for that date.
 - REPORTED vs INFERENCE. Every "why" must be a reason a reporter gave; otherwise write "no catalyst reported". Your own reasoning, a causal link no reporter stated, or a forward-looking point is kind "inference", source "Desk inference", url null. Never present an inference as reported.
 - No buy/sell calls, price targets or "customers should…". Analysis and education only.
 - Be blunt: say plainly when a move is noise.
 
 ## 5. The closes row (ArtifactData collection "closes", doc_id = bursa_date)
-{"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "myor", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "note": "Morning Read <today>"}
+{"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "myor", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)", "note": "Morning Read <today>"}
 Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (BNM 5pm middle rates for every ringgit rate, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. Add "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)". A figure taken at another time (a 6pm close, a BNM 9am rate, a live spot price) may appear in the edition with its label but must not go in this row's ringgit fields. The US-side numbers belong to the US session that ended overnight; that is expected.
 
 ## 6. Write and confirm

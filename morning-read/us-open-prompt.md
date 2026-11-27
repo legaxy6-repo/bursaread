@@ -9,9 +9,12 @@ If US stock markets are closed today (weekend or NYSE holiday), write nothing an
 - Pre-market drivers and the open: AP's live "Stock market today" story, Reuters, CNBC live updates, WSJ/MarketWatch, Bloomberg, FT. Read the full article for times and reasons. For AP, link the apnews.com page; use a syndicated copy only if apnews.com can't be read, with source "AP (via <site>)".
 - Data released before the open (usually 8:30am ET): the primary source (BLS, BEA, Census, DOL) for the actual numbers; wires for consensus. Fed speakers: federalreserve.gov plus wires. Earnings: company releases or SEC 8-Ks plus wires.
 - Rest of the US session: scheduled data (often 10am ET), Fed speakers, Treasury auctions, after-close earnings, with MYT times (ET +13h in US winter, +12h in summer).
-- Alpha Vantage (ToolSearch "+Alpha_Vantage"): the free key's 25 calls/day are shared with the Morning Read. Use AT MOST 5 calls, ONE AT A TIME, never in parallel (e.g. GLOBAL_QUOTE SPY or QQQ, GOLD_SILVER_SPOT GOLD). Label each figure source "Alpha Vantage", url null, with its time in as_of.
+- Alpha Vantage (ToolSearch "+Alpha_Vantage"): the free key's 25 calls/day are shared with the Morning Read, the area reads and Ivan's live prices. Use AT MOST 5 calls, ONE AT A TIME, never in parallel (e.g. GLOBAL_QUOTE SPY or QQQ, GOLD_SILVER_SPOT GOLD). Label each figure source "Alpha Vantage", url null, with its time in as_of.
 - Allowed sources: AP, Reuters, CNBC, WSJ/MarketWatch, Bloomberg, FT, and primary data. Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs, forums, or anything with no named reporter or agency.
 - DATE DISCIPLINE: confirm each source is from today (date, year and publish time); search often returns the same date from a previous year. If a number can't be confirmed, leave it out or null. Never guess.
+- WHEN SOURCES DISAGREE on a figure, use the primary source if there is one (BNM, BLS, BEA, a central bank); otherwise show both in the line, e.g. "3.6% (AP) or 3.7% (CNBC)". Never pick one silently.
+- SPREAD YOUR SOURCES: no single outlet may supply more than half of a read's reported lines. Prefer AP, Reuters, Bernama and primary sources; use CNBC and Bloomberg to fill gaps, not as the backbone.
+- GAPS ARE FOR READERS: list missing data in plain terms ("Singapore index close not confirmed"). Never mention tools, sessions, networks or which sites could not be reached.
 - Every "why" must be a reason a reporter gave; otherwise write "no catalyst reported". Your own reasoning is kind "inference", source "Desk inference", url null. A "reported" item's url must be the page that states every number in it; if one sentence needs two articles, split it.
 
 ## 2. The us_open block

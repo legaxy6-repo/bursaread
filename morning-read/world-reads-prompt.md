@@ -18,12 +18,17 @@ Spend effort where the news is. A quiet market gets a one-line headline and few 
 Include only the numbers you can confirm for the right session; leave the rest out and list them in "gaps".
 
 ## 3. Rules for every line
+- ONE NUMBER, ONE OWNER. Each figure is owned by one read and copied exactly by the others (level, chg, pct, chg_bp, as_of, source, url): Malaysia owns the ringgit rates, OPR, MYOR, MGS, the spread, KLCI, CPO, Brent and gold; US owns S&P 500, Nasdaq, Dow, UST 2Y/10Y, DXY, Fed funds and WTI; Japan, China & Hong Kong, Singapore and Europe own their own indices, currencies and rates. The Malaysia read is written after you (7:13am), so for Brent and gold in the Global read gather your own figures; the Global read copies every other number from the area reads you just wrote.
+- WHEN SOURCES DISAGREE on a figure, use the primary source if there is one (BNM, BLS, BEA, a central bank); otherwise show both in the line, e.g. "3.6% (AP) or 3.7% (CNBC)". Never pick one silently.
+- SPREAD YOUR SOURCES: no single outlet may supply more than half of a read's reported lines. Prefer AP, Reuters, Bernama and primary sources; use CNBC and Bloomberg to fill gaps, not as the backbone.
+- GAPS ARE FOR READERS: list missing data in plain terms ("Singapore index close not confirmed"). Never mention tools, sessions, networks or which sites could not be reached.
+- INTRADAY IS LABELLED: a number that is not a closing value must have the word "intraday" in its as_of.
 - SOURCES: only the outlets above (plus Bernama, The Star and The Edge for Malaysian angles). For AP, link apnews.com; use a syndicated copy only if apnews.com can't be read, with source "AP (via <site>)". Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs, forums, or anything with no named reporter or agency.
 - DATE DISCIPLINE: search often returns the same date from a previous year, and index pages can be cached. Confirm the date AND year of every article. Never guess a number.
 - VERIFY AGAINST THE EXACT SOURCE: a "reported" item's url must be the page that states every number and claim in it. Open it and check. If one sentence needs two articles, split it.
 - REPORTED vs INFERENCE: every "why" must be a reason a reporter gave; otherwise write "no catalyst reported". Your own reasoning, a causal link no reporter stated, or a forward-looking point is kind "inference", source "Desk inference", url null.
 - "WORTH READING" FILTER: a point earns a place only if it is one of: an index or currency move past the desk's filter (stock indices 1%, currencies 0.5%, 10-year yields 5–6bp, oil 3%); an intraday reversal of 1% or more; a move against the expected reaction; a record or multi-month level; a central-bank decision, minutes or a reported shift in rate expectations; a data surprise vs consensus; policy, trade or tariff news; a large company move with read-across to a sector, to Asia or to Malaysia.
-- Alpha Vantage (ToolSearch "+Alpha_Vantage"): the free key's 25 calls/day are shared with two other tasks. Use AT MOST 3 calls, ONE AT A TIME, and prefer reported figures. Label any Alpha Vantage figure source "Alpha Vantage", url null, with its time in as_of.
+- Alpha Vantage (ToolSearch "+Alpha_Vantage"): the free key's 25 calls/day are shared with two other tasks and Ivan's live prices. Use AT MOST 3 calls, ONE AT A TIME, and prefer reported figures. Label any Alpha Vantage figure source "Alpha Vantage", url null, with its time in as_of.
 - No buy/sell calls, price targets or "readers should…". Analysis and education only. Be blunt: say plainly when a move is noise.
 
 ## 4. Continuity
