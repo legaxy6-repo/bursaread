@@ -385,7 +385,33 @@ def covers_line(aid, rd):
     return " · ".join(bits)
 
 
-def shell(path, title, desc, body, active, kicker, h1, covers=""):
+LIVE_HTML = """  <section class="dd-livecheck" id="live" aria-labelledby="live-title">
+    <div class="dd-live-head">
+      <p class="dd-eyebrow" id="live-title"><i class="dd-dot" id="live-dot" hidden></i>Live check <span>Interbank mid from Alpha Vantage. Bank board rates differ.</span></p>
+      <div class="dd-live-actions"><button type="button" class="dd-btn" id="live-refresh" hidden disabled>Refresh</button></div>
+    </div>
+    <form class="dd-keyform" id="live-keyform">
+      <label for="live-key">Your Alpha Vantage API key</label>
+      <div class="dd-keyrow"><input class="dd-input" id="live-key" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key"><button class="dd-btn" type="submit">Save key</button></div>
+      <p class="dd-live-status" id="live-keyhint">It stays in this browser only and is never sent anywhere except Alpha Vantage. Get a free key at <a href="https://www.alphavantage.co/support/#api-key" target="_blank" rel="noopener">alphavantage.co</a>.</p>
+    </form>
+    <div class="dd-tiles" id="live-tiles" hidden></div>
+    <p class="dd-live-status" id="live-status" aria-live="polite"></p>
+    <details class="dd-live-pick" id="live-pick" hidden><summary>Choose prices</summary><div class="dd-pick-grid" id="live-pick-grid"></div><button type="button" class="dd-linkbtn" id="live-forget">Remove the saved key from this browser</button></details>
+  </section>
+"""
+
+
+def closes_json():
+    out = {}
+    for c in CLOSES:
+        for k in ("usdmyr", "sgdmyr", "eurmyr", "gbpmyr", "audmyr", "cnymyr", "jpymyr100", "gold"):
+            if is_num(c.get(k)):
+                out[k] = {"date": c["date"], "v": float(c[k])}
+    return json.dumps(out).replace("<", "\\u003c")
+
+
+def shell(path, title, desc, body, active, kicker, h1, covers="", live=False):
     depth = path.count("/")
     prefix = "../" * depth
     canonical = (f"https://{DOMAIN}/" + path.replace("index.html", "")) if DOMAIN else ""
@@ -422,6 +448,7 @@ def shell(path, title, desc, body, active, kicker, h1, covers=""):
     <h1>{E(h1)}</h1>
     {f'<p class="dd-covers">{covers}</p>' if covers else ''}
   </div>
+{LIVE_HTML if live else ''}
   <main class="dd-main">
 {body}
   </main>
@@ -436,6 +463,7 @@ def shell(path, title, desc, body, active, kicker, h1, covers=""):
   </footer>
 </div>
 <script src="{prefix}assets/site.js"></script>
+{(f'<script id="dd-closes" type="application/json">{closes_json()}</script><script src="{prefix}assets/live.js"></script>') if live else ''}
 """
     if PREVIEW and path == "index.html":
         return head + content  # the preview host wraps the root page itself
@@ -494,7 +522,7 @@ def build():
                 rd = latest[aid]
                 body = (malaysia_body(rd, prefix) if aid == "my" else area_body(aid, rd, prefix)) + earlier(aid, dates, dates[0], prefix)
                 write(path, shell(path, f"{name} market read · {SITE}", s(rd.get("headline")) or TAGLINE, body, aid,
-                                  f"{name} read · latest", day(dates[0], True), covers_line(aid, rd)))
+                                  f"{name} read · latest", day(dates[0], True), covers_line(aid, rd), live=True))
             else:
                 write(path, shell(path, f"{name} market read · {SITE}", TAGLINE, '<p class="dd-state">No read yet.</p>', aid, f"{name} read", name))
             urls.append(area_dir(aid))
@@ -516,7 +544,7 @@ def build():
     body += newsletter_box()
     write("index.html", shell("index.html", f"{SITE}: the world's markets, summarised for Malaysia",
                               s(gl.get("headline")) if gl else TAGLINE, body, "gl", "Global read · Malaysia time",
-                              day(gl["date"], True) if gl else SITE, covers_line("gl", gl) if gl else E(TAGLINE)))
+                              day(gl["date"], True) if gl else SITE, covers_line("gl", gl) if gl else E(TAGLINE), live=True))
     urls.insert(0, "")
 
     # archive
