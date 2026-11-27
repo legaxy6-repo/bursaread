@@ -317,7 +317,6 @@ body { margin: 0; }
 .dd-prose ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
 .dd-foot-base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: var(--s-xs); color: var(--muted); }
 @media (max-width: 640px) {
-  .dd-bar-links a:not(.dd-cta) { display: none; }
   .dd-today li { grid-template-columns: minmax(0, 1fr) auto; }
   .dd-today .dd-today-area { grid-column: 1 / -1; }
 }
@@ -328,3 +327,21 @@ body { margin: 0; }
 .dd-linkbtn:hover { color: var(--ink); }
 
 [hidden] { display: none !important; }
+
+/* Definitions, intraday flag, staleness banner, glossary */
+.dd-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; text-decoration: underline dotted; text-decoration-color: var(--board-muted); text-underline-offset: 4px; }
+.dd-term:hover, .dd-term[aria-expanded="true"] { text-decoration-color: var(--board-ink); }
+.dd-def { grid-column: 1 / -1; margin: 0.45rem 0 0.15rem; font-size: var(--s-sm); line-height: 1.5; color: var(--board-ink); max-width: 60ch; }
+.dd-intra { display: inline-block; margin-left: 0.45rem; font: 500 0.625rem/1.6 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--board-muted); border: 1px solid var(--board-muted); border-radius: 4px; padding: 0 0.3rem; vertical-align: 0.1em; }
+.dd-stale { display: flex; align-items: center; gap: 0.6rem; margin: 0; padding: 0.85rem 1.1rem; border: 1px solid var(--line-strong); border-radius: var(--r); font-size: var(--s-sm); color: var(--ink); }
+.dd-stale::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--alert); flex: none; }
+.dd-gloss { margin: 0; display: flex; flex-direction: column; }
+.dd-gloss div { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 0.25rem 1.5rem; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+.dd-gloss div:last-child { border-bottom: 1px solid var(--line); }
+.dd-gloss dt { font-weight: 600; }
+.dd-gloss dd { margin: 0; color: var(--muted); max-width: 62ch; }
+@media (max-width: 640px) {
+  .dd-gloss div { grid-template-columns: minmax(0, 1fr); }
+  .dd-bar-links { gap: 0.9rem; }
+  .dd-bar-links a { font-size: var(--s-xs); }
+}

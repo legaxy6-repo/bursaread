@@ -11,9 +11,9 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://dailydesk.win/404.html">
 <meta name="theme-color" content="#121214">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preload" href="assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{if(localStorage.getItem('dd-theme')==='light')document.documentElement.setAttribute('data-dd-theme','light')}catch(e){}</script>
 </head>
@@ -24,18 +24,18 @@
     <nav class="dd-bar-links" aria-label="Site">
       <a href="archive/">Archive</a>
       <a href="about/">How it works</a>
-      <a class="dd-cta" href="./#newsletter">Get the newsletter</a>
+      <a href="glossary/">Glossary</a>
     </nav>
   </div>
   <div class="dd-wrapx"><nav class="dd-areas" aria-label="Areas"><a href="./">Global</a><a href="malaysia/">Malaysia</a><a href="us/">US</a><a href="china/">China</a><a href="japan/">Japan</a><a href="singapore/">Singapore</a><a href="europe/">Europe</a></nav></div>
   <div class="dd-progress" aria-hidden="true"><span id="progress-bar"></span></div>
 </header>
 <div class="dd-wrap">
-  <div class="dd-mast" id="masthead">
+  <section class="dd-mast" id="masthead" aria-label="About this read">
     <div class="dd-mast-top"><p class="dd-kicker">Not found</p><button type="button" class="dd-theme" id="theme-toggle">Light mode</button></div>
     <h1>Page not found</h1>
     
-  </div>
+  </section>
 
   <main class="dd-main">
 <p class="dd-state">That page doesn't exist. <a href="./">Go to today's read</a>.</p>

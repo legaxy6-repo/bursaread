@@ -54,6 +54,84 @@ MOVE["pct"].update({"gold": 1.5, "cpo_3m": 2, "brent": 3, "wti": 3})
 
 E = lambda s: html.escape("" if s is None else str(s), quote=True)
 
+# Plain-language definitions shown when a reader taps a number's name, and on /glossary/.
+GLOSS = {
+    "usdmyr": ("USD/MYR", "How many ringgit one US dollar buys. Up means the ringgit weakened against the dollar."),
+    "sgdmyr": ("SGD/MYR", "How many ringgit one Singapore dollar buys. Up means the ringgit weakened against it."),
+    "cnymyr": ("CNY/MYR", "How many ringgit one Chinese yuan buys."),
+    "audmyr": ("AUD/MYR", "How many ringgit one Australian dollar buys."),
+    "eurmyr": ("EUR/MYR", "How many ringgit one euro buys."),
+    "gbpmyr": ("GBP/MYR", "How many ringgit one British pound buys."),
+    "jpymyr100": ("JPY/MYR (per 100)", "How many ringgit 100 Japanese yen buy. The yen is quoted per 100 because one yen is worth so little."),
+    "dxy": ("Dollar index (DXY)", "The US dollar's value against six major currencies, mostly the euro. Up means a stronger dollar, which usually weighs on Asian currencies, the ringgit included."),
+    "opr": ("OPR", "Overnight Policy Rate: Bank Negara Malaysia's benchmark interest rate, set at its Monetary Policy Committee meetings. It anchors what banks pay on deposits and charge on loans."),
+    "myor": ("MYOR", "Malaysia Overnight Rate: a reference rate based on overnight interbank borrowing in ringgit, published by Bank Negara Malaysia. It is replacing KLIBOR as the benchmark for loans and contracts."),
+    "klibor3m": ("KLIBOR", "Kuala Lumpur Interbank Offered Rate: the older benchmark built from banks' quoted lending rates. It is being phased out in favour of MYOR."),
+    "mgs3": ("MGS", "Malaysian Government Securities: ringgit bonds issued by the government. The 3-, 5- and 10-year figures are the yields investors earn for lending to the government for that long."),
+    "mgs5": ("MGS", "Malaysian Government Securities: ringgit bonds issued by the government. The 3-, 5- and 10-year figures are the yields investors earn for lending to the government for that long."),
+    "mgs10": ("MGS", "Malaysian Government Securities: ringgit bonds issued by the government. The 10-year yield is Malaysia's reference long-term interest rate."),
+    "ust2": ("UST", "US Treasuries: US government bonds. The 2-year yield tracks where markets expect the Fed's rate to go."),
+    "ust10": ("UST", "US Treasuries: US government bonds. The 10-year yield is the world's reference long-term interest rate; when it rises, money tends to flow toward the dollar."),
+    "spread_bp": ("MGS–UST spread", "The MGS 10-year yield minus the US 10-year yield, in basis points. Negative means US bonds pay more than Malaysian ones, which tends to pull money toward the dollar."),
+    "fedfunds": ("Fed funds rate", "The US Federal Reserve's policy interest rate, set as a range. The figure shown is the top of the range."),
+    "klci": ("FBM KLCI", "Bursa Malaysia's main index: the 30 largest listed companies by market value."),
+    "sp500": ("S&P 500", "An index of 500 large US companies, the usual measure of the US stock market."),
+    "nasdaq": ("Nasdaq", "The Nasdaq Composite, a US stock index heavy in technology companies."),
+    "dow": ("Dow", "The Dow Jones Industrial Average: 30 large US companies, weighted by share price."),
+    "brent": ("Brent", "The global benchmark price of crude oil, in US dollars per barrel."),
+    "wti": ("WTI", "West Texas Intermediate, the US benchmark crude oil price, in US dollars per barrel."),
+    "cpo_3m": ("CPO 3rd month", "Crude palm oil futures on Bursa Malaysia Derivatives for delivery three months ahead: the benchmark palm oil price, in ringgit per tonne."),
+    "gold": ("Gold", "The price of gold in US dollars per troy ounce."),
+    "nikkei": ("Nikkei 225", "Japan's best-known stock index: 225 large companies listed in Tokyo."),
+    "topix": ("TOPIX", "A broader Tokyo stock index covering most of the market's large and mid-sized companies."),
+    "usdjpy": ("USD/JPY", "How many yen one US dollar buys. Up means a weaker yen."),
+    "jgb10": ("JGB 10Y", "The yield on Japan's 10-year government bond."),
+    "boj": ("BoJ rate", "The Bank of Japan's policy interest rate."),
+    "hsi": ("Hang Seng", "Hong Kong's main stock index."),
+    "shcomp": ("Shanghai Composite", "An index of all stocks listed on the Shanghai Stock Exchange."),
+    "csi300": ("CSI 300", "An index of 300 large companies listed in Shanghai and Shenzhen."),
+    "usdcny": ("USD/CNY", "How many yuan one US dollar buys in mainland China."),
+    "lpr1y": ("LPR", "China's one-year loan prime rate, the benchmark for bank lending in China."),
+    "sti": ("STI", "Straits Times Index: Singapore's 30 largest listed companies."),
+    "usdsgd": ("USD/SGD", "How many Singapore dollars one US dollar buys."),
+    "sora": ("SORA", "Singapore Overnight Rate Average, published by the Monetary Authority of Singapore: Singapore's equivalent of MYOR."),
+    "stoxx600": ("Stoxx 600", "An index of 600 large and mid-sized European companies."),
+    "dax": ("DAX", "Germany's main stock index: 40 large companies."),
+    "ftse": ("FTSE 100", "The UK's main stock index: 100 large companies listed in London."),
+    "eurusd": ("EUR/USD", "How many US dollars one euro buys."),
+    "gbpusd": ("GBP/USD", "How many US dollars one British pound buys."),
+    "bund10": ("Bund 10Y", "The yield on Germany's 10-year government bond, Europe's reference long-term rate."),
+    "gilt10": ("Gilt 10Y", "The yield on the UK's 10-year government bond."),
+    "ecb": ("ECB rate", "The European Central Bank's deposit facility rate, its main policy rate."),
+    "boe": ("BoE rate", "The Bank of England's Bank Rate, its main policy rate."),
+}
+EXTRA_TERMS = [
+    ("Basis point (bp)", "One hundredth of a percentage point. A move from 3.78% to 3.73% is 5 basis points."),
+    ("Yield", "The return a bond pays, as a yearly percentage of its price. Bond prices and yields move in opposite directions."),
+    ("BNM 5pm middle rate", "Bank Negara Malaysia's published midpoint between banks' buying and selling rates at 5pm. An official reference, not a rate you can trade at."),
+    ("Interbank mid", "The midpoint price banks trade currencies at between themselves. Bank board rates for customers include a margin, so they differ."),
+    ("Reported", "A line taken from a named news report or official source, linked to the exact page that states it."),
+    ("Desk inference", "The desk's own reasoning about a cause or effect. Never presented as reporting."),
+    ("Moved", "A number whose change passed the desk's filter: currencies 0.5%, stock indices 1%, 10-year yields 5 to 6bp, gold 1.5%, palm oil 2%, oil 3%."),
+    ("Intraday", "A level taken while the market was still open, not at its close."),
+]
+
+# Which read owns each number: every page shows the owner's figure, so the same number never differs between pages.
+OWNER = {}
+for _k in ("usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "opr", "myor", "klibor3m",
+           "mgs3", "mgs5", "mgs10", "spread_bp", "klci", "cpo_3m", "brent", "gold"):
+    OWNER[_k] = "my"
+for _k in ("sp500", "nasdaq", "dow", "ust2", "ust10", "dxy", "fedfunds", "wti"):
+    OWNER[_k] = "us"
+for _k in ("nikkei", "topix", "usdjpy", "jgb10", "boj"):
+    OWNER[_k] = "jp"
+for _k in ("hsi", "shcomp", "csi300", "usdcny", "lpr1y"):
+    OWNER[_k] = "cn"
+for _k in ("sti", "usdsgd", "sora"):
+    OWNER[_k] = "sg"
+for _k in ("stoxx600", "dax", "ftse", "eurusd", "gbpusd", "bund10", "gilt10", "ecb", "boe"):
+    OWNER[_k] = "eu"
+
 
 # ---------- data ----------
 def load_dir(name):
@@ -77,6 +155,31 @@ for e in load_dir("editions"):
 for r in load_dir("reads"):
     if isinstance(r.get("date"), str) and r.get("area") in READS:
         READS[r["area"]][r["date"]] = r
+def owner_row(key, date):
+    """The owning read's row for this number on this date, if it has one."""
+    aid = OWNER.get(key)
+    rd = READS.get(aid, {}).get(date) if aid else None
+    if not rd:
+        return None
+    for grp in ("fx", "rates", "markets", "numbers"):
+        for r in rd.get(grp) or []:
+            if isinstance(r, dict) and r.get("key") == key and is_num(r.get("level")):
+                return r
+    return None
+
+
+def canon(rows, date, aid):
+    out = []
+    for r in rows:
+        k = r.get("key")
+        if OWNER.get(k) and OWNER[k] != aid:
+            o = owner_row(k, date)
+            if o:
+                r = dict(o, label=s(r.get("label")) or s(o.get("label")))
+        out.append(r)
+    return out
+
+
 CLOSES = sorted((c for c in load_dir("closes") if isinstance(c.get("date"), str)), key=lambda c: c["date"])
 
 
@@ -180,6 +283,8 @@ def moved(r):
 
 
 def board_row(r, idp):
+    k0 = s(r.get("key"))
+    g = GLOSS.get(k0)
     k = s(r.get("key"))
     dp = int(r["dp"]) if is_num(r.get("dp")) else DP.get(k, 2)
     unit = s(r.get("unit"))
@@ -202,9 +307,13 @@ def board_row(r, idp):
     src_html = f'<a href="{E(u)}" target="_blank" rel="noopener">{src}</a>' if u else src
     as_of = (E(s(r.get("as_of"))) + " · ") if s(r.get("as_of")) else ""
     rid = E(idp + "".join(ch for ch in k if ch.isalnum() or ch in "_-"))
-    return (f'<div class="dd-row" id="{rid}" data-dir="{d}"><div class="dd-r-label">{E(s(r.get("label")) or k)}{flag}</div>'
+    intra = '<span class="dd-intra">intraday</span>' if "intraday" in s(r.get("as_of")).lower() else ""
+    name = E(s(r.get("label")) or k)
+    label = (f'<button type="button" class="dd-term" aria-expanded="false" aria-controls="def-{rid}">{name}</button>' if g else name)
+    defn = f'<p class="dd-def" id="def-{rid}" hidden>{E(g[1])}</p>' if g else ""
+    return (f'<div class="dd-row" id="{rid}" data-dir="{d}"><div class="dd-r-label">{label}{flag}{intra}</div>'
             f'<div class="dd-r-level">{E(lv + unit) if lv is not None else "—"}</div><div class="dd-r-chg">{E(chg)}</div>'
-            f'<div class="dd-r-meta">{as_of}{src_html}</div><div class="dd-r-spark"></div></div>')
+            f'<div class="dd-r-meta">{as_of}{src_html}</div><div class="dd-r-spark"></div>{defn}</div>')
 
 
 def board_foot(note, gaps):
@@ -291,7 +400,7 @@ def malaysia_body(ed, prefix):
                    sub + (f'<ol class="dd-chain">{lis}</ol>' if lis else '<p class="dd-note">No chain in this read.</p>'))
     groups = ""
     for key, title in (("fx", "Ringgit board · per unit unless stated"), ("rates", "Rates"), ("markets", "Markets")):
-        rows = [r for r in arr(ed.get(key)) if isinstance(r, dict)]
+        rows = canon([r for r in arr(ed.get(key)) if isinstance(r, dict)], s(ed.get("date")), "my")
         if rows:
             groups += f'<div class="dd-bgroup" id="board-{key}"><h3>{E(title)}</h3>' + "".join(board_row(r, "row-") for r in rows) + "</div>"
     if groups:
@@ -332,10 +441,10 @@ def area_body(aid, rd, prefix):
     pts = points(rd.get("points"), prefix, on_global=(aid == "gl"))
     out += section("worth-reading", "The day, worldwide" if aid == "gl" else "Worth reading", s(rd.get("headline")) or None,
                    pts or '<p class="dd-note">A quiet session. Nothing here is worth your time today.</p>')
-    rows = [r for r in arr(rd.get("numbers")) if isinstance(r, dict)]
+    rows = canon([r for r in arr(rd.get("numbers")) if isinstance(r, dict)], s(rd.get("date")), aid)
     if rows:
         out += section("area-numbers", "The numbers", None,
-                       '<div class="dd-board"><div class="dd-bgroup"><h3>Closes and rates</h3>' + "".join(board_row(r, "an-") for r in rows)
+                       '<div class="dd-board"><div class="dd-bgroup"><h3>Closing levels and rates</h3>' + "".join(board_row(r, "an-") for r in rows)
                        + "</div>" + board_foot(rd.get("numbers_note"), rd.get("gaps")) + "</div>")
     devs = ""
     for d in arr(rd.get("developments")):
@@ -411,7 +520,10 @@ def closes_json():
     return json.dumps(out).replace("<", "\\u003c")
 
 
-def shell(path, title, desc, body, active, kicker, h1, covers="", live=False):
+THEME_JS = "try{if(localStorage.getItem('dd-theme')==='light')document.documentElement.setAttribute('data-dd-theme','light')}catch(e){}"
+
+
+def shell(path, title, desc, body, active, kicker, h1, covers="", live=False, read_date="", kind=""):
     depth = path.count("/")
     prefix = "../" * depth
     canonical = (f"https://{DOMAIN}/" + path.replace("index.html", "")) if DOMAIN else ""
@@ -426,30 +538,31 @@ def shell(path, title, desc, body, active, kicker, h1, covers="", live=False):
             + '<meta property="og:type" content="article">\n'
             + (f'<meta property="og:url" content="{E(canonical)}">\n' if canonical else "")
             + '<meta name="theme-color" content="#121214">\n'
-            + '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-            + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">\n'
+            + f'<link rel="preload" href="{prefix}assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
+            + f'<link rel="stylesheet" href="{prefix}assets/fonts.css">\n'
+            + f'<link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">\n'
             + f'<link rel="stylesheet" href="{prefix}assets/style.css">\n'
-            + "<script>try{if(localStorage.getItem('dd-theme')==='light')document.documentElement.setAttribute('data-dd-theme','light')}catch(e){}</script>\n")
+            + f"<script>{THEME_JS}</script>\n")
     content = f"""<header class="dd-bar" id="top">
   <div class="dd-wrapx dd-bar-row">
     <a class="dd-brand" href="{E(href(prefix, ''))}">{E(SITE)} <small>MY</small></a>
     <nav class="dd-bar-links" aria-label="Site">
       <a href="{E(href(prefix, 'archive/'))}"{nav_arch}>Archive</a>
       <a href="{E(href(prefix, 'about/'))}"{nav_about}>How it works</a>
-      <a class="dd-cta" href="{E(href(prefix, ''))}#newsletter">Get the newsletter</a>
+      <a href="{E(href(prefix, 'glossary/'))}"{' aria-current="page"' if active == 'glossary' else ''}>Glossary</a>
     </nav>
   </div>
   <div class="dd-wrapx"><nav class="dd-areas" aria-label="Areas">{tabs}</nav></div>
   <div class="dd-progress" aria-hidden="true"><span id="progress-bar"></span></div>
 </header>
 <div class="dd-wrap">
-  <div class="dd-mast" id="masthead">
+  <section class="dd-mast" id="masthead" aria-label="About this read">
     <div class="dd-mast-top"><p class="dd-kicker">{E(kicker)}</p><button type="button" class="dd-theme" id="theme-toggle">Light mode</button></div>
     <h1>{E(h1)}</h1>
     {f'<p class="dd-covers">{covers}</p>' if covers else ''}
-  </div>
+  </section>
 {LIVE_HTML if live else ''}
-  <main class="dd-main">
+  <main class="dd-main"{f' data-read-date="{E(read_date)}" data-kind="{E(kind)}" data-latest-href="{E(href(prefix, area_dir(active) if active in AREA else ""))}"' if read_date else ''}>
 {body}
   </main>
   <footer class="dd-how" id="how">
@@ -513,7 +626,8 @@ def build():
             body = malaysia_body(rd, prefix) if aid == "my" else area_body(aid, rd, prefix)
             body += earlier(aid, dates, date, prefix)
             title = f"{name} market read, {day(date, True)} · {SITE}"
-            write(path, shell(path, title, s(rd.get("headline")) or TAGLINE, body, aid, f"{name} read", day(date, True), covers_line(aid, rd)))
+            write(path, shell(path, title, s(rd.get("headline")) or TAGLINE, body, aid, f"{name} read", day(date, True), covers_line(aid, rd),
+                              read_date=date, kind="archive"))
             urls.append(read_dir(aid, date))
         if aid != "gl":
             path = area_dir(aid) + "index.html"
@@ -522,7 +636,8 @@ def build():
                 rd = latest[aid]
                 body = (malaysia_body(rd, prefix) if aid == "my" else area_body(aid, rd, prefix)) + earlier(aid, dates, dates[0], prefix)
                 write(path, shell(path, f"{name} market read · {SITE}", s(rd.get("headline")) or TAGLINE, body, aid,
-                                  f"{name} read · latest", day(dates[0], True), covers_line(aid, rd), live=True))
+                                  f"{name} read · latest", day(dates[0], True), covers_line(aid, rd), live=True,
+                                  read_date=dates[0], kind="latest"))
             else:
                 write(path, shell(path, f"{name} market read · {SITE}", TAGLINE, '<p class="dd-state">No read yet.</p>', aid, f"{name} read", name))
             urls.append(area_dir(aid))
@@ -541,10 +656,10 @@ def build():
         body += area_body("gl", gl, "")
     if today:
         body += section("by-area", "Today, by area", "Each market in one line", f'<ul class="dd-today">{today}</ul>')
-    body += newsletter_box()
     write("index.html", shell("index.html", f"{SITE}: the world's markets, summarised for Malaysia",
                               s(gl.get("headline")) if gl else TAGLINE, body, "gl", "Global read · Malaysia time",
-                              day(gl["date"], True) if gl else SITE, covers_line("gl", gl) if gl else E(TAGLINE), live=True))
+                              day(gl["date"], True) if gl else SITE, covers_line("gl", gl) if gl else E(TAGLINE), live=True,
+                              read_date=gl["date"] if gl else "", kind="latest"))
     urls.insert(0, "")
 
     # archive
@@ -578,6 +693,18 @@ def build():
                                     section("method", "How it works", "Sources, rules and corrections", about), "about", "How it works", "How Daily Desk works"))
     urls.append("about/")
 
+    items = sorted([(v[0], v[1]) for v in GLOSS.values()] + EXTRA_TERMS, key=lambda x: x[0].lower())
+    seen, dl = set(), ""
+    for term, text in items:
+        if term in seen:
+            continue
+        seen.add(term)
+        dl += f"<div><dt>{E(term)}</dt><dd>{E(text)}</dd></div>"
+    write("glossary/index.html", shell("glossary/index.html", f"Glossary \u00b7 {SITE}", "Plain-language definitions of the terms used in Daily Desk.",
+                                       section("terms", "Glossary", "The terms on this site, in plain words", f'<dl class="dd-gloss">{dl}</dl>'),
+                                       "glossary", "Glossary", "What the terms mean"))
+    urls.append("glossary/")
+
     write("404.html", shell("404.html", f"Not found · {SITE}", TAGLINE,
                             f'<p class="dd-state">That page doesn\'t exist. <a href="{E(href("", ""))}">Go to today\'s read</a>.</p>', "", "Not found", "Page not found"))
 
@@ -590,6 +717,24 @@ def build():
     else:
         open(os.path.join(OUT, "robots.txt"), "w").write("User-agent: *\nAllow: /\n")
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
+    if not PREVIEW:
+        import base64, hashlib
+        h = base64.b64encode(hashlib.sha256(THEME_JS.encode()).digest()).decode()
+        csp = ("default-src 'self'; script-src 'self' 'sha256-" + h + "' https://static.cloudflareinsights.com; style-src 'self'; "
+               "font-src 'self'; img-src 'self' data:; connect-src 'self' https://www.alphavantage.co https://cloudflareinsights.com; "
+               "base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'")
+        open(os.path.join(OUT, "_headers"), "w").write(
+            "/*\n"
+            f"  Content-Security-Policy: {csp}\n"
+            "  Strict-Transport-Security: max-age=31536000\n"
+            "  X-Content-Type-Options: nosniff\n"
+            "  X-Frame-Options: DENY\n"
+            "  Referrer-Policy: strict-origin-when-cross-origin\n"
+            "  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()\n"
+            "/assets/fonts/*\n"
+            "  Cache-Control: public, max-age=31536000, immutable\n"
+            "/assets/*\n"
+            "  Cache-Control: public, max-age=3600\n")
     print(f"Built {len(PAGES)} pages into {OUT}" + ("" if DOMAIN else " (no domain set: sitemap and CNAME skipped)"))
 
 
