@@ -17,20 +17,21 @@ Tell the story in that order: each market trades on what happened while it was s
 DATE DISCIPLINE: web search often returns the same date from a previous year, and index pages (Bernama especially) can come back cached and weeks old. Confirm the date AND year of every article. If a number can't be confirmed for the right date, leave it null and list it in "gaps". Never guess.
 
 ## 2. Sources
-Allowed: Bernama (bernama.com/en/market), The Star, The Edge Malaysia, NST, FMT, Business Today, Malay Mail, BNM (bnm.gov.my), DOSM, Bursa Malaysia announcements, Securities Commission, AP, Reuters, CNBC, FT, WSJ, Bloomberg, and primary data (BLS, BEA, Federal Reserve, US Treasury, SEC filings).
+Allowed: Bernama (bernama.com/en/market), The Star, The Edge Malaysia, NST, FMT, Business Today, Malay Mail, BNM (bnm.gov.my and its Open API at api.bnm.gov.my), DOSM, Bursa Malaysia announcements, Securities Commission, AP, Reuters, CNBC, FT, WSJ, Bloomberg, and primary data (BLS, BEA, Federal Reserve, US Treasury, SEC filings).
 AP LINKS: link the apnews.com page for an AP story. Use a syndicated copy (a local TV or newspaper site carrying the same AP story) only if apnews.com can't be read, and then set source to "AP (via <site>)".
 Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs (e.g. Rakuten Trade), forums, or anything with no named reporter or agency.
-Alpha Vantage connector (ToolSearch "+Alpha_Vantage"): free key, 25 calls/day, shared with the US Open Brief (which uses 5). Use AT MOST 12 calls, ONE AT A TIME, never in parallel. On rate_limit wait a few seconds and retry once, then fall back to reported figures. Useful: TREASURY_YIELD daily 2year and 10year (read only the latest rows), BRENT daily, GOLD_SILVER_SPOT GOLD, GLOBAL_QUOTE SPY (day's high/low vs close = the session's shape), CURRENCY_EXCHANGE_RATE for a cross BNM doesn't give. Label every Alpha Vantage figure: source "Alpha Vantage", url null, and its time in as_of.
+Alpha Vantage connector (ToolSearch "+Alpha_Vantage"): free key, 25 calls/day, shared with the US Open Brief (which uses 5). Use AT MOST 12 calls, ONE AT A TIME, never in parallel. On rate_limit wait a few seconds and retry once, then fall back to reported figures. Useful: TREASURY_YIELD daily 2year and 10year (read only the latest rows), BRENT daily, GOLD_SILVER_SPOT GOLD, GLOBAL_QUOTE SPY (day's high/low vs close = the session's shape). Label every Alpha Vantage figure: source "Alpha Vantage", url null, and its time in as_of.
 
 ## 3. Gather
 A) RINGGIT AND CROSSES (the core for a retail treasury desk)
-- USD/MYR 6pm close on bursa_date and the prior 6pm close: Bernama / The Star / NST / FMT ringgit-close story. That story usually also gives the ringgit against SGD, EUR, GBP, JPY and often AUD and CNY.
-- Crosses: BNM's exchange-rate page https://www.bnm.gov.my/exchange-rates for bursa_date (the 1700 session middle rates if offered). Record units exactly as BNM quotes them (some currencies are per 100 units). If BNM can't be read for the right date, use the ringgit-close story; otherwise null + gaps.
-- Rows, in this order when confirmed: USD/MYR, SGD/MYR, CNY/MYR, AUD/MYR, EUR/MYR, GBP/MYR, JPY/MYR (per 100), then the dollar index (DXY) from the AP/Reuters/CNBC US close story.
-- chg = level minus the prior level on the same basis; pct = chg / prior × 100, 2dp. Compute only when both levels are confirmed on the same basis (e.g. both 6pm closes).
+- OFFICIAL RATES FIRST. BNM's Open API gives the 5pm middle rate for each currency. Call it with Bash: curl -s -H 'Accept: application/vnd.BNM.API.v1+json' 'https://api.bnm.gov.my/public/exchange-rate/<CODE>/date/<YYYY-MM-DD>?session=1700&quote=rm' for USD, SGD, CNY, AUD, EUR, GBP and JPY. Read data.rate.middle_rate and data.unit (JPY is quoted per 100 units; check unit) and confirm data.rate.date equals the date you asked for. Fetch bursa_date and the previous trading day to compute chg. These board rows use source "BNM", url "https://www.bnm.gov.my/exchange-rates", as_of "<D Mon>, BNM 5pm middle".
+- The ringgit-close story (Bernama / The Star / NST / FMT, 6pm close) supplies the narrative and the reported reasons. Quote its 6pm level in the chain if useful, but the board uses BNM's 5pm rates so every number is on one official basis.
+- If the API fails for a currency, leave that row null and list it in gaps.
+- Rows, in this order: USD/MYR, SGD/MYR, CNY/MYR, AUD/MYR, EUR/MYR, GBP/MYR, JPY/MYR (per 100), then the dollar index (DXY) from the AP/Reuters/CNBC US close story.
+- chg = level minus the prior level on the same basis; pct = chg / prior × 100, 2dp.
 B) RATES
-- OPR: BNM; put the date of the last MPC decision in as_of.
-- MYOR (Malaysia Overnight Rate): BNM's published MYOR for bursa_date; confirm the date. It is the reference rate the market is moving to, so it leads the money-market rates: key "myor", label "MYOR (overnight)", unit "%", chg_bp.
+- OPR: BNM's Open API, curl -s -H 'Accept: application/vnd.BNM.API.v1+json' https://api.bnm.gov.my/public/opr gives new_opr_level and the date of the last MPC decision (put that date in as_of). Link the url of BNM's Monetary Policy Statement for that decision.
+- MYOR (Malaysia Overnight Rate): BNM's published MYOR for bursa_date from BNM's website; confirm the date. (The API's /public/interest-rate "interbank overnight" figure is a cross-check, not MYOR; never label it MYOR.) It is the reference rate the market is moving to, so it leads the money-market rates: key "myor", label "MYOR (overnight)", unit "%", chg_bp.
 - KLIBOR is being phased out in favour of MYOR. Include KLIBOR 3M only if BNM or a named outlet still publishes it for bursa_date, as key "klibor3m", label "KLIBOR 3M (legacy)", placed after MYOR. Never lead with it.
 - MGS 3Y, 5Y, 10Y: https://www.bnm.gov.my/government-securities-yield; confirm the trading date is bursa_date; chg in bp.
 - UST 2Y and 10Y at the US close: AP / Reuters / CNBC, or Alpha Vantage TREASURY_YIELD (labelled).
@@ -61,7 +62,7 @@ Plain-text strings, https-only urls, numbers as JSON numbers, null when unconfir
  "covers": e.g. "Bursa Thu 26 Nov close · US Wed 25 Nov close (Thu closed for Thanksgiving)",
  "headline": "<one sentence: the day in one line>",
  "one_thing": {"title": "<short plain title>", "steps": [{"node": "<market + day, e.g. Bursa Thu, Europe Thu, US Thu, Ringgit, MGS, or So what>", "fact": "<one sentence with the specific number>", "source": "<outlet>", "url": "<exact page>", "kind": "reported" | "inference"}]},
- "fx": [{"key": "usdmyr|sgdmyr|cnymyr|audmyr|eurmyr|gbpmyr|jpymyr100|dxy", "label": "USD/MYR | SGD/MYR | CNY/MYR | AUD/MYR | EUR/MYR | GBP/MYR | JPY/MYR (per 100) | Dollar index (DXY)", "level": n, "chg": n, "pct": n, "as_of": "<e.g. 26 Nov, 6pm close | 26 Nov, BNM 5pm middle>", "source": "", "url": ""}],
+ "fx": [{"key": "usdmyr|sgdmyr|cnymyr|audmyr|eurmyr|gbpmyr|jpymyr100|dxy", "label": "USD/MYR | SGD/MYR | CNY/MYR | AUD/MYR | EUR/MYR | GBP/MYR | JPY/MYR (per 100) | Dollar index (DXY)", "level": n, "chg": n, "pct": n, "as_of": "<e.g. 26 Nov, BNM 5pm middle>", "source": "", "url": ""}],
  "rates": [{"key": "opr|myor|klibor3m|mgs3|mgs5|mgs10|ust2|ust10|spread_bp", "label": "OPR | MYOR (overnight) | KLIBOR 3M (legacy) | MGS 3Y | MGS 5Y | MGS 10Y | UST 2Y | UST 10Y | MGS–UST 10Y spread", "level": n, "unit": "%" or "bp", "chg_bp": n, "as_of": "", "source": "", "url": ""}],
  "markets": [{"key": "klci|sp500|brent|cpo_3m|gold", "label": "FBM KLCI | S&P 500 | Brent (US$/bbl) | CPO 3rd month (RM/t) | Gold (US$/oz)", "level": n, "chg": n, "pct": n, "as_of": "", "source": "", "url": ""}],
  "numbers_note": "<one sentence, desk inference: which numbers passed the move filter and what that says; if none, say it was a quiet session>",
@@ -83,7 +84,7 @@ RULES FOR EVERY LINE
 
 ## 5. The closes row (ArtifactData collection "closes", doc_id = bursa_date)
 {"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "myor", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "note": "Morning Read <today>"}
-Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (6pm ringgit closes, BNM 5pm middle rates, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. A figure taken at another time (a BNM 9am middle rate, a live spot price) may appear in the edition with its as_of label but must be null here. Keep USD/MYR on the 6pm-close basis every day so the series stays consistent. The US-side numbers belong to the US session that ended overnight; that is expected.
+Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (BNM 5pm middle rates for every ringgit rate, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. Add "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)". A figure taken at another time (a 6pm close, a BNM 9am rate, a live spot price) may appear in the edition with its label but must not go in this row's ringgit fields. The US-side numbers belong to the US session that ended overnight; that is expected.
 
 ## 6. Write and confirm
 Write both documents in ONE ArtifactData "batch" of two "set" writes (pin if_version on any document that already exists). Then "get" editions/<today> once and confirm it saved.
