@@ -1,0 +1,550 @@
+{
+  "bursa_date": "2026-11-26",
+  "calendar": [
+    {
+      "event": "US stock market closes early (1pm ET) after Thanksgiving; bond market closes 03:00 MYT",
+      "region": "US",
+      "source": "AP",
+      "time_myt": "Sat 28 Nov, 02:00",
+      "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237",
+      "why": "First full US read since Wednesday's AI swing; a renewed tech sell-off would hit Asia and Bursa tech on Monday, a calm session supports the yield-led bounce."
+    },
+    {
+      "event": "DOSM: Producer Price Index (local production), October 2026",
+      "region": "MY",
+      "source": "DOSM",
+      "time_myt": "Fri 27 Nov, time not stated",
+      "url": "https://dosm.gov.my/portal-main/arc",
+      "why": "BNM flagged higher energy costs lifting inflation; a jump in producer prices would feed talk of an OPR hike in 2027 and push MGS yields up."
+    },
+    {
+      "event": "DOSM: Malaysia External Trade Indices and trade by state, October 2026",
+      "region": "MY",
+      "source": "DOSM",
+      "time_myt": "Fri 27 Nov, time not stated",
+      "url": "https://dosm.gov.my/portal-main/arc",
+      "why": "Export volumes and prices matter more now that the US has proposed tariffs on Malaysian goods with ICT and autos named."
+    },
+    {
+      "event": "BNM: analytical accounts of the banking sector and central government operations, October 2026",
+      "region": "MY",
+      "source": "BNM",
+      "time_myt": "Fri 27 Nov, time not stated",
+      "url": "https://www.bnm.gov.my/advance-release-calendar",
+      "why": "Background for loan and deposit growth; rarely moves the ringgit."
+    },
+    {
+      "event": "BNM reserves template (Oct) and DOSM Business Tendency Statistics Q4 2026",
+      "region": "MY",
+      "source": "DOSM",
+      "time_myt": "Mon 30 Nov, time not stated",
+      "url": "https://dosm.gov.my/portal-main/arc",
+      "why": "Business sentiment is the first survey read since the tariff proposal; a sharp drop would weigh on Bursa domestic plays."
+    },
+    {
+      "event": "FOMC meeting (8–9 Dec ET)",
+      "region": "US",
+      "source": "Bernama",
+      "time_myt": "Wed 9 – Thu 10 Dec",
+      "url": "https://bernama.com/en/market/news.php?id=2636293",
+      "why": "AP says the Fed is likely to raise rates in December; a hike widens the US-Malaysia rate gap, the classic pressure point for USD/MYR."
+    },
+    {
+      "event": "USTR deadline for written comments on the Section 301 tariff proposal; hearings from 25 Jan",
+      "region": "US",
+      "source": "Malay Mail (Bernama)",
+      "time_myt": "Tue 5 Jan 2027",
+      "url": "https://www.malaymail.com/news/malaysia/2026/11/26/us-proposes-tariffs-of-up-to-18pc-on-malaysian-goods-with-25pc-on-the-table/244776",
+      "why": "Any change to Malaysia's proposed rate (up to 18%, or 25%) would reprice E&E exporters and the ringgit."
+    }
+  ],
+  "covers": "Bursa Thu 26 Nov close · Europe Thu 26 Nov (early trade only) · US Wed 25 Nov close (Thu closed for Thanksgiving; Fri half-day)",
+  "date": "2026-11-27",
+  "desk": {
+    "check": [
+      "The bank's own board rates for SGD, EUR and USD today, not the Bernama 6pm interbank close",
+      "BNM's latest middle rate for the session the customer is asking about",
+      "Tonight's US half-day session (stocks shut 2am Sat MYT) and any USTR or MITI tariff update",
+      "Fixed-deposit and foreign-currency deposit board rates; OPR is 2.75%, held on 5 Nov"
+    ],
+    "explain": "Against the US dollar the ringgit moved from 4.1170 to 4.1135 at the 6pm close, a 0.09% move, which is small; Bank Muamalat's economist put it down mainly to technical factors. The bigger overnight force was the US dollar itself: the US 10-year yield slipped to 4.87% from 4.91% and the dollar index eased about 0.10%. The Singapore dollar and euro gained more against the US dollar than the ringgit did, so in ringgit terms SGD rose to 3.1878 from 3.1858 and EUR to 4.5133 from 4.5036; a cross rate is just two US dollar rates divided. On tariffs, the US proposal is up to 18% with 25% possible, MITI calls the rate indicative, and public hearings only start on 25 January 2027, so nothing is final yet.",
+    "question": "The US just proposed new tariffs on Malaysia, so why did the ringgit strengthen against the US dollar yesterday but weaken against the Singapore dollar and the euro?"
+  },
+  "fx": [
+    {
+      "as_of": "26 Nov, 6pm close",
+      "chg": -0.0035,
+      "key": "usdmyr",
+      "label": "USD/MYR",
+      "level": 4.1135,
+      "pct": -0.09,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "as_of": "26 Nov, 6pm close",
+      "chg": 0.002,
+      "key": "sgdmyr",
+      "label": "SGD/MYR",
+      "level": 3.1878,
+      "pct": 0.06,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "as_of": "26 Nov, BNM 9am middle (vs 25 Nov 9am)",
+      "chg": -0.0001,
+      "key": "cnymyr",
+      "label": "CNY/MYR",
+      "level": 0.6166,
+      "pct": -0.02,
+      "source": "BNM",
+      "url": "https://www.bnm.gov.my/exchange-rates"
+    },
+    {
+      "as_of": "26 Nov, BNM 9am middle (vs 25 Nov 9am)",
+      "chg": -0.0023,
+      "key": "audmyr",
+      "label": "AUD/MYR",
+      "level": 2.7329,
+      "pct": -0.08,
+      "source": "BNM",
+      "url": "https://www.bnm.gov.my/exchange-rates"
+    },
+    {
+      "as_of": "26 Nov, 6pm close",
+      "chg": 0.0097,
+      "key": "eurmyr",
+      "label": "EUR/MYR",
+      "level": 4.5133,
+      "pct": 0.22,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "as_of": "26 Nov, 6pm close",
+      "chg": 0.0168,
+      "key": "gbpmyr",
+      "label": "GBP/MYR",
+      "level": 5.3924,
+      "pct": 0.31,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "as_of": "26 Nov, 6pm close",
+      "chg": 0.0014,
+      "key": "jpymyr100",
+      "label": "JPY/MYR (per 100)",
+      "level": 2.5834,
+      "pct": 0.05,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "as_of": "After US 25 Nov close, per Bernama 26 Nov 8am report",
+      "chg": null,
+      "key": "dxy",
+      "label": "Dollar index (DXY)",
+      "level": 103.708,
+      "pct": -0.1,
+      "source": "Malay Mail (Bernama)",
+      "url": "https://www.malaymail.com/news/money/2026/11/26/ringgit-firms-up-against-dollar-softens-against-euro-and-pound/244815"
+    }
+  ],
+  "gaps": [
+    "Europe Thursday closing levels: no allowed-source close found; AP gave only early-trade moves.",
+    "BNM 5pm (1700) middle rates could not be read (page served the 9am session only), so CNY/MYR and AUD/MYR use BNM 9am middle rates; the other crosses use Bernama 6pm closes.",
+    "Bernama's ringgit-close story did not quote CNY or AUD.",
+    "Brent: AP stories give inconsistent levels ($94.61 Wednesday settle; $91.09 in Thursday's Asia story; $96.29 in Friday's), probably different contract months; the board uses Wednesday's settle and leaves the point change null.",
+    "Gold: no US-close price found from an allowed outlet; the board shows Alpha Vantage live spot at 10:42 MYT Friday, so no change is computed.",
+    "UST 2Y and DXY come from Bernama's 8am MYT Thursday report (via Malay Mail), not an AP/Reuters close story; Bernama put the 10Y at 4.86% (-7bp) vs AP's 4.87% (-4bp), and the board uses AP for the 10Y.",
+    "Alpha Vantage TREASURY_YIELD's latest daily row was 24 Nov, so it was not used.",
+    "Foreign fund flows for Thursday 26 Nov were not reported in the sources read (The Star reported foreigners net bought RM34mil on Wednesday).",
+    "The Star quoted the ringgit at 4.1160 at its 5pm-ish close; the board keeps Bernama's 6pm basis (4.1135)."
+  ],
+  "headline": "Wall Street clawed back most of an AI-led rout and US yields eased, giving Bursa a heavyweight-led bounce and the ringgit a small gain, while a US Section 301 tariff proposal of up to 18% on Malaysian goods now hangs over the market.",
+  "learn": {
+    "answer": "EUR/USD = 4.5133 / 4.1135, about 1.0972. With EUR/MYR up and USD/MYR down, the euro must have strengthened against the US dollar.",
+    "body": "Every ringgit cross is built from two US dollar rates. On Thursday USD/MYR fell to 4.1135 from 4.1170, so the ringgit gained 0.09% on the dollar. SGD/MYR rose to 3.1878 from 3.1858, which means USD/SGD (4.1135 / 3.1878) fell to about 1.2904 from 1.2923, so the Singapore dollar gained about 0.15% on the US dollar, more than the ringgit did. The same arithmetic gives EUR/USD of about 1.0972 (4.5133 / 4.1135), up from about 1.0939. So 'the ringgit strengthened' is only true against the dollar; a customer holding SGD or EUR saw those balances worth more in ringgit.",
+    "concept": "Cross rates: how the ringgit can rise and fall on the same day",
+    "question": "If USD/MYR is 4.1135 and EUR/MYR is 4.5133, what EUR/USD rate do they imply, and which way did the euro move against the dollar if EUR/MYR rose while USD/MYR fell?"
+  },
+  "markets": [
+    {
+      "as_of": "26 Nov, 5pm close (range 1,563.15–1,584.96)",
+      "chg": 8.69,
+      "key": "klci",
+      "label": "FBM KLCI",
+      "level": 1570.98,
+      "pct": 0.56,
+      "source": "Bernama",
+      "url": "https://www.bernama.com/tv/news.php?id=2639913"
+    },
+    {
+      "as_of": "US 25 Nov close (intraday low -3.2%)",
+      "chg": -18.31,
+      "key": "sp500",
+      "label": "S&P 500",
+      "level": 7182.78,
+      "pct": -0.25,
+      "source": "AP",
+      "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+    },
+    {
+      "as_of": "25 Nov settle",
+      "chg": null,
+      "key": "brent",
+      "label": "Brent (US$/bbl)",
+      "level": 94.61,
+      "pct": 3.5,
+      "source": "AP",
+      "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+    },
+    {
+      "as_of": "26 Nov close, Feb 2027 contract",
+      "chg": 63,
+      "key": "cpo_3m",
+      "label": "CPO 3rd month (RM/t)",
+      "level": 4292,
+      "pct": 1.49,
+      "source": "Bernama",
+      "url": "https://bernama.com/en/news.php?id=2640057"
+    },
+    {
+      "as_of": "27 Nov, 10:42 MYT live spot",
+      "chg": null,
+      "key": "gold",
+      "label": "Gold (US$/oz)",
+      "level": 3623.09,
+      "pct": null,
+      "source": "Alpha Vantage",
+      "url": null
+    }
+  ],
+  "numbers_note": "Only Brent (+3.5%) cleared its move filter outright, and the US 10-year eased 4bp by AP's count (7bp by Bernama's); USD/MYR -0.09%, MGS 10Y -1bp and KLCI +0.56% are small, and the KLCI's fade from 1,584.96 on negative breadth says the bounce was thin.",
+  "one_thing": {
+    "steps": [
+      {
+        "fact": "The S&P 500 fell as much as 3.2% and the Nasdaq as much as 4.6% intraday before closing down 0.3% at 7,182.78 and 0.6% at 23,585.80, with Nvidia down more than 9% at one point and closing 3.9% lower.",
+        "kind": "reported",
+        "node": "US Wed",
+        "source": "AP",
+        "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+      },
+      {
+        "fact": "The 10-year Treasury yield eased to 4.87% from 4.91% late Tuesday even though October PCE inflation rose to 3.8% year on year from 3.6%.",
+        "kind": "reported",
+        "node": "US Wed",
+        "source": "AP",
+        "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+      },
+      {
+        "fact": "Asia rebounded: Hang Seng +1.2% to 22,226.88, Nikkei 225 +0.9% to 57,499.16, Taiex +2.5%, and Kospi +0.3% after a 6.2% drop the day before.",
+        "kind": "reported",
+        "node": "Asia Thu",
+        "source": "AP",
+        "url": "https://www.bnnbloomberg.ca/markets/2026/11/26/world-shares-push-higher-while-markets-in-us-will-be-closed-for-thanksgiving/"
+      },
+      {
+        "fact": "The FBM KLCI rose 8.69 points to 1,570.98 after touching 1,584.96 mid-morning, with Rakuten Trade's Thong Pak Leng crediting easing US Treasury yields, but breadth was negative at 703 losers to 412 gainers.",
+        "kind": "reported",
+        "node": "Bursa Thu",
+        "source": "Bernama",
+        "url": "https://www.bernama.com/tv/news.php?id=2639913"
+      },
+      {
+        "fact": "The ringgit firmed to 4.1135 per US dollar at 6pm from 4.1170, which Bank Muamalat's Mohd Afzanizam Abdul Rashid put down mainly to technical factors, while it slipped against the euro, pound and Singapore dollar.",
+        "kind": "reported",
+        "node": "Ringgit",
+        "source": "Bernama",
+        "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+      },
+      {
+        "fact": "European shares rallied in early trade, DAX +1.9% to 25,180.12, CAC 40 +1.8% and FTSE 100 +1.6%; closing levels were not confirmed.",
+        "kind": "reported",
+        "node": "Europe Thu",
+        "source": "AP",
+        "url": "https://www.whec.com/ap-top-news/global-stocks-rise-and-tech-shares-rebound-as-us-closes-for-thanksgiving/"
+      },
+      {
+        "fact": "The overnight lesson is transmission through yields: a 4bp dip in US 10-year yields lifted Asian risk and nudged USD/MYR down 0.09%, but the KLCI gave back about 14 points from its high and the FBM Emas fell, so this was a bank-and-consumer heavyweight bounce, not a broad turn; with MGS 10Y at 3.78% against UST 4.87%, the -109bp gap means the ringgit still needs a softer dollar rather than carry to gain.",
+        "kind": "inference",
+        "node": "So what",
+        "source": "Desk inference",
+        "url": null
+      }
+    ],
+    "title": "Yields, not stocks, carried the relay to KL"
+  },
+  "published_at": "2026-11-27T10:48:10+08:00",
+  "rates": [
+    {
+      "as_of": "MPC 5 Nov 2026 (held)",
+      "chg_bp": 0,
+      "key": "opr",
+      "label": "OPR",
+      "level": 2.75,
+      "source": "BNM",
+      "unit": "%",
+      "url": "https://www.bnm.gov.my/-/monetary-policy-statement-05112026"
+    },
+    {
+      "as_of": "26 Nov close",
+      "chg_bp": -3,
+      "key": "mgs3",
+      "label": "MGS 3Y",
+      "level": 3.32,
+      "source": "BNM",
+      "unit": "%",
+      "url": "https://www.bnm.gov.my/government-securities-yield"
+    },
+    {
+      "as_of": "26 Nov close",
+      "chg_bp": 4,
+      "key": "mgs5",
+      "label": "MGS 5Y",
+      "level": 3.56,
+      "source": "BNM",
+      "unit": "%",
+      "url": "https://www.bnm.gov.my/government-securities-yield"
+    },
+    {
+      "as_of": "26 Nov close",
+      "chg_bp": -1,
+      "key": "mgs10",
+      "label": "MGS 10Y",
+      "level": 3.78,
+      "source": "BNM",
+      "unit": "%",
+      "url": "https://www.bnm.gov.my/government-securities-yield"
+    },
+    {
+      "as_of": "After US 25 Nov close, per Bernama 26 Nov 8am report",
+      "chg_bp": -4,
+      "key": "ust2",
+      "label": "UST 2Y",
+      "level": 4.65,
+      "source": "Malay Mail (Bernama)",
+      "unit": "%",
+      "url": "https://www.malaymail.com/news/money/2026/11/26/ringgit-firms-up-against-dollar-softens-against-euro-and-pound/244815"
+    },
+    {
+      "as_of": "US 25 Nov close",
+      "chg_bp": -4,
+      "key": "ust10",
+      "label": "UST 10Y",
+      "level": 4.87,
+      "source": "AP",
+      "unit": "%",
+      "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+    },
+    {
+      "as_of": "MGS 26 Nov vs UST 25 Nov",
+      "chg_bp": null,
+      "key": "spread_bp",
+      "label": "MGS–UST 10Y spread",
+      "level": -109,
+      "source": "Desk calc",
+      "unit": "bp",
+      "url": null
+    }
+  ],
+  "sections": [
+    {
+      "headline": "Washington proposed Section 301 tariffs of up to 18% on Malaysian goods, with 25% possible; MITI says it will push to keep the total below 19%.",
+      "key": "policy",
+      "points": [
+        {
+          "kind": "reported",
+          "source": "Malay Mail (Bernama)",
+          "text": "USTR proposed tariffs of up to 18% on Malaysian goods on top of existing duties, rising to up to 25% if consultations are judged unsatisfactory, within headline rates of 15–35% for 14 economies.",
+          "url": "https://www.malaymail.com/news/malaysia/2026/11/26/us-proposes-tariffs-of-up-to-18pc-on-malaysian-goods-with-25pc-on-the-table/244776"
+        },
+        {
+          "kind": "reported",
+          "source": "Malay Mail (Bernama)",
+          "text": "Written comments are due 5 January 2027 and public hearings begin 25 January 2027; ICT and automotive were named as sectors of particular concern.",
+          "url": "https://www.malaymail.com/news/malaysia/2026/11/26/us-proposes-tariffs-of-up-to-18pc-on-malaysian-goods-with-25pc-on-the-table/244776"
+        },
+        {
+          "kind": "reported",
+          "source": "The Star",
+          "text": "MITI said the 18–25% range is only indicative, that Malaysia has no excess manufacturing capacity, and that it will work to keep the total tariff below 19%, with an update by the first quarter.",
+          "url": "https://www.thestar.com.my/news/nation/2026/11/26/miti-says-it-will-work-to-keep-us-tariff-rate-below-19"
+        },
+        {
+          "kind": "inference",
+          "source": "Desk inference",
+          "text": "Because the rate is not final until after late-January hearings, the risk for Bursa's E&E names is a drawn-out overhang rather than a one-day shock; Thursday's tech losers (MI Technovation, ViTrox, UWC) show where sellers lean first.",
+          "url": null
+        }
+      ],
+      "title": "Policy & budget",
+      "trigger": "US tariff proposal naming Malaysia"
+    },
+    {
+      "headline": "US inflation is running hotter and a Fed hike is in play, yet yields dipped; BNM stays at 2.75%.",
+      "key": "rates_ringgit",
+      "points": [
+        {
+          "kind": "reported",
+          "source": "AP",
+          "text": "October's PCE price index rose 3.8% year on year from 3.6%, Q3 GDP was revised up to a 4.3% annual rate, and AP said the Fed is likely to raise rates at its December meeting.",
+          "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+        },
+        {
+          "kind": "reported",
+          "source": "Bernama",
+          "text": "Rakuten Trade's Thong Pak Leng said the US 10-year yield hovered around 4.85% after touching an 11-week low as expectations of more aggressive tightening receded.",
+          "url": "https://www.bernama.com/tv/news.php?id=2639913"
+        },
+        {
+          "kind": "reported",
+          "source": "BNM",
+          "text": "BNM held the OPR at 2.75% on 5 November, saying inflation has risen on higher energy costs; the next MPC meeting is 21 January 2027.",
+          "url": "https://www.bnm.gov.my/-/monetary-policy-statement-05112026"
+        },
+        {
+          "kind": "inference",
+          "source": "Desk inference",
+          "text": "With MGS 10Y at 3.78% and UST 10Y at 4.87%, the gap is -109bp; a Fed hike with BNM on hold would widen it, so Thursday's ringgit gain reflects the yield dip, not a closing of the gap.",
+          "url": null
+        }
+      ],
+      "title": "Fed & BNM",
+      "trigger": "Reported shift in rate expectations (AP: Fed likely to hike in December; Rakuten's Thong: bets on more aggressive tightening receded)"
+    },
+    {
+      "headline": "Brent jumped 3.5% on Middle East supply risk; CPO bounced 1.5% on bargain buying but high stocks cap it.",
+      "key": "oil_palm",
+      "points": [
+        {
+          "kind": "reported",
+          "source": "AP",
+          "text": "Brent rose 3.5% to settle at $94.61 a barrel on Wednesday and has swung between $72 and $114 since the US and Israel attacked Iran in February.",
+          "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+        },
+        {
+          "kind": "reported",
+          "source": "AP",
+          "text": "ING strategists said reports of vessels being targeted in the Strait of Hormuz brought supply risks back into focus.",
+          "url": "https://www.whec.com/ap-top-news/global-stocks-rise-and-tech-shares-rebound-as-us-closes-for-thanksgiving/"
+        },
+        {
+          "kind": "reported",
+          "source": "Bernama",
+          "text": "The third-month February 2027 CPO contract rose RM63 to RM4,292 a tonne; Iceberg X trader David Ng said bargain buying lifted prices but high Malaysian inventories and sluggish exports limited the rebound.",
+          "url": "https://bernama.com/en/news.php?id=2640057"
+        },
+        {
+          "kind": "inference",
+          "source": "Desk inference",
+          "text": "Higher oil supports Malaysia's petroleum revenue and terms of trade, but energy costs are what BNM cites for rising inflation, so oil up is two-edged for MGS yields.",
+          "url": null
+        }
+      ],
+      "title": "Oil & palm",
+      "trigger": "Brent +3.5% (25 Nov settle)"
+    }
+  ],
+  "sources": [
+    {
+      "outlet": "AP",
+      "time_myt": "27 Nov, 10:18",
+      "title": "Asian shares mostly higher Friday before Wall Street's holiday-shortened reopening",
+      "url": "https://www.clickorlando.com/business/2026/11/27/asian-shares-mostly-rise-ahead-of-wall-streets-reopening-after-the-thanksgiving-holiday/"
+    },
+    {
+      "outlet": "AP",
+      "time_myt": "27 Nov, 01:39",
+      "title": "Global stocks and tech shares rebound while US is shut for Thanksgiving (later version)",
+      "url": "https://www.whec.com/ap-top-news/global-stocks-rise-and-tech-shares-rebound-as-us-closes-for-thanksgiving/"
+    },
+    {
+      "outlet": "Bernama",
+      "time_myt": "26 Nov, 21:39",
+      "title": "CPO futures close higher on bargain buying",
+      "url": "https://bernama.com/en/news.php?id=2640057"
+    },
+    {
+      "outlet": "AP",
+      "time_myt": "26 Nov, 19:04",
+      "title": "World shares climb as US markets close for Thanksgiving",
+      "url": "https://www.bnnbloomberg.ca/markets/2026/11/26/world-shares-push-higher-while-markets-in-us-will-be-closed-for-thanksgiving/"
+    },
+    {
+      "outlet": "Bernama",
+      "time_myt": "26 Nov, 18:48",
+      "title": "Ringgit closes higher against the US dollar",
+      "url": "https://www.bernama.com/en/market/news.php?id=2639959"
+    },
+    {
+      "outlet": "Bernama",
+      "time_myt": "26 Nov, 18:19",
+      "title": "Bursa closes higher with upbeat regional markets",
+      "url": "https://www.bernama.com/tv/news.php?id=2639913"
+    },
+    {
+      "outlet": "The Star",
+      "time_myt": "26 Nov, 16:13",
+      "title": "MITI aims to keep total US tariff on Malaysia below 19%",
+      "url": "https://www.thestar.com.my/news/nation/2026/11/26/miti-says-it-will-work-to-keep-us-tariff-rate-below-19"
+    },
+    {
+      "outlet": "Malay Mail (Bernama)",
+      "time_myt": "26 Nov, 10:34",
+      "title": "Ringgit opens firmer on the dollar; DXY and Treasury yields lower",
+      "url": "https://www.malaymail.com/news/money/2026/11/26/ringgit-firms-up-against-dollar-softens-against-euro-and-pound/244815"
+    },
+    {
+      "outlet": "BNM",
+      "time_myt": "26 Nov, 09:00",
+      "title": "Exchange rates, 9am middle rates for 25 and 26 Nov",
+      "url": "https://www.bnm.gov.my/exchange-rates"
+    },
+    {
+      "outlet": "BNM",
+      "time_myt": "26 Nov, close",
+      "title": "MGS benchmark yields for 26 Nov",
+      "url": "https://www.bnm.gov.my/government-securities-yield"
+    },
+    {
+      "outlet": "AP",
+      "time_myt": "26 Nov, 08:34",
+      "title": "Wall Street recovers most of an early AI-led slump",
+      "url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237"
+    },
+    {
+      "outlet": "Malay Mail (Bernama)",
+      "time_myt": "26 Nov, 08:10",
+      "title": "US proposes Section 301 tariffs of up to 18% on Malaysian goods",
+      "url": "https://www.malaymail.com/news/malaysia/2026/11/26/us-proposes-tariffs-of-up-to-18pc-on-malaysian-goods-with-25pc-on-the-table/244776"
+    },
+    {
+      "outlet": "DOSM",
+      "time_myt": "26 Nov",
+      "title": "Advance release calendar, November–December 2026",
+      "url": "https://dosm.gov.my/portal-main/arc"
+    },
+    {
+      "outlet": "Bernama",
+      "time_myt": "18 Nov, 19:05",
+      "title": "Ringgit weaker on hawkish US outlook; FOMC on 8–9 Dec",
+      "url": "https://bernama.com/en/market/news.php?id=2636293"
+    },
+    {
+      "outlet": "BNM",
+      "time_myt": "5 Nov, 15:00",
+      "title": "Monetary Policy Statement: OPR held at 2.75%",
+      "url": "https://www.bnm.gov.my/-/monetary-policy-statement-05112026"
+    },
+    {
+      "outlet": "BNM",
+      "time_myt": "13 May",
+      "title": "Advance release calendar",
+      "url": "https://www.bnm.gov.my/advance-release-calendar"
+    }
+  ],
+  "v": 1
+}

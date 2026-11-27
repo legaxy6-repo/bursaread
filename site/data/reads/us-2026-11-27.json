@@ -1,0 +1,195 @@
+{
+  "area": "us",
+  "calendar": [
+    {
+      "event": "Shortened post-Thanksgiving session on NYSE and Nasdaq",
+      "region": "US",
+      "source": "CNBC",
+      "time_myt": "Fri 27 Nov, 22:30 – Sat 28 Nov, 02:00",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html",
+      "why": "Thin volume; a renewed AI sell-off would show Wednesday's rebound was holiday-light buying rather than a floor. S&P and Nasdaq are on pace for weekly gains."
+    }
+  ],
+  "covers": "NYSE Wed 25 Nov close (US markets shut Thu 26 Nov for Thanksgiving; Fri 27 Nov is a half-day)",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "Markets now price a 25bp Fed hike in December and another in early 2027 after hot October core PCE and an upgraded Q3 GDP.",
+      "title": "Fed hike cycle",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "kind": "reported",
+      "source": "Bloomberg",
+      "status": "new",
+      "text": "AI-linked stocks drove a sharp sell-off in November after Nvidia's CEO turmoil and funding worries; Wednesday's late dip-buying pulled the Nasdaq 100 back from the brink of a bear market.",
+      "title": "AI-stock sell-off and rebound",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/stock-market-today-dow-s-p-live-updates"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; officials say they are months from taking effect and lower rates are on offer for trade deals.",
+      "title": "US Section 301 'overcapacity' tariffs",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    }
+  ],
+  "for_malaysia": "Rates channel: a Fed that is hiking again keeps US yields well above Malaysia's, which pressures the ringgit and limits room for MGS yields to fall. Sentiment channel: Bursa tech and data-centre names tend to follow the US AI trade, so Wednesday's swings are the main thing to watch there.",
+  "gaps": [
+    "Fed funds target: could not confirm the current upper bound from an allowed source this run.",
+    "Nasdaq and S&P point changes not stated in the source read.",
+    "2-year yield is approximate; CNBC updates gave 4.588% and about 4.65% at different times.",
+    "Reuters, AP, WSJ and FT could not be reached from this session, so figures rest on CNBC and Bloomberg only."
+  ],
+  "headline": "Wall Street erased most of a deep AI-led sell-off on Wednesday, then shut for Thanksgiving, with a hot inflation print locking in bets on a December Fed hike.",
+  "numbers": [
+    {
+      "as_of": "Wed 25 Nov close",
+      "key": "sp500",
+      "label": "S&P 500",
+      "level": 7182.78,
+      "pct": -0.25,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "as_of": "Wed 25 Nov close",
+      "key": "nasdaq",
+      "label": "Nasdaq",
+      "level": 23585.8,
+      "pct": -0.62,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "as_of": "Wed 25 Nov close",
+      "chg": 164.25,
+      "key": "dow",
+      "label": "Dow",
+      "level": 50182.95,
+      "pct": 0.33,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "as_of": "Wed 25 Nov, US session (approx.)",
+      "key": "ust2",
+      "label": "UST 2Y",
+      "level": 4.65,
+      "source": "CNBC",
+      "unit": "%",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "as_of": "Wed 25 Nov, US session",
+      "chg_bp": -3,
+      "key": "ust10",
+      "label": "UST 10Y",
+      "level": 4.866,
+      "source": "CNBC",
+      "unit": "%",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "as_of": "Thu 26 Nov, Asian trading",
+      "key": "dxy",
+      "label": "Dollar index (DXY)",
+      "level": 103.7,
+      "pct": 0,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "as_of": "Wed 25 Nov settle (no settle Thu)",
+      "key": "wti",
+      "label": "WTI (US$/bbl)",
+      "level": 83.68,
+      "pct": 2,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/oil-wti-brent-hormuz-iran-saudi-arabia.html"
+    }
+  ],
+  "numbers_note": "Only the intraday swing passed the filter: a 3%+ drop in the S&P 500 that reversed to -0.25% is a big reversal, while the closing moves, the 3bp drop in the 10-year and WTI's 2% gain were all inside the filter.",
+  "points": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The S&P 500 fell as much as 3.2% and the Nasdaq as much as 4.6% on Wednesday before recovering; the S&P closed down 0.25% at 7,182.78, the Nasdaq down 0.62% at 23,585.80, and the Dow up 0.33% at 50,182.95. CNBC said no specific catalyst for the bounce could be pinpointed, though traders cited light pre-holiday trading and a Michael Burry blog post.",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "Tech fell as the lift from Jensen Huang's return as Nvidia CEO faded and failed to calm worries about whether the AI trade can last.",
+      "url": "https://www.cnbc.com/2026/11/25/nvidia-ai-stock-tech-selloff.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "October PCE inflation rose to 3.8% a year from 3.7%, and core PCE was 3.3%, slightly above the 3.2% forecast. Yet the 10-year Treasury yield fell more than 3bp to about 4.87% as investors bought bonds for protection.",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "Hotter core inflation, an upward revision to Q3 GDP and a Fed survey showing sticky inflation cemented expectations of a 25bp Fed hike in December and another in early 2027.",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The White House proposed new 'overcapacity' tariffs on 14 trading partners including China, the EU and India; officials say they are months away from taking effect.",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "CNBC",
+      "time_myt": "Fri 27 Nov, 03:00",
+      "title": "Futures edge up before the shortened Friday session",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Dollar steadies as yields fall; Fed hike bets firm",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Oil rises on supply worries; Wednesday settles",
+      "url": "https://www.cnbc.com/2026/11/26/oil-wti-brent-hormuz-iran-saudi-arabia.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov, 05:00",
+      "title": "Dow wipes out 1,100-point loss to close higher",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Tech stocks close well off their lows",
+      "url": "https://www.cnbc.com/2026/11/25/nvidia-ai-stock-tech-selloff.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "10-year yield slides despite sticky PCE inflation",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Wed 25 Nov",
+      "title": "US proposes tariffs on 14 trading partners",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    }
+  ],
+  "v": 1
+}

@@ -1,0 +1,105 @@
+{
+  "area": "eu",
+  "calendar": [],
+  "covers": "Europe Thu 26 Nov session (closing figures not confirmed; intraday levels only)",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; officials say they are months from taking effect and lower rates are on offer for trade deals.",
+      "title": "US Section 301 'overcapacity' tariffs",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "The regional tech index bounced 2.5% after losing about 12% this month on AI-bubble worries.",
+      "title": "European tech rebound",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    }
+  ],
+  "for_malaysia": "Trade channel: the EU faces a proposed 15% US tariff, which weighs on European demand for Malaysian electronics and palm-oil-linked goods if it sticks. In the near term, Europe's tech rebound helps the global chip mood that Bursa's semiconductor names follow.",
+  "gaps": [
+    "Stoxx 600, DAX and FTSE 100 closing levels not confirmed (Reuters and FT unreachable).",
+    "GBP/USD, Bund 10Y, Gilt 10Y, ECB deposit rate and BoE Bank Rate not confirmed this run."
+  ],
+  "headline": "European stocks rallied about 1.6–1.7%, led by chipmakers, as investors shrugged off new US tariffs.",
+  "numbers": [
+    {
+      "as_of": "Thu 26 Nov, ~12:20 London (intraday, not close)",
+      "chg": 9.77,
+      "key": "stoxx600",
+      "label": "Stoxx 600",
+      "level": 635.8,
+      "pct": 1.56,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov, Asian trading",
+      "key": "eurusd",
+      "label": "EUR/USD",
+      "level": 1.097,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    }
+  ],
+  "numbers_note": "The Stoxx 600's roughly 1.6% intraday gain and the DAX's 1.9% passed the stock filter, but these are midday readings and the closes were not confirmed.",
+  "points": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The Stoxx 600 was about 1.6% higher at 635.80 by midday London time, with all sectors and major bourses positive; the DAX led with a 1.9% rise and the Stoxx tech index jumped 2.5% after losing about 12% this month.",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "kind": "reported",
+      "source": "Bloomberg",
+      "text": "Bloomberg reported the Stoxx 600 rallying 1.7% as Wednesday's late US dip-buying pulled the Nasdaq 100 back from the brink of a bear market.",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/stock-market-today-dow-s-p-live-updates"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "AJ Bell's Russ Mould said the new US tariffs were not as bad as feared but warned against complacency, pointing to oil prices and possible retaliation.",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "kind": "reported",
+      "source": "ECB",
+      "text": "The ECB's account of its October meeting said financial conditions had tightened on a repricing of risk, though the October PMIs still signalled expansion.",
+      "url": "https://www.ecb.europa.eu/press/accounts/2026/html/ecb.mg261126~ccf28c8071.en.html"
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "Bloomberg",
+      "time_myt": "Thu 26 Nov",
+      "title": "Live: Stoxx 600 rallies as AI trade rebounds",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/stock-market-today-dow-s-p-live-updates"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Global stocks rally despite tariffs and AI worries",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Dollar steadies; euro near US$1.097",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "outlet": "ECB",
+      "time_myt": "Thu 26 Nov, 20:30",
+      "title": "Account of 28–29 October monetary policy meeting",
+      "url": "https://www.ecb.europa.eu/press/accounts/2026/html/ecb.mg261126~ccf28c8071.en.html"
+    }
+  ],
+  "v": 1
+}

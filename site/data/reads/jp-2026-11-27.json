@@ -1,0 +1,113 @@
+{
+  "area": "jp",
+  "calendar": [],
+  "covers": "Tokyo Thu 26 Nov close",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "The Japan Times",
+      "status": "new",
+      "text": "Washington proposed 15% with a possible rise to 20%; Tokyo protested but the rate is in line with the 2025 trade deal.",
+      "title": "US 15% tariff on Japan",
+      "url": "https://www.japantimes.co.jp/business/2026/11/26/economy/japan-protests-trump-new-tariff/"
+    },
+    {
+      "kind": "reported",
+      "source": "The Japan Times",
+      "status": "new",
+      "text": "The summary of the BoJ's October meeting suggested many board members see a near-term hike as necessary, and Governor Ueda signalled a December move is possible.",
+      "title": "BoJ December hike watch",
+      "url": "https://www.japantimes.co.jp/business/2026/11/10/economy/boj-summary-opinions-october/"
+    }
+  ],
+  "for_malaysia": "Currency channel: a yen near 159 per dollar makes Japanese goods cheaper relative to Malaysian exports; a BoJ hike in December would ease that. Japan is also a major investor in Malaysian manufacturing, so a tariff deal that holds near 15% limits the knock-on effect.",
+  "gaps": [
+    "JGB 10Y yield not confirmed for this session.",
+    "BoJ policy rate level not confirmed from an allowed source this run."
+  ],
+  "headline": "The Nikkei won back under a third of Wednesday's 2.8% drop, and Tokyo protested a proposed 15% US tariff.",
+  "numbers": [
+    {
+      "as_of": "Thu 26 Nov close",
+      "key": "nikkei",
+      "label": "Nikkei 225",
+      "level": 57499.16,
+      "pct": 0.86,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov close",
+      "key": "topix",
+      "label": "TOPIX",
+      "level": 3750.4,
+      "pct": 0.11,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov, Asian trading",
+      "key": "usdjpy",
+      "label": "USD/JPY",
+      "level": 159.06,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    }
+  ],
+  "numbers_note": "Nothing passed the filter on Thursday; the story was Wednesday's 2.78% Nikkei drop, and the yen staying near 159 matters more than any one day's move.",
+  "points": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The Nikkei 225 rose 0.86% to 57,499.16 and the Topix rose just 0.11% to 3,750.4, a day after the Nikkei fell 2.78% to 57,011.62 in the AI sell-off.",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "kind": "reported",
+      "source": "The Japan Times",
+      "text": "The US plans a 15% levy on Japanese imports over alleged excess capacity, which could rise to 20%; Chief Cabinet Secretary Minoru Kihara said Japan has no structural excess capacity and has told Washington it regrets the move.",
+      "url": "https://www.japantimes.co.jp/business/2026/11/26/economy/japan-protests-trump-new-tariff/"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The yen was around 159.06 per dollar in Asian trading on Thursday, up 0.1%.",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "kind": "inference",
+      "source": "Desk inference",
+      "text": "The gap between the Nikkei's 0.86% gain and the Topix's 0.11% means a handful of chip and AI heavyweights did the lifting; the broad market barely moved.",
+      "url": null
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Dollar steadies; yen near 159",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "outlet": "The Japan Times",
+      "time_myt": "Thu 26 Nov",
+      "title": "Japan protests new US tariff rate",
+      "url": "https://www.japantimes.co.jp/business/2026/11/26/economy/japan-protests-trump-new-tariff/"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Global stocks rally; Nikkei and Topix close",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "outlet": "The Japan Times",
+      "time_myt": "Tue 10 Nov",
+      "title": "BoJ summary points to a chance of a December hike",
+      "url": "https://www.japantimes.co.jp/business/2026/11/10/economy/boj-summary-opinions-october/"
+    }
+  ],
+  "v": 1
+}

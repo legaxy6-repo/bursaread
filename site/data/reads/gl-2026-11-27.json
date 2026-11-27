@@ -1,0 +1,222 @@
+{
+  "area": "gl",
+  "calendar": [
+    {
+      "event": "Shortened US session after Thanksgiving",
+      "region": "US",
+      "source": "CNBC",
+      "time_myt": "Fri 27 Nov, 22:30 – Sat 28 Nov, 02:00",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html",
+      "why": "First US trade since the tariffs and the Asia/Europe rebound; a renewed tech sell-off would undercut the bounce."
+    }
+  ],
+  "covers": "All areas: US Wed 25 Nov close (Thu holiday), Europe and Asia Thu 26 Nov",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; officials say they are months from taking effect and lower rates are on offer for trade deals.",
+      "title": "US Section 301 'overcapacity' tariffs",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "Markets price a 25bp Fed hike in December and another in early 2027 after hot October core PCE data.",
+      "title": "Fed back in hiking mode",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "kind": "reported",
+      "source": "Bloomberg",
+      "status": "new",
+      "text": "AI-linked stocks drove a sharp sell-off in November after Nvidia's CEO turmoil and funding worries; Wednesday's late dip-buying pulled the Nasdaq 100 back from the brink of a bear market.",
+      "title": "AI-stock sell-off and rebound",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/stock-market-today-dow-s-p-live-updates"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "status": "new",
+      "text": "Brent rose 3.5% on Wednesday and nearly US$2 more on Thursday to its highest since 6 November, on attacks on shipping and Gulf supply.",
+      "title": "Middle East oil supply risk",
+      "url": "https://www.cnbc.com/2026/11/27/brent-oil-wti-hormuz-middle-east.html"
+    }
+  ],
+  "for_malaysia": "Three channels point the same way for now: a hiking Fed (rates) caps the ringgit, higher Brent (commodities) helps Petronas-linked revenue and oil-and-gas stocks but lifts fuel-subsidy costs, and the tariff proposal (trade) leaves Malaysian exporters waiting until Q1 2027 for a final rate. Bursa tech will keep following the US AI trade.",
+  "gaps": [
+    "Gold: CNBC reported it briefly fell below US$3,500 on Wednesday for the first time since September 2025, but no settlement figure was confirmed.",
+    "Singapore market data and several European, Chinese and Japanese rates are missing; see area reads.",
+    "Reuters, AP, FT, WSJ and the Singapore outlets could not be reached from this session."
+  ],
+  "headline": "Global stocks bounced back from an AI-led sell-off and largely shrugged off new US tariffs on 14 partners, while hot US inflation firmed bets on a December Fed hike.",
+  "numbers": [
+    {
+      "as_of": "Wed 25 Nov close",
+      "key": "sp500",
+      "label": "S&P 500",
+      "level": 7182.78,
+      "pct": -0.25,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov close",
+      "key": "nikkei",
+      "label": "Nikkei 225",
+      "level": 57499.16,
+      "pct": 0.86,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov close",
+      "key": "hsi",
+      "label": "Hang Seng",
+      "level": 22226.88,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    },
+    {
+      "as_of": "Thu 26 Nov, intraday",
+      "key": "stoxx600",
+      "label": "Stoxx 600",
+      "level": 635.8,
+      "pct": 1.56,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Wed 25 Nov",
+      "chg_bp": -3,
+      "key": "ust10",
+      "label": "UST 10Y",
+      "level": 4.866,
+      "source": "CNBC",
+      "unit": "%",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "as_of": "Thu 26 Nov, Asian trading",
+      "key": "dxy",
+      "label": "Dollar index (DXY)",
+      "level": 103.7,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "as_of": "Wed 25 Nov settle",
+      "key": "brent",
+      "label": "Brent (US$/bbl)",
+      "level": 94.61,
+      "pct": 3.5,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/oil-wti-brent-hormuz-iran-saudi-arabia.html"
+    }
+  ],
+  "numbers_note": "Brent's 3.5% jump and Europe's roughly 1.6% intraday rally passed the filter; the S&P 500's 3%+ intraday reversal was Wednesday's real signal.",
+  "points": [
+    {
+      "area": "us",
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The US proposed new 'overcapacity' tariffs on 14 trading partners, mostly 15–20% and up to 35% for Vietnam, which officials say are months from taking effect.",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    },
+    {
+      "area": "my",
+      "kind": "reported",
+      "source": "The Star",
+      "text": "Malaysia is among them: MITI said the USTR's reported 18–25% for Malaysia was only indicative, and it will negotiate to keep the rate below 19%, with a final rate expected in Q1 2027.",
+      "url": "https://www.thestar.com.my/news/nation/2026/11/26/miti-says-it-will-work-to-keep-us-tariff-rate-below-19"
+    },
+    {
+      "area": "us",
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "Wall Street erased most of a deep intraday AI sell-off on Wednesday: the S&P 500 closed down 0.25% after falling as much as 3.2%.",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "area": "us",
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "Hot October core PCE inflation cemented expectations of a 25bp Fed hike in December, even as the 10-year Treasury yield fell to about 4.87%.",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "area": "eu",
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "Europe's Stoxx 600 rallied about 1.6% intraday, led by tech, and the Nikkei rose 0.86%, while China's CSI 300 barely moved.",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "CNBC",
+      "time_myt": "Fri 27 Nov, 03:00",
+      "title": "Live: futures up before the shortened Friday session",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Fri 27 Nov",
+      "title": "Brent trades near month's high on Mideast risks",
+      "url": "https://www.cnbc.com/2026/11/27/brent-oil-wti-hormuz-middle-east.html"
+    },
+    {
+      "outlet": "The Star",
+      "time_myt": "Thu 26 Nov",
+      "title": "MITI to work to keep US tariff rate below 19%",
+      "url": "https://www.thestar.com.my/news/nation/2026/11/26/miti-says-it-will-work-to-keep-us-tariff-rate-below-19"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Global stocks rally despite tariffs and AI worries",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Dollar steadies as yields fall",
+      "url": "https://www.cnbc.com/2026/11/26/dollar-yields-treasury-safe-heaven-federal-reserve.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Oil rises; Wednesday settles",
+      "url": "https://www.cnbc.com/2026/11/26/oil-wti-brent-hormuz-iran-saudi-arabia.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Gold steadies after over one-year low",
+      "url": "https://www.cnbc.com/2026/11/26/gold-federal-reserve-interest-rate-metals.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov, 05:00",
+      "title": "Dow wipes out 1,100-point loss",
+      "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "10-year yield slides despite sticky inflation",
+      "url": "https://www.cnbc.com/2026/11/25/treasury-yields-bonds-inflation.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Wed 25 Nov",
+      "title": "US proposes tariffs on 14 trading partners",
+      "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
+    }
+  ],
+  "v": 1
+}

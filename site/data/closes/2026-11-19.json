@@ -1,0 +1,14 @@
+{
+  "audmyr": 2.7568,
+  "cnymyr": 0.6168,
+  "date": "2026-11-19",
+  "eurmyr": 4.5177,
+  "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)",
+  "gbpmyr": 5.4087,
+  "jpymyr100": 2.5735,
+  "klci": 1566.16,
+  "klci_chg": -0.57,
+  "note": "Migrated from the Bursa Daily Desk tracker (verified closes only). Source: Bernama",
+  "sgdmyr": 3.1891,
+  "usdmyr": 4.1115
+}

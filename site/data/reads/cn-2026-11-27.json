@@ -1,0 +1,98 @@
+{
+  "area": "cn",
+  "calendar": [],
+  "covers": "Shanghai and Hong Kong Thu 26 Nov close",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "SCMP",
+      "status": "new",
+      "text": "The proposal comes before the truce expires on 10 January 2027; Beijing's response so far is rhetorical, not retaliation.",
+      "title": "US 20% tariff proposal on China",
+      "url": "https://www.scmp.com/economy/china-economy/article/3375960/china-slams-us-tariff-proposals-analysts-say-trade-talks-remain-track"
+    },
+    {
+      "kind": "inference",
+      "source": "Desk inference",
+      "status": "new",
+      "text": "The November AI rout took the Hang Seng to multi-month lows; it was trading near 22,200 by Thursday.",
+      "title": "AI sell-off hits Hong Kong tech",
+      "url": null
+    }
+  ],
+  "for_malaysia": "Trade channel: China is Malaysia's largest trading partner, and higher US tariffs on China raise the risk that Chinese exports get diverted into ASEAN, adding pressure on Malaysian steel and manufacturers. For now Beijing is choosing talks over retaliation, which keeps the ringgit and Bursa exporters out of the worst case.",
+  "gaps": [
+    "Shanghai Composite close not confirmed by an allowed news source.",
+    "Hang Seng daily change and reason not confirmed.",
+    "USD/CNY and 1-year LPR not confirmed this run; Reuters, Caixin and PBOC pages could not be opened directly."
+  ],
+  "headline": "Mainland stocks barely moved and Beijing pushed back verbally on new US tariffs while signalling the trade truce should hold.",
+  "numbers": [
+    {
+      "as_of": "Thu 26 Nov close",
+      "key": "csi300",
+      "label": "CSI 300",
+      "level": 3900.55,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    },
+    {
+      "as_of": "Thu 26 Nov close (CNBC 'last close')",
+      "key": "hsi",
+      "label": "Hang Seng",
+      "level": 22226.88,
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    }
+  ],
+  "numbers_note": "The CSI 300 moved only marginally (Wednesday's close was 3,898.24), well inside the filter; Hang Seng's daily change could not be confirmed.",
+  "points": [
+    {
+      "kind": "reported",
+      "source": "Caixin Global",
+      "text": "The US proposed an additional tariff of up to 20% on Chinese goods, which Caixin said could take combined duties to about 45% on some imports, ahead of the trade truce's January deadline.",
+      "url": "https://www.caixinglobal.com/2026-11-26/us-proposes-additional-20-tariff-on-china-ahead-of-trade-truce-deadline-102508768.html"
+    },
+    {
+      "kind": "reported",
+      "source": "SCMP",
+      "text": "China's foreign ministry called 'overcapacity' a false proposition and the commerce ministry urged dialogue, but analysts told SCMP that trade talks remain on track; the truce expires on 10 January 2027.",
+      "url": "https://www.scmp.com/economy/china-economy/article/3375960/china-slams-us-tariff-proposals-analysts-say-trade-talks-remain-track"
+    },
+    {
+      "kind": "reported",
+      "source": "CNBC",
+      "text": "The CSI 300 edged up marginally to close at 3,900.55 on Thursday. No catalyst was reported for the move.",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "CNBC",
+      "time_myt": "Fri 27 Nov, 03:00",
+      "title": "Live blog cites Hang Seng's last close",
+      "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    },
+    {
+      "outlet": "SCMP",
+      "time_myt": "Thu 26 Nov",
+      "title": "China rebukes US tariff plan; talks seen on track",
+      "url": "https://www.scmp.com/economy/china-economy/article/3375960/china-slams-us-tariff-proposals-analysts-say-trade-talks-remain-track"
+    },
+    {
+      "outlet": "Caixin Global",
+      "time_myt": "Thu 26 Nov",
+      "title": "US proposes extra 20% tariff on China before truce deadline",
+      "url": "https://www.caixinglobal.com/2026-11-26/us-proposes-additional-20-tariff-on-china-ahead-of-trade-truce-deadline-102508768.html"
+    },
+    {
+      "outlet": "CNBC",
+      "time_myt": "Thu 26 Nov",
+      "title": "Global stocks rally despite tariffs and AI worries",
+      "url": "https://www.cnbc.com/2026/11/26/stock-markets-today-.html"
+    }
+  ],
+  "v": 1
+}

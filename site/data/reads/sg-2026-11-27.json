@@ -1,0 +1,47 @@
+{
+  "area": "sg",
+  "calendar": [],
+  "covers": "SGX Thu 26 Nov close (market data not confirmed this run)",
+  "date": "2026-11-27",
+  "developments": [
+    {
+      "kind": "reported",
+      "source": "Bloomberg",
+      "status": "new",
+      "text": "Proposed under the overcapacity probe; Singapore plans to help firms adjust, then negotiate.",
+      "title": "US tariff of up to 20% on Singapore",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-26/singapore-is-very-disappointed-by-trump-s-proposed-tariff-hike"
+    }
+  ],
+  "for_malaysia": "Trade channel: if a key ASEAN hub with a free-trade pact gets up to 20%, Malaysia's target of 19% or less looks like the regional norm rather than a bad deal. Singapore's response also shows the playbook is negotiation, not retaliation.",
+  "gaps": [
+    "STI close, USD/SGD and SORA not confirmed: Business Times, Straits Times, CNA and MAS pages could not be reached from this session."
+  ],
+  "headline": "Singapore said it was 'very disappointed' at a proposed US tariff of up to 20%; the desk could not confirm the STI's close.",
+  "numbers": [],
+  "numbers_note": "No Singapore market numbers could be confirmed from an allowed source this run.",
+  "points": [
+    {
+      "kind": "reported",
+      "source": "Bloomberg",
+      "text": "The US proposed Section 301 tariffs of up to 20% on Singapore. Trade minister Gan Kim Yong said Singapore was 'very disappointed' and disputed the US findings of overcapacity.",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-26/singapore-is-very-disappointed-by-trump-s-proposed-tariff-hike"
+    },
+    {
+      "kind": "inference",
+      "source": "Desk inference",
+      "text": "For a trade hub with a US trade deficit, this is a political signal more than a direct earnings hit; the rate is still a proposal and open to negotiation.",
+      "url": null
+    }
+  ],
+  "published_at": "2026-11-27T12:10:00+08:00",
+  "sources": [
+    {
+      "outlet": "Bloomberg",
+      "time_myt": "Thu 26 Nov",
+      "title": "Singapore 'very disappointed' by proposed tariff",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-26/singapore-is-very-disappointed-by-trump-s-proposed-tariff-hike"
+    }
+  ],
+  "v": 1
+}
