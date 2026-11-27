@@ -191,5 +191,79 @@
       "url": "https://www.cnbc.com/2026/11/25/us-tariffs-trump-section-301.html"
     }
   ],
+  "us_open": {
+    "as_of": "09:45 ET / 22:45 MYT; half-day (cash close 13:00 ET / Sat 02:00 MYT)",
+    "board": [
+      {
+        "as_of": "Wed 25 Nov close (official; today's not yet published)",
+        "chg_bp": -6,
+        "key": "ust10",
+        "label": "UST 10Y",
+        "level": 4.85,
+        "source": "US Treasury",
+        "unit": "%",
+        "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611"
+      },
+      {
+        "as_of": "09:48 ET spot",
+        "chg": null,
+        "key": "gold",
+        "label": "Gold (US$/oz)",
+        "level": 3630,
+        "pct": null,
+        "source": "Alpha Vantage",
+        "url": null
+      }
+    ],
+    "drivers": [
+      {
+        "kind": "reported",
+        "source": "Dow Jones (via MarketScreener)",
+        "text": "AI rebound: at 08:47 ET Nasdaq futures were up about 2%, S&P 500 futures up 1.4% and Dow futures up 1.2%, with Nvidia up over 3% premarket as AI-linked stocks recovered. Kospi rose 4.3% on memory chips. Gold futures rose 3.6% to about US$3,660 and silver jumped over 9%. If gains hold, all three indexes finish the week up more than 4%; the Nasdaq is still more than 14% below its peak.",
+        "url": "https://www.marketscreener.com/news/stock-futures-jump-as-ai-trade-set-for-rebound-update-ce7851d9df8ff521"
+      },
+      {
+        "kind": "reported",
+        "source": "Dow Jones (via MarketScreener)",
+        "text": "Rates are not helping: the 10-year Treasury yield rose more than 5.5bp to above 4.90% and the 2-year moved toward 4.70%. Markets price a 99% chance of a 25bp December hike (LSEG). The Fed's pre-meeting blackout starts Saturday.",
+        "url": "https://www.marketscreener.com/news/stock-futures-jump-as-ai-trade-set-for-rebound-update-ce7851d9df8ff521"
+      },
+      {
+        "kind": "inference",
+        "source": "Desk inference",
+        "text": "Opening shape: futures pointed to a gap up of roughly 1–2% vs Wednesday's close. Whether the first 15 minutes extended or faded that move is not confirmed. Equities rising while yields rise means the rally is a positioning bounce in AI names, not a rates relief trade.",
+        "url": null
+      }
+    ],
+    "for_tomorrow": "Bursa and most of Asia are shut for the weekend, so the next read-through is Monday's open. If this rebound holds into the close, Asian tech and Bursa data-centre names get a positive lead, but Kospi's 4.3% jump shows Asia has already priced much of it. US yields rising toward 4.90% with a December hike locked in still works against the ringgit. On a thin half-day, treat the equity move as low-conviction.",
+    "gaps": [
+      "S&P 500, Nasdaq and Dow opening levels and changes not confirmed; only pre-market futures moves are reported.",
+      "Today's intraday 10-year yield level comes from the news report only; the official Treasury figure is published after the close.",
+      "Dollar index and Brent levels not confirmed at the open.",
+      "Gold change vs prior close not confirmed for spot; only the futures move (+3.6%) is reported."
+    ],
+    "published_at": "2026-11-27T22:49:00+08:00",
+    "setup": "The US is set to open sharply higher in a thin post-Thanksgiving half-day as battered AI and chip stocks rebound, even as Treasury yields rise with a December Fed hike fully priced.",
+    "watch": [
+      {
+        "event": "Early cash close (13:00 ET) on thin volume",
+        "region": "US",
+        "time_myt": "Sat 28 Nov, 02:00",
+        "why": "A close near the highs with the Nasdaq still up about 2% would confirm the AI rebound. Giving back most of the gain would show it was holiday-light buying, like Wednesday's intraday swing."
+      },
+      {
+        "event": "Fed blackout begins ahead of the December meeting",
+        "region": "US",
+        "time_myt": "Sat 28 Nov",
+        "why": "Fed speakers go quiet after this, so the 99% hike pricing stands as is. Any late Fed comment before then that cools hike talk would ease yields. Hawkish comments would keep the 10-year above 4.90%."
+      },
+      {
+        "event": "Nvidia CEO Jensen Huang appears before Congress",
+        "region": "US",
+        "time_myt": "Tue 1 Dec – Wed 2 Dec, time TBC",
+        "why": "Testimony that calms the Nvidia governance and AI-funding worries would support the rebound. New problems would reverse it."
+      }
+    ]
+  },
   "v": 1
 }
