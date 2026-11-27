@@ -15,6 +15,8 @@
   --accent-soft: #E1EFEF;
   --infer: #8A5000;
   --infer-soft: #F6EBDB;
+  --up: #13784F;
+  --down: #B93A33;
   --board: #0F1E25;
   --board-line: #22363F;
   --board-fg: #F3C553;
@@ -41,7 +43,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0D1519; --surface: #131E23; --ink: #E2EAEC; --muted: #97A8B0; --line: #25353C;
-    --accent: #5BBDBF; --accent-soft: #15302F; --infer: #E5A953; --infer-soft: #2C2315;
+    --accent: #5BBDBF; --accent-soft: #15302F; --infer: #E5A953; --infer-soft: #2C2315; --up: #47BF86; --down: #EE7A70;
     --board: #132730; --board-line: #28434D; --board-fg: #F3C553; --board-ink: #E3ECEE; --board-muted: #93AAB2;
     --board-up: #4CC38A; --board-down: #F2786E; --spark: #86C0C3; --tip-bg: #E3ECEE; --tip-ink: #0F1E25;
     color-scheme: dark;
@@ -49,7 +51,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #0D1519; --surface: #131E23; --ink: #E2EAEC; --muted: #97A8B0; --line: #25353C;
-  --accent: #5BBDBF; --accent-soft: #15302F; --infer: #E5A953; --infer-soft: #2C2315;
+  --accent: #5BBDBF; --accent-soft: #15302F; --infer: #E5A953; --infer-soft: #2C2315; --up: #47BF86; --down: #EE7A70;
   --board: #132730; --board-line: #28434D; --board-fg: #F3C553; --board-ink: #E3ECEE; --board-muted: #93AAB2;
   --board-up: #4CC38A; --board-down: #F2786E; --spark: #86C0C3; --tip-bg: #E3ECEE; --tip-ink: #0F1E25;
   color-scheme: dark;
@@ -109,6 +111,27 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .dd-step-body p { margin: 0; }
 .dd-step.dd-sowhat { background: var(--infer-soft); border-radius: var(--r); border: 0; padding: 0.875rem 1rem; margin-top: 0.75rem; }
 .dd-step.dd-sowhat .dd-node { color: var(--infer); }
+
+/* Live check */
+.dd-livecheck { display: flex; flex-direction: column; gap: 0.75rem; }
+.dd-live-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; }
+.dd-live-head .dd-eyebrow { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.dd-live-head .dd-eyebrow span { font: 400 var(--s-xs)/1.4 var(--f-body); letter-spacing: 0; text-transform: none; color: var(--muted); }
+.dd-live-actions { display: flex; gap: 0.5rem; align-items: center; }
+.dd-btn { font: 500 var(--s-sm)/1 var(--f-body); min-height: 40px; padding: 0 0.9rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.dd-btn:hover:not(:disabled) { border-color: var(--accent); }
+.dd-btn:disabled { opacity: 0.5; cursor: default; }
+.dd-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.5rem; }
+.dd-tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 0.7rem 0.85rem; display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.dd-tile-label { font-size: var(--s-xs); font-weight: 600; color: var(--muted); }
+.dd-tile-value { font: 500 var(--s-lg)/1.3 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.dd-tile-meta, .dd-tile-vs { font: 400 0.75rem/1.4 var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.dd-tile-vs[data-dir="up"] { color: var(--up); }
+.dd-tile-vs[data-dir="down"] { color: var(--down); }
+.dd-live-status { margin: 0; font-size: var(--s-xs); color: var(--muted); max-width: 70ch; }
+.dd-live-pick > summary { cursor: pointer; font-size: var(--s-sm); color: var(--accent); min-height: 32px; display: inline-flex; align-items: center; }
+.dd-pick-grid { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; padding-top: 0.4rem; }
+.dd-pick-grid label { display: inline-flex; align-items: center; gap: 0.35rem; font-size: var(--s-sm); min-height: 32px; cursor: pointer; }
 
 /* Area tabs */
 .dd-areas { display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); margin-top: 0.5rem; }
@@ -240,6 +263,21 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     <nav class="dd-areas" id="area-tabs" aria-label="Areas"></nav>
   </header>
 
+  <section class="dd-livecheck" id="live" aria-labelledby="live-title">
+    <div class="dd-live-head">
+      <p class="dd-eyebrow" id="live-title">Live check <span>Interbank mid from Alpha Vantage. Bank board rates differ.</span></p>
+      <div class="dd-live-actions">
+        <button type="button" class="dd-btn" id="live-refresh" disabled>Refresh</button>
+      </div>
+    </div>
+    <div class="dd-tiles" id="live-tiles"></div>
+    <p class="dd-live-status" id="live-status" aria-live="polite"></p>
+    <details class="dd-live-pick" id="live-pick">
+      <summary>Choose prices</summary>
+      <div class="dd-pick-grid" id="live-pick-grid"></div>
+    </details>
+  </section>
+
   <main id="edition" class="dd-main" aria-live="polite">
     <div class="dd-state" id="ed-state"><strong>Loading the latest edition.</strong> Editions are written each business day at about 7:15am MYT.</div>
   </main>
@@ -253,6 +291,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
       <li>Every line tagged <b>Reported</b> links to the exact page that states it. Lines tagged <b>Desk inference</b> are the desk's own reasoning, never reporting. A cause no reporter gave reads "no catalyst reported".</li>
       <li>Sources: Bernama, The Star, The Edge, NST, FMT, Business Today, Malay Mail, BNM, AP, Reuters, CNBC, FT, WSJ. Prices taken from Alpha Vantage are labelled with their time. A number that can't be confirmed is left blank.</li>
       <li>A number is marked <b>moved</b> when it passes the desk's filter: currencies 0.5%, stock indices 1%, MGS and MYOR 5bp, other 10-year yields 5–6bp, gold 1.5%, CPO 2%, oil 3%.</li>
+      <li>Live check uses your own Alpha Vantage connector, only when you press Refresh: one call per price, from a free key that allows 25 calls a day shared with the scheduled reads. Opening the page costs nothing. Prices are interbank mid rates, not a bank's board rates.</li>
       <li>Analysis and education only. Nothing here is a buy or sell call. Times are Malaysia time (MYT, UTC+8).</li>
     </ul>
     <div class="dd-live" id="live-links">
@@ -973,6 +1012,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     S.db.collection("closes").orderBy("date", "desc").limit(120).onSnapshot(function (snap) {
       S.closes = snap.docs.map(function (d) { return d.data(); }).filter(function (c) { return c && typeof c.date === "string"; });
       if (S.current && S.area === "my") render(S.current);
+      renderLive();
     }, function () { /* sparklines and history stay empty */ });
   }
 
@@ -1000,8 +1040,205 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     }, 150);
   });
 
+  /* ---------- live check: the viewer's own Alpha Vantage connector ---------- */
+  var AV = "Alpha Vantage MCP Server";
+  function fx(code) { return { tool: "CURRENCY_EXCHANGE_RATE", input: { from_currency: code, to_currency: "MYR", datatype: "json" } }; }
+  var LIVE = [
+    Object.assign({ key: "usdmyr", label: "USD/MYR", dp: 4 }, fx("USD")),
+    Object.assign({ key: "sgdmyr", label: "SGD/MYR", dp: 4 }, fx("SGD")),
+    Object.assign({ key: "eurmyr", label: "EUR/MYR", dp: 4 }, fx("EUR")),
+    Object.assign({ key: "gbpmyr", label: "GBP/MYR", dp: 4 }, fx("GBP")),
+    Object.assign({ key: "audmyr", label: "AUD/MYR", dp: 4 }, fx("AUD")),
+    Object.assign({ key: "cnymyr", label: "CNY/MYR", dp: 4 }, fx("CNY")),
+    Object.assign({ key: "jpymyr100", label: "JPY/MYR (per 100)", dp: 4, scale: 100 }, fx("JPY")),
+    { key: "gold", label: "Gold (US$/oz)", dp: 2, tool: "GOLD_SILVER_SPOT", input: { symbol: "GOLD" } }
+  ];
+  var LV = { mcp: null, ready: false, picks: [], docs: {}, usage: null, busy: false, msg: "" };
+  var MIN_GAP_MS = 5 * 60 * 1000;
+
+  function cfgFor(k) { return LIVE.find(function (c) { return c.key === k; }); }
+  function loadPicks() {
+    try {
+      var v = JSON.parse(localStorage.getItem("dd-live-picks") || "null");
+      if (Array.isArray(v)) return LIVE.map(function (c) { return c.key; }).filter(function (k) { return v.indexOf(k) >= 0; });
+    } catch (e) { /* storage unavailable */ }
+    return ["usdmyr", "sgdmyr", "gold"];
+  }
+  function savePicks() { try { localStorage.setItem("dd-live-picks", JSON.stringify(LV.picks)); } catch (e) { /* ignore */ } }
+  function mytDay(ms) { return new Date(ms).toLocaleDateString("en-CA", { timeZone: "Asia/Kuala_Lumpur" }); }
+  function ago(ms) {
+    var m = Math.round(ms / 60000);
+    if (m < 1) return "just now";
+    if (m < 60) return m + " min ago";
+    var h = Math.round(m / 60);
+    return h < 24 ? h + " h ago" : Math.round(h / 24) + " d ago";
+  }
+  function latestClose(key) {
+    var rows = S.closes.filter(function (c) { return c && isNum(c[key]); }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    return rows.length ? { date: rows[0].date, v: Number(rows[0][key]) } : null;
+  }
+  function utcIso(t) { var m = /^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}:\d{2})/.exec(str(t)); return m ? m[1] + "T" + m[2] + "Z" : null; }
+  function parseLive(cfg, payload) {
+    if (typeof payload === "string") { try { payload = JSON.parse(payload); } catch (e) { return null; } }
+    if (!payload || typeof payload !== "object") return null;
+    if (payload["Information"] || payload["Note"] || payload["Error Message"]) return { limit: true };
+    var v = null, at = null;
+    if (cfg.tool === "CURRENCY_EXCHANGE_RATE") {
+      var r = payload["Realtime Currency Exchange Rate"];
+      if (r && typeof r === "object") { v = parseFloat(r["5. Exchange Rate"]); at = utcIso(r["6. Last Refreshed"]); }
+    } else if (cfg.tool === "GOLD_SILVER_SPOT") {
+      v = parseFloat(payload.price); at = utcIso(payload.timestamp);
+    }
+    if (!isFinite(v)) return null;
+    return { value: v * (cfg.scale || 1), at: at };
+  }
+  function errMsg(err) {
+    var c = err && err.code;
+    if (c === "needs_reauth") return "Alpha Vantage needs reconnecting. Reconnect it in claude.ai Settings, Connectors, then refresh.";
+    if (c === "server_not_connected") return "Alpha Vantage isn't connected for you. Add it in claude.ai Settings, Connectors.";
+    if (c === "selection_required") return "You have more than one Alpha Vantage connector. Choose one when Claude asks, then refresh.";
+    if (c === "not_in_manifest") return "Live prices are switched off for this page. Allow Alpha Vantage in the page's permissions to use them.";
+    if (c === "blocked_by_policy" || c === "approval_required") return "Your organisation's settings don't allow Alpha Vantage here.";
+    if (c === "tool_error") return "Alpha Vantage reported an error: " + (str(err.message) || "no details") + ".";
+    if (c === "server_unavailable" || c === "upstream_error" || c === "rate_limited") return "Alpha Vantage didn't answer. Try again in a minute.";
+    if (c === "not_granted" || c === "capability_disabled" || c === "capability_removed") return "Live prices aren't available in this view.";
+    return "Live prices couldn't load" + (c ? " (" + c + ")" : "") + ".";
+  }
+
+  function renderPicker() {
+    var grid = $("live-pick-grid");
+    grid.textContent = "";
+    LIVE.forEach(function (c) {
+      var lab = el("label");
+      var cb = el("input");
+      cb.type = "checkbox"; cb.id = "live-pick-" + c.key; cb.checked = LV.picks.indexOf(c.key) >= 0;
+      cb.addEventListener("change", function () {
+        LV.picks = LIVE.map(function (x) { return x.key; }).filter(function (k) { var b = $("live-pick-" + k); return b && b.checked; });
+        savePicks();
+        renderLive();
+      });
+      lab.appendChild(cb);
+      lab.appendChild(document.createTextNode(c.label));
+      grid.appendChild(lab);
+    });
+  }
+
+  function renderLive() {
+    var box = $("live-tiles");
+    box.textContent = "";
+    var now = Date.now();
+    LV.picks.forEach(function (k) {
+      var c = cfgFor(k), d = LV.docs[k];
+      if (!c) return;
+      var tile = el("div", "dd-tile");
+      tile.id = "live-" + k;
+      tile.appendChild(el("span", "dd-tile-label", c.label));
+      var val = d && isNum(d.value) ? fmt(d.value, c.dp) : null;
+      tile.appendChild(el("span", "dd-tile-value", val === null ? "—" : val));
+      var st = d ? Date.parse(d.source_time || d.fetched_at || "") : NaN;
+      tile.appendChild(el("span", "dd-tile-meta", isFinite(st)
+        ? new Date(st).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kuala_Lumpur" }) + " MYT · " + ago(now - st)
+        : "Not fetched yet"));
+      var lc = latestClose(k);
+      if (val !== null && lc && lc.v) {
+        var pct = (Number(d.value) - lc.v) / lc.v * 100;
+        var vs = el("span", "dd-tile-vs", sgn(pct, 2, "%") + " vs " + shortDay(lc.date) + " close");
+        vs.setAttribute("data-dir", pct > 0 ? "up" : pct < 0 ? "down" : "flat");
+        tile.appendChild(vs);
+      }
+      box.appendChild(tile);
+    });
+    if (!LV.picks.length) box.appendChild(el("p", "dd-live-status", "No prices chosen. Open Choose prices below."));
+    var btn = $("live-refresh");
+    btn.disabled = LV.busy || !LV.mcp || !LV.picks.length;
+    btn.textContent = LV.busy ? "Refreshing…" : "Refresh " + LV.picks.length + (LV.picks.length === 1 ? " price" : " prices");
+    var calls = LV.usage && LV.usage.day === mytDay(now) && isNum(LV.usage.calls) ? Number(LV.usage.calls) : 0;
+    var status = LV.msg;
+    if (!status) {
+      if (!LV.ready) status = "Connecting to Alpha Vantage…";
+      else if (!LV.mcp) status = "Live prices aren't available in this view.";
+      else status = "Each refresh uses one Alpha Vantage call per price. This page has used " + calls + (calls === 1 ? " call" : " calls") + " today.";
+    }
+    $("live-status").textContent = status;
+  }
+
+  function callOnce(c, retry) {
+    return LV.mcp.callTool(AV, c.tool, c.input, { cache: false }).catch(function (err) {
+      if (retry && err && err.retryable) {
+        var wait = Math.min(isNum(err.retryAfterMs) ? Number(err.retryAfterMs) : 2500, 15000) + Math.random() * 800;
+        return new Promise(function (r) { setTimeout(r, wait); }).then(function () { return callOnce(c, false); });
+      }
+      throw err;
+    });
+  }
+
+  function refreshLive() {
+    if (LV.busy || !LV.mcp) return;
+    var now = Date.now();
+    var queue = LV.picks.filter(function (k) { var d = LV.docs[k]; return !(d && d.fetched_at && now - Date.parse(d.fetched_at) < MIN_GAP_MS); });
+    var skipped = LV.picks.length - queue.length;
+    if (!queue.length) { LV.msg = "All chosen prices were refreshed in the last 5 minutes. Nothing was called."; renderLive(); return; }
+    LV.busy = true; LV.msg = ""; renderLive();
+    var done = 0, calls = 0, stop = null, unread = [];
+    function next() {
+      if (!queue.length || stop) { finish(); return; }
+      var c = cfgFor(queue.shift());
+      calls++;
+      callOnce(c, true).then(function (res) {
+        var parsed = parseLive(c, res && res.payload);
+        if (parsed && parsed.limit) { stop = "Alpha Vantage's daily limit is used up. Try again tomorrow."; return; }
+        if (!parsed) { unread.push(c.label); return; }
+        var doc = { key: c.key, value: parsed.value, source_time: parsed.at, fetched_at: new Date().toISOString(), tool: c.tool };
+        LV.docs[c.key] = doc;
+        done++;
+        if (S.db) return S.db.doc("live/" + c.key).set(doc).catch(function () { /* the tile still shows it */ });
+      }).catch(function (err) { stop = errMsg(err); }).then(function () { renderLive(); setTimeout(next, 1200); });
+    }
+    function finish() {
+      var day = mytDay(Date.now());
+      var prev = LV.usage && LV.usage.day === day && isNum(LV.usage.calls) ? Number(LV.usage.calls) : 0;
+      LV.usage = { day: day, calls: prev + calls };
+      if (S.db) S.db.doc("live/_usage").set(LV.usage).catch(function () { /* count is a convenience */ });
+      LV.busy = false;
+      var parts = [];
+      if (stop) parts.push(stop);
+      if (done) parts.push("Updated " + done + (done === 1 ? " price." : " prices."));
+      if (unread.length) parts.push("Couldn't read Alpha Vantage's answer for " + unread.join(", ") + ".");
+      if (skipped) parts.push(skipped + " refreshed in the last 5 minutes " + (skipped === 1 ? "was" : "were") + " skipped.");
+      LV.msg = parts.join(" ");
+      renderLive();
+    }
+    next();
+  }
+
+  function subscribeLive() {
+    S.db.collection("live").onSnapshot(function (snap) {
+      var docs = {};
+      snap.docs.forEach(function (d) {
+        var x = d.data();
+        if (!x) return;
+        if (d.id === "_usage") LV.usage = x;
+        else if (typeof x.key === "string") docs[x.key] = x;
+      });
+      if (!LV.busy) LV.docs = docs; else Object.keys(docs).forEach(function (k) { if (!LV.docs[k]) LV.docs[k] = docs[k]; });
+      renderLive();
+    }, function () { /* tiles show what this visit fetched */ });
+  }
+
+  function initLive() {
+    LV.picks = loadPicks();
+    renderPicker();
+    renderLive();
+    $("live-refresh").addEventListener("click", refreshLive);
+    setInterval(renderLive, 60000);
+    if (!window.claude || typeof window.claude.use !== "function") { LV.ready = true; renderLive(); return; }
+    window.claude.use("mcp").then(function (m) { LV.mcp = m; LV.ready = true; renderLive(); })
+      .catch(function () { LV.ready = true; renderLive(); });
+  }
+
   S.area = parseHash().area;
   renderTabs();
+  initLive();
   var noStore = ["Reads aren't available in this view.", "Open the page on claude.ai while signed in to read them."];
   if (!window.claude || typeof window.claude.use !== "function") { setState(noStore); return; }
   window.claude.use("db").then(function (db) {
@@ -1010,6 +1247,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     S.area = null;
     route();
     subscribeCloses();
+    subscribeLive();
   }).catch(function () { setState(noStore); });
 })();
 </script>
