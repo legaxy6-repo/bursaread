@@ -18,6 +18,7 @@ DATE DISCIPLINE: web search often returns the same date from a previous year, an
 
 ## 2. Sources
 Allowed: Bernama (bernama.com/en/market), The Star, The Edge Malaysia, NST, FMT, Business Today, Malay Mail, BNM (bnm.gov.my), DOSM, Bursa Malaysia announcements, Securities Commission, AP, Reuters, CNBC, FT, WSJ, Bloomberg, and primary data (BLS, BEA, Federal Reserve, US Treasury, SEC filings).
+AP LINKS: link the apnews.com page for an AP story. Use a syndicated copy (a local TV or newspaper site carrying the same AP story) only if apnews.com can't be read, and then set source to "AP (via <site>)".
 Never: Substack, AI-generated market sites, forecast or prediction sites, Yahoo price pages, broker blogs (e.g. Rakuten Trade), forums, or anything with no named reporter or agency.
 Alpha Vantage connector (ToolSearch "+Alpha_Vantage"): free key, 25 calls/day, shared with the US Open Brief (which uses 5). Use AT MOST 12 calls, ONE AT A TIME, never in parallel. On rate_limit wait a few seconds and retry once, then fall back to reported figures. Useful: TREASURY_YIELD daily 2year and 10year (read only the latest rows), BRENT daily, GOLD_SILVER_SPOT GOLD, GLOBAL_QUOTE SPY (day's high/low vs close = the session's shape), CURRENCY_EXCHANGE_RATE for a cross BNM doesn't give. Label every Alpha Vantage figure: source "Alpha Vantage", url null, and its time in as_of.
 
@@ -69,7 +70,7 @@ Plain-text strings, https-only urls, numbers as JSON numbers, null when unconfir
  "learn": {"concept": "", "body": "<4–6 sentences using today's numbers>", "question": "", "answer": "<2–3 sentences>"},
  "sources": [{"time_myt": "<e.g. 26 Nov, 17:40>", "outlet": "", "title": "<your own paraphrase>", "url": ""}]
 }
-Sizes: one_thing 3–7 steps ending with ONE "So what" step (kind inference) that teaches the cause-and-effect lesson for the ringgit, rates or Bursa. Calendar max 8, most important first. Sections 0–3, each 2–4 points. Sources = every url used in the edition, newest first.
+Sizes: one_thing 3–7 steps ending with ONE "So what" step (kind inference) that teaches the cause-and-effect lesson for the ringgit, rates or Bursa. Calendar max 8, in time order (today first, items with no stated time after the timed ones for that day). Sections 0–3, each 2–4 points. Sources = every url used in the edition, newest first.
 Learn: one concept today's story illustrates. Favour what a retail treasury desk uses: cross rates, carry and rate differentials, how US yields reach MGS and the ringgit, the dollar index, FX forwards and hedging, OPR transmission to deposit and loan rates, bond prices vs yields, foreign flows, gold vs real yields, CPO and the ringgit, intraday reversals.
 
 RULES FOR EVERY LINE
@@ -80,7 +81,7 @@ RULES FOR EVERY LINE
 
 ## 5. The closes row (ArtifactData collection "closes", doc_id = bursa_date)
 {"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "note": "Morning Read <today>"}
-Use exactly the confirmed numbers from the edition (null where unconfirmed). Keep USD/MYR on the 6pm-close basis every day so the series stays consistent. The US-side numbers belong to the US session that ended overnight; that is expected.
+Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (6pm ringgit closes, BNM 5pm middle rates, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. A figure taken at another time (a BNM 9am middle rate, a live spot price) may appear in the edition with its as_of label but must be null here. Keep USD/MYR on the 6pm-close basis every day so the series stays consistent. The US-side numbers belong to the US session that ended overnight; that is expected.
 
 ## 6. Write and confirm
 Write both documents in ONE ArtifactData "batch" of two "set" writes (pin if_version on any document that already exists). Then "get" editions/<today> once and confirm it saved.
