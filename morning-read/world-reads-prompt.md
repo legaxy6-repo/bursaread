@@ -32,7 +32,8 @@ Include only the numbers you can confirm for the right session; leave the rest o
 - No buy/sell calls, price targets or "readers should…". Analysis and education only. Be blunt: say plainly when a move is noise.
 
 ## 4. Continuity
-Before writing each area, read that area's most recent earlier read (ArtifactData "query" collection "reads" with where area == <area>, order_by date desc, limit 1). Carry its developments forward: mark one "building" if it moved on, "fading" if it went quiet (drop it after a fading day), and "new" for anything that started in this session.
+Before writing each area, read that area's most recent earlier read (ArtifactData "query" collection "reads" with where area == <area>, order_by date desc, limit 1) and its independent check (ArtifactData "query" collection "checks" with where date == <that read's date>; use the flags whose doc is "reads/<area>-<that date>"). Carry its developments forward: mark one "building" if it moved on, "fading" if it went quiet (drop it after a fading day), and "new" for anything that started in this session.
+CHECKED ERRORS DON'T CARRY: never repeat a claim or number the check flagged with severity "error". Re-open its source. If the flag is right, drop the item or restate it correctly, and add {"where": "<e.g. US read, 26 Nov>", "was": "<what it said>", "now": "<what the source says>", "source": "", "url": ""} to a "corrections" list in your new document. If you think the flag is wrong, carry the item only after re-verifying it yourself, and add no correction. If there is no check for that read, re-verify a development's source before carrying it.
 
 ## 5. Schema (one document per area)
 {
@@ -49,9 +50,10 @@ Before writing each area, read that area's most recent earlier read (ArtifactDat
  "developments": [{"title": "<short>", "status": "new" | "building" | "fading", "text": "<one or two sentences>", "source": "", "url": "", "kind": "reported" | "inference"}],
  "calendar": [{"time_myt": "<e.g. Fri 27 Nov, 21:30>", "region": "US|CN|HK|JP|SG|EU|UK", "event": "", "why": "<what result would change the story>", "source": "", "url": ""}],
  "for_malaysia": "<1–3 sentences, desk inference: what this area's day means for the ringgit, MGS yields, Bursa sectors or Malaysian trade; name the channel (rates, currency, trade, commodities, sentiment)>",
- "sources": [{"time_myt": "", "outlet": "", "title": "<your own paraphrase>", "url": ""}]
+ "sources": [{"time_myt": "", "outlet": "", "title": "<your own paraphrase>", "url": ""}],
+ "corrections": [{"where": "", "was": "", "now": "", "source": "", "url": ""}]
 }
-Sizes: points 0–5, most important first. For rates and yields use "unit": "%" and "chg_bp" instead of chg/pct; for the 1-year LPR, policy rates and SORA give the level and chg_bp. developments 0–4. calendar 0–5, in time order. sources = every url used, newest first.
+Sizes: corrections 0–5, only for flagged errors you confirmed in step 4 (else []). points 0–5, most important first. For rates and yields use "unit": "%" and "chg_bp" instead of chg/pct; for the 1-year LPR, policy rates and SORA give the level and chg_bp. developments 0–4. calendar 0–5, in time order. sources = every url used, newest first.
 
 ## 6. The Global read (area "gl"), written last
 Its job is to save readers from wading through everything: a neutral summary of the whole world's market day in one place. Build it from the five area reads you just wrote (reuse their verified facts and source urls; do not add new unverified claims).

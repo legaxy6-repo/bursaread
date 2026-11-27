@@ -4,6 +4,7 @@
 Input:  site/data/editions/<date>.json   (Malaysia reads)
         site/data/reads/<area>-<date>.json (Global, US, China, Japan, Singapore, Europe)
         site/data/closes/<date>.json     (closing numbers)
+        site/data/checks/<date>-am.json  (the independent check's findings)
         site/config.json                 (domain, newsletter form action)
 Output: docs/  (GitHub Pages can serve this folder)
 
@@ -14,6 +15,7 @@ import datetime as dt
 import html
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -175,9 +177,138 @@ def canon(rows, date, aid):
         if OWNER.get(k) and OWNER[k] != aid:
             o = owner_row(k, date)
             if o:
-                r = dict(o, label=s(r.get("label")) or s(o.get("label")))
+                r = dict(o, label=s(r.get("label")) or s(o.get("label")), _canon=True)
         out.append(r)
     return out
+
+
+# ---------- the independent check ----------
+CHECKS = [c for c in load_dir("checks") if isinstance(c.get("date"), str)]
+CHECK_START = "2026-11-27"
+PROBLEM = {
+    "number_differs": "Number differs from the source", "number_not_on_page": "Number not on the linked page",
+    "claim_not_on_page": "Claim not on the linked page", "wrong_date": "Source is from another day",
+    "source_not_allowed": "Source not on the allowed list", "link_broken": "Link broken",
+    "owner_mismatch": "Differs from the read that owns this number", "closes_mismatch": "History row differs from the read",
+    "math": "Change doesn't add up", "intraday_unlabelled": "Intraday figure not labelled",
+    "inference_mislabelled": "Inference states an unsourced fact", "calendar": "Calendar time or date off",
+    "source_spread": "Leans on one outlet", "gap_wording": "Gap note wording", "advice": "Reads as advice",
+    "repeated_error": "Repeats an earlier error", "low_verifiability": "Much of this read can't be checked",
+}
+CHK = {"flags": []}  # the check for the read being rendered
+
+
+def check_for(aid, rd):
+    date = s(rd.get("date"))
+    ids = ["editions/" + date, "closes/" + s(rd.get("bursa_date"))] if aid == "my" else [f"reads/{aid}-{date}"]
+    out = {"docs": [], "flags": [], "unv": [], "at": ""}
+    for c in CHECKS:
+        if c.get("date") != date:
+            continue
+        hit = False
+        for d in arr(c.get("docs")):
+            if isinstance(d, dict) and d.get("doc") in ids:
+                out["docs"].append(d)
+                hit = True
+        out["flags"] += [f for f in arr(c.get("flags")) if isinstance(f, dict) and f.get("doc") in ids]
+        out["unv"] += [u for u in arr(c.get("unverifiable")) if isinstance(u, dict) and u.get("doc") in ids]
+        if hit and s(c.get("checked_at")) > out["at"]:
+            out["at"] = s(c.get("checked_at"))
+    return out
+
+
+def flag_html(where, key=None, canon_row=False):
+    if not where:
+        return ""
+    grp = re.sub(r"\[\d+\]$", "", where)
+    out = ""
+    for f in CHK["flags"]:
+        w = s(f.get("where"))
+        if not (w == where or (key and s(f.get("key")) == key and re.sub(r"\[\d+\]$", "", w) == grp)):
+            continue
+        if canon_row and f.get("problem") == "owner_mismatch":
+            continue  # the site already shows the owning read's figure
+        err = f.get("severity") == "error"
+        tag = f'<span class="dd-tag {"dd-tag-flag" if err else "dd-tag-warn"}">{"Check: error" if err else "Check: note"}</span>'
+        txt = PROBLEM.get(s(f.get("problem")), "Flagged by the check") + (". " + s(f.get("detail")) if s(f.get("detail")) else "")
+        u = safe_url(f.get("checked_url"))
+        link = f' <a href="{E(u)}" target="_blank" rel="noopener">Page checked ↗</a>' if u else ""
+        out += f"<p>{tag} {E(txt)}{link}</p>"
+    return f'<div class="dd-flagnote">{out}</div>' if out else ""
+
+
+def where_label(w):
+    w = s(w)
+    for pat, fn in (
+        (r"^one_thing\.steps\[(\d+)\]", lambda m: f"The one thing, step {int(m[1]) + 1}"),
+        (r"^sections\[(\d+)\]\.points\[(\d+)\]", lambda m: f"Section {int(m[1]) + 1}, point {int(m[2]) + 1}"),
+        (r"^us_open\.drivers\[(\d+)\]", lambda m: f"US open, driver {int(m[1]) + 1}"),
+        (r"^us_open\.board", lambda m: "US open numbers"), (r"^us_open\.watch", lambda m: "US open, rest of session"),
+        (r"^points\[(\d+)\]", lambda m: f"Point {int(m[1]) + 1}"),
+        (r"^developments\[(\d+)\]", lambda m: f"Development {int(m[1]) + 1}"),
+        (r"^(fx|rates|markets|numbers)\[", lambda m: "The numbers"), (r"^calendar", lambda m: "Calendar"),
+        (r"^closes\.", lambda m: f"History row ({w[7:]})"), (r"^gaps", lambda m: "Gaps note"),
+    ):
+        m = re.match(pat, w)
+        if m:
+            return fn(m)
+    return "Whole read" if w in ("", "read") else w
+
+
+def check_panel(aid, rd):
+    c = check_for(aid, rd)
+    CHK["flags"] = c["flags"]
+    docs = [d for d in c["docs"] if d.get("status") != "missing"]
+    if not docs:
+        msg = ("Not checked: this read came before the independent check started." if s(rd.get("date")) < CHECK_START
+               else "Not checked yet. An independent check re-opens every source at about 7:45am MYT, and 11:45pm for the US open.")
+        return f'<section class="dd-check" id="check" aria-label="Independent check" data-s="none"><p class="dd-check-line">{E(msg)}</p></section>'
+    num = lambda v: int(v) if is_num(v) else 0
+    items = sum(num(d.get("items")) for d in docs)
+    ok = sum(num(d.get("verified")) for d in docs)
+    unv = sum(num(d.get("unverifiable")) for d in docs)
+    errs = sum(1 for f in c["flags"] if f.get("severity") == "error")
+    notes = len(c["flags"]) - errs
+    t = myt(c["at"]) if c["at"] else None
+    line = f"Independently checked{' at ' + t + ' MYT' if t else ''}: {ok} of {items} items match their sources."
+    if errs:
+        line += f" {errs} error{'s' if errs != 1 else ''}."
+    if notes:
+        line += f" {notes} note{'s' if notes != 1 else ''}."
+    if unv:
+        line += f" {unv} couldn't be opened."
+    inner = f'<p class="dd-check-line">{E(line)}</p>'
+    for d in docs:
+        uo = rd.get("us_open") if isinstance(rd.get("us_open"), dict) else {}
+        cur = uo.get("published_at") if d.get("part") == "us_open" else (None if s(d.get("doc")).startswith("closes/") else rd.get("published_at"))
+        if s(d.get("published_at")) and s(cur) and d.get("published_at") != cur:
+            at = myt(cur)
+            inner += (f'<p class="dd-note">{"The US open update" if d.get("part") == "us_open" else "This read"} changed after the check'
+                      f'{" (rewritten at " + at + " MYT)" if at else ""}; it hasn\'t been re-checked.</p>')
+    if aid == "us" and isinstance(rd.get("us_open"), dict) and not any(d.get("part") == "us_open" for d in docs):
+        inner += '<p class="dd-note">The US open update isn\'t checked yet; that check runs at about 11:45pm MYT.</p>'
+    lis = ""
+    for f in c["flags"]:
+        txt = PROBLEM.get(s(f.get("problem")), "Flagged") + (f" ({s(f.get('item'))})" if s(f.get("item")) else "") + (". " + s(f.get("detail")) if s(f.get("detail")) else "")
+        u = safe_url(f.get("checked_url"))
+        link = f' <a href="{E(u)}" target="_blank" rel="noopener">Page checked ↗</a>' if u else ""
+        lis += f'<li><strong>{"Error" if f.get("severity") == "error" else "Note"} · {E(where_label(f.get("where")))}:</strong> {E(txt)}{link}</li>'
+    for x in c["unv"]:
+        lis += (f'<li>Couldn\'t be opened · {E(where_label(x.get("where")))}{": " + E(x.get("item")) if s(x.get("item")) else ""}'
+                f'{" (" + E(x.get("reason")) + ")" if s(x.get("reason")) else ""}</li>')
+    if lis:
+        inner += f'<details id="check-details"><summary>What the check found ({len(c["flags"]) + len(c["unv"])})</summary><ul>{lis}</ul></details>'
+    cor = [x for x in arr(rd.get("corrections")) if isinstance(x, dict) and (s(x.get("now")) or s(x.get("was")))]
+    if cor:
+        cl = ""
+        for x in cor:
+            u = safe_url(x.get("url"))
+            link = f'<a href="{E(u)}" target="_blank" rel="noopener">{E(s(x.get("source")) or "Source")} ↗</a>' if u else ""
+            cl += (f'<li>{E(s(x.get("where")) + ": ") if s(x.get("where")) else ""}{"was " + E(x.get("was")) + ", " if s(x.get("was")) else ""}'
+                   f'now {E(x.get("now"))} {link}</li>')
+        inner += f"<p>Corrected from an earlier read:</p><ul>{cl}</ul>"
+    state = "error" if errs else "warn" if notes else "clean"
+    return f'<section class="dd-check" id="check" aria-label="Independent check" data-s="{state}">{inner}</section>'
 
 
 CLOSES = sorted((c for c in load_dir("closes") if isinstance(c.get("date"), str)), key=lambda c: c["date"])
@@ -282,7 +413,7 @@ def moved(r):
     return False
 
 
-def board_row(r, idp):
+def board_row(r, idp, where=None):
     k0 = s(r.get("key"))
     g = GLOSS.get(k0)
     k = s(r.get("key"))
@@ -313,7 +444,7 @@ def board_row(r, idp):
     defn = f'<p class="dd-def" id="def-{rid}" hidden>{E(g[1])}</p>' if g else ""
     return (f'<div class="dd-row" id="{rid}" data-dir="{d}"><div class="dd-r-label">{label}{flag}{intra}</div>'
             f'<div class="dd-r-level">{E(lv + unit) if lv is not None else "—"}</div><div class="dd-r-chg">{E(chg)}</div>'
-            f'<div class="dd-r-meta">{as_of}{src_html}</div><div class="dd-r-spark"></div>{defn}</div>')
+            f'<div class="dd-r-meta">{as_of}{src_html}</div><div class="dd-r-spark"></div>{defn}{flag_html(where, k, bool(r.get("_canon")))}</div>')
 
 
 def board_foot(note, gaps):
@@ -326,9 +457,9 @@ def board_foot(note, gaps):
     return f'<div class="dd-board-foot">{out}</div>' if out else ""
 
 
-def points(items, prefix, on_global=False):
+def points(items, prefix, on_global=False, base=None):
     out = ""
-    for p in arr(items):
+    for i, p in enumerate(arr(items)):
         if not isinstance(p, dict) or not s(p.get("text")):
             continue
         c = cite(p)
@@ -337,7 +468,7 @@ def points(items, prefix, on_global=False):
             chip = f'<a class="dd-area-chip" href="{E(href(prefix, area_dir(pa)))}">{E(AREA[pa][2])} read →</a>'
             c = c.replace('<span class="dd-cite">', '<span class="dd-cite">' + chip, 1)
         cls = ' class="dd-inf"' if p.get("kind") == "inference" else ""
-        out += f"<li{cls}><p>{E(p['text'])}</p>{c}</li>"
+        out += f"<li{cls}><p>{E(p['text'])}</p>{c}{flag_html(f'{base}[{i}]' if base else None)}</li>"
     return f'<ul class="dd-points">{out}</ul>' if out else ""
 
 
@@ -373,11 +504,11 @@ def us_open(rd):
     if not isinstance(u, dict):
         return ""
     when = s(u.get("as_of")) or ((myt(u.get("published_at")) or "") + " MYT")
-    inner = points(u.get("drivers"), "")
-    rows = [r for r in arr(u.get("board")) if isinstance(r, dict)]
+    inner = points(u.get("drivers"), "", base="us_open.drivers")
+    rows = [(i, r) for i, r in enumerate(arr(u.get("board"))) if isinstance(r, dict)]
     if rows:
         inner += ('<div class="dd-board"><div class="dd-bgroup"><h3>At the open, vs prior close</h3>'
-                  + "".join(board_row(r, "uo-") for r in rows) + "</div></div>")
+                  + "".join(board_row(r, "uo-", f"us_open.board[{i}]") for i, r in rows) + "</div></div>")
     if cal_list(u.get("watch")):
         inner += "<h3>Rest of the US session</h3>" + cal_list(u.get("watch"))
     if s(u.get("for_tomorrow")):
@@ -387,14 +518,16 @@ def us_open(rd):
 
 # ---------- read bodies ----------
 def malaysia_body(ed, prefix):
-    out = us_open(ed)
+    out = check_panel("my", ed) + us_open(ed)
     ot = ed.get("one_thing") if isinstance(ed.get("one_thing"), dict) else {}
-    steps = [x for x in arr(ot.get("steps")) if isinstance(x, dict)]
-    lis = ""
-    for i, st in enumerate(steps):
+    lis, n = "", 0
+    for i, st in enumerate(arr(ot.get("steps"))):
+        if not isinstance(st, dict):
+            continue
+        n += 1
         so = s(st.get("node")).lower().startswith("so what")
-        lis += (f'<li class="dd-step{" dd-sowhat" if so else ""}"><div class="dd-node"><span class="dd-num">{i + 1}</span>{E(st.get("node"))}</div>'
-                f'<div class="dd-step-body"><p>{E(st.get("fact"))}</p>{cite(st)}</div></li>')
+        lis += (f'<li class="dd-step{" dd-sowhat" if so else ""}"><div class="dd-node"><span class="dd-num">{n}</span>{E(st.get("node"))}</div>'
+                f'<div class="dd-step-body"><p>{E(st.get("fact"))}</p>{cite(st)}{flag_html(f"one_thing.steps[{i}]")}</div></li>')
     sub = f"<h3>{E(ot.get('title'))}</h3>" if s(ot.get("title")) and s(ed.get("headline")) else ""
     out += section("one-thing", "The one thing", s(ed.get("headline")) or s(ot.get("title")) or "Today's main story",
                    sub + (f'<ol class="dd-chain">{lis}</ol>' if lis else '<p class="dd-note">No chain in this read.</p>'))
@@ -402,7 +535,8 @@ def malaysia_body(ed, prefix):
     for key, title in (("fx", "Ringgit board · per unit unless stated"), ("rates", "Rates"), ("markets", "Markets")):
         rows = canon([r for r in arr(ed.get(key)) if isinstance(r, dict)], s(ed.get("date")), "my")
         if rows:
-            groups += f'<div class="dd-bgroup" id="board-{key}"><h3>{E(title)}</h3>' + "".join(board_row(r, "row-") for r in rows) + "</div>"
+            groups += (f'<div class="dd-bgroup" id="board-{key}"><h3>{E(title)}</h3>'
+                       + "".join(board_row(r, "row-", f"{key}[{i}]") for i, r in enumerate(rows)) + "</div>")
     if groups:
         out += section("rate-board", "The numbers", None, f'<div class="dd-board">{groups}{board_foot(ed.get("numbers_note"), ed.get("gaps"))}</div>' + history(ed))
     dk = ed.get("desk")
@@ -421,7 +555,7 @@ def malaysia_body(ed, prefix):
             continue
         trig = f'<p class="dd-trigger">Why it\'s here: {E(sec.get("trigger"))}</p>' if s(sec.get("trigger")) else ""
         out += section("sec-" + (s(sec.get("key")) or str(i)), s(sec.get("title")) or "Also today", s(sec.get("headline")) or None,
-                       trig + points(sec.get("points"), prefix))
+                       trig + points(sec.get("points"), prefix, base=f"sections[{i}].points"))
     ln = ed.get("learn")
     if isinstance(ln, dict) and s(ln.get("concept")):
         inner = f"<h3>{E(ln['concept'])}</h3>" + (f"<p>{E(ln['body'])}</p>" if s(ln.get("body")) else "")
@@ -437,23 +571,23 @@ STATUS = {"new": "New", "building": "Building", "fading": "Fading"}
 
 
 def area_body(aid, rd, prefix):
-    out = us_open(rd)
-    pts = points(rd.get("points"), prefix, on_global=(aid == "gl"))
+    out = check_panel(aid, rd) + us_open(rd)
+    pts = points(rd.get("points"), prefix, on_global=(aid == "gl"), base="points")
     out += section("worth-reading", "The day, worldwide" if aid == "gl" else "Worth reading", s(rd.get("headline")) or None,
                    pts or '<p class="dd-note">A quiet session. Nothing here is worth your time today.</p>')
     rows = canon([r for r in arr(rd.get("numbers")) if isinstance(r, dict)], s(rd.get("date")), aid)
     if rows:
         out += section("area-numbers", "The numbers", None,
-                       '<div class="dd-board"><div class="dd-bgroup"><h3>Closing levels and rates</h3>' + "".join(board_row(r, "an-") for r in rows)
+                       '<div class="dd-board"><div class="dd-bgroup"><h3>Closing levels and rates</h3>' + "".join(board_row(r, "an-", f"numbers[{i}]") for i, r in enumerate(rows))
                        + "</div>" + board_foot(rd.get("numbers_note"), rd.get("gaps")) + "</div>")
     devs = ""
-    for d in arr(rd.get("developments")):
+    for di, d in enumerate(arr(rd.get("developments"))):
         if not isinstance(d, dict) or not s(d.get("title")):
             continue
         st = s(d.get("status")).lower()
         chip = f'<span class="dd-status" data-s="{E(st)}">{STATUS[st]}</span>' if st in STATUS else ""
         txt = f"<p>{E(d['text'])}</p>" if s(d.get("text")) else ""
-        devs += f'<li><div class="dd-dev-head">{chip}<span class="dd-dev-title">{E(d["title"])}</span></div>{txt}{cite(d)}</li>'
+        devs += f'<li><div class="dd-dev-head">{chip}<span class="dd-dev-title">{E(d["title"])}</span></div>{txt}{cite(d)}{flag_html(f"developments[{di}]")}</li>'
     if devs:
         out += section("developments", "Developments to watch", None, f'<ul class="dd-devs">{devs}</ul>')
     cl = cal_list(rd.get("calendar"))
@@ -684,8 +818,8 @@ def build():
 <p>Every line tagged Reported links to the exact page that states it. Lines tagged Desk inference are the desk's own reasoning and are never presented as reporting. If no reporter gave a reason for a move, the read says "no catalyst reported".</p>
 <h3>Numbers</h3>
 <p>Ringgit rates are Bank Negara Malaysia's 5pm middle rates. Other figures carry their time and source. A number that can't be confirmed is left blank and listed under "Left blank". Market prices are shown as reported, not as a live feed.</p>
-<h3>Corrections</h3>
-<p>Errors are corrected in place, with a dated note in the read. Spot one? Use the contact on this page once it's live.</p>
+<h3>Independent check and corrections</h3>
+<p>A separate process, which did not write the reads, re-opens every linked source each morning and flags any line or number that doesn't match, as a bank's maker-checker control would. Flags appear on the read itself. Reads are never quietly edited: a confirmed error is corrected in the next read, under "Corrected from an earlier read", and the history behind the charts is fixed at the same time.</p>
 <h3>Not advice</h3>
 <p>Analysis and education only. Nothing on this site is a recommendation to buy or sell anything.</p>
 </div>"""

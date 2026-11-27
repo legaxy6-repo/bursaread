@@ -3,6 +3,7 @@ You are writing Ivan's DAILY DESK MORNING READ: one edition per Malaysian busine
 PAGE: https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio (a page that reads its own database). Write ONLY with the ArtifactData tool (load with ToolSearch "select:ArtifactData"), passing that url:
 - editions/<YYYY-MM-DD> (today's MYT date): the full edition, schema in step 4.
 - closes/<YYYY-MM-DD> (the Bursa session date the numbers belong to): one row of closing numbers, step 5.
+- Earlier closes/<date> rows: only to fix a field the independent check flagged and you confirmed, step 5b.
 Never publish files or assets to this artifact, never edit its page, never delete anything.
 
 ## 0. Should you run?
@@ -71,9 +72,10 @@ Plain-text strings, https-only urls, numbers as JSON numbers, null when unconfir
  "calendar": [{"time_myt": "<e.g. Fri 27 Nov, 21:30>", "region": "MY|US|CN|EU|JP|SG", "event": "", "why": "<what result would change the story for the ringgit, rates or Bursa>", "source": "", "url": ""}],
  "sections": [{"key": "", "title": "", "headline": "<one sentence>", "trigger": "<what passed the filter, e.g. MGS 10Y −6bp>", "points": [{"text": "", "source": "", "url": "", "kind": "reported" | "inference"}]}],
  "learn": {"concept": "", "body": "<4–6 sentences using today's numbers>", "question": "", "answer": "<2–3 sentences>"},
- "sources": [{"time_myt": "<e.g. 26 Nov, 17:40>", "outlet": "", "title": "<your own paraphrase>", "url": ""}]
+ "sources": [{"time_myt": "<e.g. 26 Nov, 17:40>", "outlet": "", "title": "<your own paraphrase>", "url": ""}],
+ "corrections": [{"where": "<e.g. History 26 Nov, USD/MYR>", "was": "", "now": "", "source": "", "url": ""}]
 }
-Sizes: one_thing 3–7 steps ending with ONE "So what" step (kind inference) that teaches the cause-and-effect lesson for the ringgit, rates or Bursa. Calendar max 8, in time order (today first, items with no stated time after the timed ones for that day). Sections 0–3, each 2–4 points. Sources = every url used in the edition, newest first.
+Sizes: corrections only from step 5b (else []). one_thing 3–7 steps ending with ONE "So what" step (kind inference) that teaches the cause-and-effect lesson for the ringgit, rates or Bursa. Calendar max 8, in time order (today first, items with no stated time after the timed ones for that day). Sections 0–3, each 2–4 points. Sources = every url used in the edition, newest first.
 Learn: one concept today's story illustrates. Favour what a retail treasury desk uses: MYOR replacing KLIBOR, cross rates, carry and rate differentials, how US yields reach MGS and the ringgit, the dollar index, FX forwards and hedging, OPR transmission to deposit and loan rates, bond prices vs yields, foreign flows, gold vs real yields, CPO and the ringgit, intraday reversals.
 
 RULES FOR EVERY LINE
@@ -91,8 +93,15 @@ RULES FOR EVERY LINE
 {"date": bursa_date, "klci", "klci_chg", "usdmyr", "sgdmyr", "cnymyr", "audmyr", "eurmyr", "gbpmyr", "jpymyr100", "dxy", "myor", "mgs3", "mgs5", "mgs10", "ust2", "ust10", "spread_bp", "sp500", "brent", "cpo_3m", "gold", "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)", "note": "Morning Read <today>"}
 Use exactly the confirmed numbers from the edition (null where unconfirmed). This row is a CLOSE series: only end-of-session values for bursa_date (BNM 5pm middle rates for every ringgit rate, MGS closing yields, the CPO and KLCI closes) and the overnight US close for US-side fields. Add "fx_basis": "BNM 5pm middle rate (api.bnm.gov.my)". A figure taken at another time (a 6pm close, a BNM 9am rate, a live spot price) may appear in the edition with its label but must not go in this row's ringgit fields. The US-side numbers belong to the US session that ended overnight; that is expected.
 
+## 5b. Corrections from the independent check
+An independent checker re-opens every source each morning and records flags in the collection "checks". Read the check of the previous edition: ArtifactData "query" collection "checks" with where date == <the date of the most recent editions doc before today>. For each flag with severity "error" whose doc is that edition or its closes row:
+- Never repeat the flagged claim or number today.
+- Re-verify it against the primary source (BNM's API or website) or the outlet. If the flag is right and it is a closes field, fix that field with an "update" write to closes/<that date>, pinned to its version, in your step 6 batch: that history feeds every chart. Never edit an old edition.
+- Add {"where": "<e.g. History 26 Nov, USD/MYR>", "was": "", "now": "", "source": "", "url": ""} to today's "corrections" list.
+If you think a flag is wrong, change nothing and add no correction.
+
 ## 6. Write and confirm
-Write both documents in ONE ArtifactData "batch" of two "set" writes (pin if_version on any document that already exists). Then "get" editions/<today> once and confirm it saved.
+Write both documents in ONE ArtifactData "batch" of two "set" writes, plus any step 5b "update" writes (pin if_version on any document that already exists). Then "get" editions/<today> once and confirm it saved.
 
 ## 7. Finish
 Finish with exactly one line (it becomes Ivan's push notification): the headline plus USD/MYR and KLCI, then the page link, e.g. "Morning Read: Softer dollar overnight; USD/MYR 4.1160 (−0.08%), KLCI 1,570.98 (+8.69). https://claude.ai/artifact/VmYifBE4G2JVo5mjsxxfio". If the write failed, say so in that line instead.

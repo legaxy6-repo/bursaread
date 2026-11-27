@@ -278,6 +278,25 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-live { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; }
 .dd-live a { color: var(--ink); }
 
+/* Independent check */
+.dd-check { display: flex; flex-direction: column; gap: 0.55rem; padding: 0.85rem 1.1rem; border: 1px solid var(--line-strong); border-radius: var(--r); font-size: var(--s-sm); color: var(--ink); }
+.dd-check p { margin: 0; }
+.dd-check-line { display: flex; align-items: baseline; gap: 0.6rem; }
+.dd-check-line::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex: none; transform: translateY(-0.1em); }
+.dd-check[data-s="error"] .dd-check-line::before { background: var(--alert); }
+.dd-check[data-s="clean"] .dd-check-line::before { background: var(--signal); }
+.dd-check .dd-note { font-size: var(--s-xs); }
+.dd-check summary { cursor: pointer; font-size: var(--s-xs); color: var(--muted); }
+.dd-check ul { margin: 0.6rem 0 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: var(--s-xs); }
+.dd-check li a { color: var(--ink); }
+.dd-flagnote { display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--s-xs); line-height: 1.5; }
+.dd-flagnote p { margin: 0; }
+.dd-row .dd-flagnote { grid-column: 1 / -1; margin-top: 0.4rem; color: var(--board-ink); }
+.dd-tag-flag { border-color: var(--alert); }
+.dd-tag-warn { border-style: dashed; color: var(--muted); }
+.dd-row .dd-tag-flag { color: var(--board-ink); }
+.dd-row .dd-flagnote a { color: var(--board-ink); }
+.dd-row .dd-tag-warn { color: var(--board-muted); border-color: var(--board-muted); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
@@ -352,7 +371,7 @@ a:hover { text-decoration-color: var(--ink); }
 (function () {
   "use strict";
 
-  var S = { db: null, area: null, list: [], loaded: false, closes: [], limit: 30, unsubEd: null, current: null, sparks: [], width: 0, missing: null };
+  var S = { db: null, area: null, list: [], loaded: false, closes: [], checks: [], chk: null, limit: 30, unsubEd: null, current: null, sparks: [], width: 0, missing: null };
 
   var DP = { usdmyr: 4, sgdmyr: 4, cnymyr: 4, audmyr: 4, eurmyr: 4, gbpmyr: 4, jpymyr100: 4, hkdmyr100: 4, dxy: 2,
     opr: 2, mgs3: 2, mgs5: 2, mgs10: 2, ust2: 2, ust10: 2, spread_bp: 0,
@@ -436,6 +455,141 @@ a:hover { text-decoration-color: var(--ink); }
       wrap.appendChild(u ? linkOrText(src + " ↗", u) : el("span", "", src + " (link missing)"));
     }
     return wrap;
+  }
+
+  /* ---------- independent check ---------- */
+  var CHECK_START = "2026-11-27";
+  var PROBLEM = {
+    number_differs: "Number differs from the source", number_not_on_page: "Number not on the linked page",
+    claim_not_on_page: "Claim not on the linked page", wrong_date: "Source is from another day",
+    source_not_allowed: "Source not on the allowed list", link_broken: "Link broken",
+    owner_mismatch: "Differs from the read that owns this number", closes_mismatch: "History row differs from the read",
+    math: "Change doesn't add up", intraday_unlabelled: "Intraday figure not labelled",
+    inference_mislabelled: "Inference states an unsourced fact", calendar: "Calendar time or date off",
+    source_spread: "Leans on one outlet", gap_wording: "Gap note wording", advice: "Reads as advice",
+    repeated_error: "Repeats an earlier error", low_verifiability: "Much of this read can't be checked"
+  };
+  function checksFor(ed) {
+    if (!ed || !str(ed.date)) return null;
+    var date = str(ed.date);
+    var ids = S.area === "my" ? ["editions/" + date, "closes/" + str(ed.bursa_date)] : ["reads/" + S.area + "-" + date];
+    var out = { docs: [], flags: [], unv: [], at: null };
+    S.checks.forEach(function (c) {
+      if (!c || c.date !== date) return;
+      var hit = false;
+      arr(c.docs).forEach(function (d) { if (d && ids.indexOf(d.doc) >= 0) { out.docs.push(d); hit = true; } });
+      arr(c.flags).forEach(function (f) { if (f && ids.indexOf(f.doc) >= 0) out.flags.push(f); });
+      arr(c.unverifiable).forEach(function (u) { if (u && ids.indexOf(u.doc) >= 0) out.unv.push(u); });
+      if (hit && str(c.checked_at) && (!out.at || c.checked_at > out.at)) out.at = c.checked_at;
+    });
+    return out;
+  }
+  function flagsAt(where, key) {
+    if (!S.chk || !where) return [];
+    var grp = where.replace(/\[\d+\]$/, "");
+    return S.chk.flags.filter(function (f) {
+      var w = str(f.where);
+      if (w === where) return true;
+      return !!key && str(f.key) === key && w.replace(/\[\d+\]$/, "") === grp;
+    });
+  }
+  function markFlags(node, where, key) {
+    var fl = flagsAt(where, key);
+    if (!fl.length) return;
+    node.classList.add("dd-flagged");
+    var box = el("div", "dd-flagnote");
+    fl.forEach(function (f) {
+      var p = el("p", "");
+      var err = f.severity === "error";
+      p.appendChild(el("span", "dd-tag " + (err ? "dd-tag-flag" : "dd-tag-warn"), err ? "Check: error" : "Check: note"));
+      p.appendChild(document.createTextNode(" " + (PROBLEM[f.problem] || "Flagged by the check") + (str(f.detail) ? ". " + str(f.detail) : "")));
+      if (safeUrl(f.checked_url)) { p.appendChild(document.createTextNode(" ")); p.appendChild(linkOrText("Page checked ↗", f.checked_url)); }
+      box.appendChild(p);
+    });
+    node.appendChild(box);
+  }
+  function whereLabel(w) {
+    var m;
+    w = str(w);
+    if ((m = /^one_thing\.steps\[(\d+)\]/.exec(w))) return "The one thing, step " + (Number(m[1]) + 1);
+    if ((m = /^sections\[(\d+)\]\.points\[(\d+)\]/.exec(w))) return "Section " + (Number(m[1]) + 1) + ", point " + (Number(m[2]) + 1);
+    if ((m = /^us_open\.drivers\[(\d+)\]/.exec(w))) return "US open, driver " + (Number(m[1]) + 1);
+    if (/^us_open\.board/.test(w)) return "US open numbers";
+    if (/^us_open\.watch/.test(w)) return "US open, rest of session";
+    if ((m = /^points\[(\d+)\]/.exec(w))) return "Point " + (Number(m[1]) + 1);
+    if ((m = /^developments\[(\d+)\]/.exec(w))) return "Development " + (Number(m[1]) + 1);
+    if (/^(fx|rates|markets|numbers)\[/.test(w)) return "The numbers";
+    if (/^calendar/.test(w)) return "Calendar";
+    if (/^closes\./.test(w)) return "History row (" + w.slice(7) + ")";
+    if (/^gaps/.test(w)) return "Gaps note";
+    if (w === "read" || !w) return "Whole read";
+    return w;
+  }
+  function renderCheck(main, ed) {
+    var c = S.chk;
+    var box = el("section", "dd-check");
+    box.id = "check";
+    box.setAttribute("aria-label", "Independent check");
+    var docs = c ? c.docs.filter(function (d) { return d.status !== "missing"; }) : [];
+    if (!docs.length) {
+      box.setAttribute("data-s", "none");
+      box.appendChild(el("p", "dd-check-line", str(ed.date) < CHECK_START
+        ? "Not checked: this read came before the independent check started."
+        : "Not checked yet. An independent check re-opens every source at about 7:45am MYT, and 11:45pm for the US open."));
+      main.appendChild(box);
+      return;
+    }
+    var items = 0, ok = 0, unv = 0;
+    docs.forEach(function (d) { items += isNum(d.items) ? Number(d.items) : 0; ok += isNum(d.verified) ? Number(d.verified) : 0; unv += isNum(d.unverifiable) ? Number(d.unverifiable) : 0; });
+    var errs = c.flags.filter(function (f) { return f.severity === "error"; }).length;
+    var notes = c.flags.length - errs;
+    box.setAttribute("data-s", errs ? "error" : notes ? "warn" : "clean");
+    var t = mytTime(c.at);
+    var line = "Independently checked" + (t ? " at " + t + " MYT" : "") + ": " + ok + " of " + items + " items match their sources.";
+    if (errs) line += " " + errs + (errs === 1 ? " error." : " errors.");
+    if (notes) line += " " + notes + (notes === 1 ? " note." : " notes.");
+    if (unv) line += " " + unv + " couldn't be opened.";
+    box.appendChild(el("p", "dd-check-line", line));
+    docs.forEach(function (d) {
+      var cur = d.part === "us_open" ? (ed.us_open && ed.us_open.published_at) : (str(d.doc).indexOf("closes/") === 0 ? null : ed.published_at);
+      if (str(d.published_at) && str(cur) && d.published_at !== cur) {
+        var at = mytTime(cur);
+        box.appendChild(el("p", "dd-note", (d.part === "us_open" ? "The US open update" : "This read") + " changed after the check" + (at ? " (rewritten at " + at + " MYT)" : "") + "; it hasn't been re-checked."));
+      }
+    });
+    if (S.area === "us" && ed.us_open && typeof ed.us_open === "object" && !docs.some(function (d) { return d.part === "us_open"; })) {
+      box.appendChild(el("p", "dd-note", "The US open update isn't checked yet; that check runs at about 11:45pm MYT."));
+    }
+    if (c.flags.length || c.unv.length) {
+      var det = el("details", "");
+      det.id = "check-details";
+      det.appendChild(el("summary", "", "What the check found (" + (c.flags.length + c.unv.length) + ")"));
+      var ul = el("ul", "");
+      c.flags.forEach(function (f) {
+        var li = el("li", "");
+        li.appendChild(el("strong", "", (f.severity === "error" ? "Error" : "Note") + " · " + whereLabel(f.where) + ": "));
+        li.appendChild(document.createTextNode((PROBLEM[f.problem] || "Flagged") + (str(f.item) ? " (" + str(f.item) + ")" : "") + (str(f.detail) ? ". " + str(f.detail) : "")));
+        if (safeUrl(f.checked_url)) { li.appendChild(document.createTextNode(" ")); li.appendChild(linkOrText("Page checked ↗", f.checked_url)); }
+        ul.appendChild(li);
+      });
+      c.unv.forEach(function (u) {
+        ul.appendChild(el("li", "", "Couldn't be opened · " + whereLabel(u.where) + (str(u.item) ? ": " + str(u.item) : "") + (str(u.reason) ? " (" + str(u.reason) + ")" : "")));
+      });
+      det.appendChild(ul);
+      box.appendChild(det);
+    }
+    var cor = arr(ed.corrections).filter(function (x) { return x && typeof x === "object" && (str(x.now) || str(x.was)); });
+    if (cor.length) {
+      box.appendChild(el("p", "", "Corrected from an earlier read:"));
+      var cl = el("ul", "");
+      cor.forEach(function (x) {
+        var li = el("li", "", (str(x.where) ? str(x.where) + ": " : "") + (str(x.was) ? "was " + str(x.was) + ", " : "") + "now " + str(x.now) + " ");
+        if (safeUrl(x.url)) li.appendChild(linkOrText((str(x.source) || "Source") + " ↗", x.url));
+        cl.appendChild(li);
+      });
+      box.appendChild(cl);
+    }
+    main.appendChild(box);
   }
 
   function sectionHead(parent, id, eyebrow, title) {
@@ -532,7 +686,7 @@ a:hover { text-decoration-color: var(--ink); }
     var v = isNum(r.pct) ? Number(r.pct) : isNum(r.chg) ? Number(r.chg) : isNum(r.chg_bp) ? Number(r.chg_bp) : 0;
     return v > 0 ? "up" : v < 0 ? "down" : "flat";
   }
-  function boardRow(r, board, tip, upTo, idPrefix, noSpark) {
+  function boardRow(r, board, tip, upTo, idPrefix, noSpark, where) {
     var dp = isNum(r.dp) ? Number(r.dp) : (DP[r.key] !== undefined ? DP[r.key] : 2);
     var unit = str(r.unit);
     var row = el("div", "dd-row");
@@ -567,6 +721,7 @@ a:hover { text-decoration-color: var(--ink); }
     if (key && !noSpark) {
       S.sparks.push(function () { drawSpark(spark, seriesFor(key, upTo), dp, unit, board, tip); });
     }
+    markFlags(row, where, key);
     return row;
   }
   function renderBoard(main, ed) {
@@ -583,7 +738,7 @@ a:hover { text-decoration-color: var(--ink); }
       var grp = el("div", "dd-bgroup");
       grp.id = "board-" + g[0];
       grp.appendChild(el("h3", "", g[1]));
-      rows.forEach(function (r) { if (r && typeof r === "object") grp.appendChild(boardRow(r, board, tip, str(ed.bursa_date))); });
+      rows.forEach(function (r, i) { if (r && typeof r === "object") grp.appendChild(boardRow(r, board, tip, str(ed.bursa_date), null, false, g[0] + "[" + i + "]")); });
       board.appendChild(grp);
     });
     if (!any) board.appendChild(el("p", "dd-gaps", "No numbers in this edition."));
@@ -643,6 +798,7 @@ a:hover { text-decoration-color: var(--ink); }
       var body = el("div", "dd-step-body");
       body.appendChild(el("p", "", str(s.fact)));
       body.appendChild(cite(s));
+      markFlags(body, "one_thing.steps[" + i + "]");
       li.appendChild(body);
       ol.appendChild(li);
     });
@@ -701,10 +857,12 @@ a:hover { text-decoration-color: var(--ink); }
     var drivers = arr(u.drivers).filter(function (d) { return d && typeof d === "object" && str(d.text); });
     if (drivers.length) {
       var ul = el("ul", "dd-points");
-      drivers.forEach(function (d) {
+      arr(u.drivers).forEach(function (d, i) {
+        if (!d || typeof d !== "object" || !str(d.text)) return;
         var li = el("li", d.kind === "inference" ? "dd-inf" : "");
         li.appendChild(el("p", "", str(d.text)));
         li.appendChild(cite(d));
+        markFlags(li, "us_open.drivers[" + i + "]");
         ul.appendChild(li);
       });
       sec.appendChild(ul);
@@ -716,7 +874,7 @@ a:hover { text-decoration-color: var(--ink); }
       var tip = el("div", "dd-tip"); tip.hidden = true;
       var grp = el("div", "dd-bgroup");
       grp.appendChild(el("h3", "", "At the open, vs prior close"));
-      rows.forEach(function (r) { grp.appendChild(boardRow(r, board, tip, null, "uo-", true)); });
+      arr(u.board).forEach(function (r, i) { if (r && typeof r === "object") grp.appendChild(boardRow(r, board, tip, null, "uo-", true, "us_open.board[" + i + "]")); });
       board.appendChild(grp);
       board.appendChild(tip);
       sec.appendChild(board);
@@ -740,11 +898,12 @@ a:hover { text-decoration-color: var(--ink); }
       var sec = sectionHead(main, id, str(s.title) || "Also today", str(s.headline) || null);
       if (str(s.trigger)) sec.appendChild(el("p", "dd-trigger", "Why it's here: " + str(s.trigger)));
       var ul = el("ul", "dd-points");
-      arr(s.points).forEach(function (pt) {
+      arr(s.points).forEach(function (pt, i) {
         if (!pt || typeof pt !== "object" || !str(pt.text)) return;
         var li = el("li", pt.kind === "inference" ? "dd-inf" : "");
         li.appendChild(el("p", "", str(pt.text)));
         li.appendChild(cite(pt));
+        markFlags(li, "sections[" + idx + "].points[" + i + "]");
         ul.appendChild(li);
       });
       sec.appendChild(ul);
@@ -921,7 +1080,8 @@ a:hover { text-decoration-color: var(--ink); }
     var sec = sectionHead(main, "worth-reading", S.area === "gl" ? "The day, worldwide" : "Worth reading", str(rd.headline) || null);
     if (pts.length) {
       var ul = el("ul", "dd-points");
-      pts.forEach(function (pt) {
+      arr(rd.points).forEach(function (pt, pi) {
+        if (!pt || typeof pt !== "object" || !str(pt.text)) return;
         var li = el("li", pt.kind === "inference" ? "dd-inf" : "");
         li.appendChild(el("p", "", str(pt.text)));
         var c = cite(pt);
@@ -932,6 +1092,7 @@ a:hover { text-decoration-color: var(--ink); }
           c.insertBefore(chip, c.firstChild);
         }
         li.appendChild(c);
+        markFlags(li, "points[" + pi + "]");
         ul.appendChild(li);
       });
       sec.appendChild(ul);
@@ -947,7 +1108,7 @@ a:hover { text-decoration-color: var(--ink); }
       var tip = el("div", "dd-tip"); tip.hidden = true;
       var grp = el("div", "dd-bgroup");
       grp.appendChild(el("h3", "", "Closes and rates"));
-      rows.forEach(function (r) { grp.appendChild(boardRow(r, board, tip, null, "an-", true)); });
+      arr(rd.numbers).forEach(function (r, i) { if (r && typeof r === "object") grp.appendChild(boardRow(r, board, tip, null, "an-", true, "numbers[" + i + "]")); });
       board.appendChild(grp);
       boardFoot(board, rd.numbers_note, rd.gaps);
       board.appendChild(tip);
@@ -958,7 +1119,8 @@ a:hover { text-decoration-color: var(--ink); }
     if (devs.length) {
       var dsec = sectionHead(main, "developments", "Developments to watch", null);
       var dl = el("ul", "dd-devs");
-      devs.forEach(function (d) {
+      arr(rd.developments).forEach(function (d, di) {
+        if (!d || typeof d !== "object" || !str(d.title)) return;
         var li = el("li");
         var head = el("div", "dd-dev-head");
         var st = str(d.status).toLowerCase();
@@ -967,6 +1129,7 @@ a:hover { text-decoration-color: var(--ink); }
         li.appendChild(head);
         if (str(d.text)) li.appendChild(el("p", "", str(d.text)));
         li.appendChild(cite(d));
+        markFlags(li, "developments[" + di + "]");
         dl.appendChild(li);
       });
       dsec.appendChild(dl);
@@ -1003,6 +1166,8 @@ a:hover { text-decoration-color: var(--ink); }
     if (S.missing) {
       main.appendChild(el("p", "dd-state", "There's no " + AREA[S.area].name + " read for " + dayLabel(S.missing, true) + ". Showing the latest instead."));
     }
+    S.chk = checksFor(ed);
+    renderCheck(main, ed);
     if (S.area === "my") renderMalaysia(main, ed); else renderArea(main, ed);
     if (sameEd) Object.keys(open).forEach(function (id) { var d = document.getElementById(id); if (d) d.open = true; });
     S.width = main.clientWidth;
@@ -1050,6 +1215,13 @@ a:hover { text-decoration-color: var(--ink); }
     var r = parseHash();
     if (r.area !== S.area || !S.unsubEd) { S.area = r.area; S.limit = 30; subscribeList(); return; }
     choose();
+  }
+
+  function subscribeChecks() {
+    S.db.collection("checks").orderBy("date", "desc").limit(40).onSnapshot(function (snap) {
+      S.checks = snap.docs.map(function (d) { return d.data(); }).filter(function (c) { return c && typeof c.date === "string"; });
+      if (S.current) render(S.current);
+    }, function () { /* no check panel data; reads still show */ });
   }
 
   function subscribeCloses() {
@@ -1318,6 +1490,7 @@ a:hover { text-decoration-color: var(--ink); }
     S.area = null;
     route();
     subscribeCloses();
+    subscribeChecks();
     subscribeLive();
   }).catch(function () { setState(noStore); });
 })();
