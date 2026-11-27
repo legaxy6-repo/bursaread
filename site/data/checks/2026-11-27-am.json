@@ -1,0 +1,891 @@
+{
+  "checked_at": "2026-11-27T16:18:10+08:00",
+  "date": "2026-11-27",
+  "docs": [
+    {
+      "doc": "editions/2026-11-27",
+      "errors": 9,
+      "items": 46,
+      "part": "main",
+      "published_at": "2026-11-27T10:48:10+08:00",
+      "status": "flagged",
+      "unverifiable": 1,
+      "verified": 33,
+      "warnings": 7
+    },
+    {
+      "doc": "closes/2026-11-26",
+      "errors": 0,
+      "items": 19,
+      "part": "main",
+      "published_at": null,
+      "status": "clean",
+      "unverifiable": 0,
+      "verified": 19,
+      "warnings": 0
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "errors": 0,
+      "items": 16,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 16,
+      "verified": 0,
+      "warnings": 6
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "errors": 0,
+      "items": 7,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 5,
+      "verified": 1,
+      "warnings": 3
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "errors": 0,
+      "items": 8,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 7,
+      "verified": 1,
+      "warnings": 4
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "errors": 1,
+      "items": 9,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 5,
+      "verified": 3,
+      "warnings": 3
+    },
+    {
+      "doc": "reads/sg-2026-11-27",
+      "errors": 0,
+      "items": 3,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 2,
+      "verified": 0,
+      "warnings": 4
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "errors": 0,
+      "items": 17,
+      "part": "main",
+      "published_at": "2026-11-27T12:10:00+08:00",
+      "status": "flagged",
+      "unverifiable": 16,
+      "verified": 1,
+      "warnings": 4
+    }
+  ],
+  "flags": [
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/USD/date/2026-11-26?session=1700&quote=rm",
+      "detail": "The figure matches Bernama's 6pm interbank close, but BNM's 5pm middle rate for 26 Nov is 4.1160, a change of -0.0015 from 4.1175 on 25 Nov. The closes row already carries the BNM figure.",
+      "doc": "editions/2026-11-27",
+      "item": "USD/MYR 4.1135, -0.0035 (26 Nov 6pm)",
+      "key": "usdmyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[0]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/SGD/date/2026-11-26?session=1700&quote=rm",
+      "detail": "The figure matches Bernama's 6pm interbank close, but BNM's 5pm middle rate for 26 Nov is 3.1905, a change of +0.0030 from 3.1875. The closes row already carries the BNM figure.",
+      "doc": "editions/2026-11-27",
+      "item": "SGD/MYR 3.1878, +0.0020 (26 Nov 6pm)",
+      "key": "sgdmyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[1]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/EUR/date/2026-11-26?session=1700&quote=rm",
+      "detail": "The figure matches Bernama's 6pm interbank close, but BNM's 5pm middle rate for 26 Nov is 4.5153, a change of +0.0091 from 4.5062. The closes row already carries the BNM figure.",
+      "doc": "editions/2026-11-27",
+      "item": "EUR/MYR 4.5133, +0.0097 (26 Nov 6pm)",
+      "key": "eurmyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[4]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/GBP/date/2026-11-26?session=1700&quote=rm",
+      "detail": "The figure matches Bernama's 6pm interbank close, but BNM's 5pm middle rate for 26 Nov is 5.3950, a change of +0.0091 from 5.3859. The closes row already carries the BNM figure.",
+      "doc": "editions/2026-11-27",
+      "item": "GBP/MYR 5.3924, +0.0168 (26 Nov 6pm)",
+      "key": "gbpmyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[5]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/JPY/date/2026-11-26?session=1700&quote=rm",
+      "detail": "The figure matches Bernama's 6pm interbank close, but BNM's 5pm middle rate for 26 Nov is 2.5864 per 100 yen, a change of +0.0033 from 2.5831. The closes row already carries the BNM figure.",
+      "doc": "editions/2026-11-27",
+      "item": "JPY/MYR per 100 2.5834, +0.0014 (26 Nov 6pm)",
+      "key": "jpymyr100",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[6]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/CNY/date/2026-11-26?session=1700&quote=rm",
+      "detail": "Matches BNM's 9am middle rate, but BNM's 5pm middle rate for 26 Nov is 0.6180, a change of +0.0011 from 0.6169.",
+      "doc": "editions/2026-11-27",
+      "item": "CNY/MYR 0.6166, -0.0001 (BNM 9am, 26 vs 25 Nov)",
+      "key": "cnymyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[2]"
+    },
+    {
+      "checked_url": "https://api.bnm.gov.my/public/exchange-rate/AUD/date/2026-11-26?session=1700&quote=rm",
+      "detail": "Matches BNM's 9am middle rate, but BNM's 5pm middle rate for 26 Nov is 2.7328, a change of +0.0257 from 2.7071: the 5pm-to-5pm move was a rise, not a fall.",
+      "doc": "editions/2026-11-27",
+      "item": "AUD/MYR 2.7329, -0.0023 (BNM 9am, 26 vs 25 Nov)",
+      "key": "audmyr",
+      "part": "main",
+      "problem": "number_differs",
+      "severity": "error",
+      "where": "fx[3]"
+    },
+    {
+      "checked_url": "https://www.wmtw.com/article/wall-street-recovers-ai-stocks/74536237",
+      "detail": "AP does say 4.87% from 4.91%, but the US read, which owns this figure, shows 4.866% with a change of -3bp. The two need to agree.",
+      "doc": "editions/2026-11-27",
+      "item": "UST 10Y 4.87%, -4bp (US 25 Nov close, AP)",
+      "key": "ust10",
+      "part": "main",
+      "problem": "owner_mismatch",
+      "severity": "error",
+      "where": "rates[5]"
+    },
+    {
+      "checked_url": "https://www.malaymail.com/news/money/2026/11/26/ringgit-firms-up-against-dollar-softens-against-euro-and-pound/244815",
+      "detail": "Bernama (via Malay Mail) does give 103.708, down 0.10%, but the US read, which owns this figure, shows 103.7 with a 0% change (Thursday Asian trading).",
+      "doc": "editions/2026-11-27",
+      "item": "Dollar index 103.708, -0.10%",
+      "key": "dxy",
+      "part": "main",
+      "problem": "owner_mismatch",
+      "severity": "error",
+      "where": "fx[7]"
+    },
+    {
+      "checked_url": null,
+      "detail": "No reported item in the edition says the FBM Emas fell or that banks and consumer names led. Bernama's Bursa close story does say both, so this could be a reported line.",
+      "doc": "editions/2026-11-27",
+      "item": "KLCI gave back about 14 points from its high and the FBM Emas fell, so this was a bank-and-consumer heavyweight bounce",
+      "part": "main",
+      "problem": "inference_mislabelled",
+      "severity": "warning",
+      "where": "one_thing.steps[6]"
+    },
+    {
+      "checked_url": null,
+      "detail": "No reported item names these losers. Bernama's close story lists MI Technovation among decliners but does not mention ViTrox or UWC.",
+      "doc": "editions/2026-11-27",
+      "item": "Thursday's tech losers (MI Technovation, ViTrox, UWC) show where sellers lean first",
+      "part": "main",
+      "problem": "inference_mislabelled",
+      "severity": "warning",
+      "where": "sections[0].points[3]"
+    },
+    {
+      "checked_url": null,
+      "detail": "This is a live price, not a close, and its as_of does not say intraday.",
+      "doc": "editions/2026-11-27",
+      "item": "Gold US$3,623.09 (27 Nov, 10:42 MYT live spot)",
+      "key": "gold",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "markets[4]"
+    },
+    {
+      "checked_url": "https://dosm.gov.my/portal-main/arc",
+      "detail": "The DOSM calendar lists Business Tendency Statistics on 30 Nov, but the BNM reserves template is not on that page (BNM's own release calendar lists it).",
+      "doc": "editions/2026-11-27",
+      "item": "BNM reserves template (Oct) and DOSM Business Tendency Statistics Q4 2026, Mon 30 Nov",
+      "part": "main",
+      "problem": "calendar",
+      "severity": "warning",
+      "where": "calendar[4]"
+    },
+    {
+      "checked_url": null,
+      "detail": "This gap line talks about a data feed or a page that could not be read, not about what is missing for readers.",
+      "doc": "editions/2026-11-27",
+      "item": "BNM 5pm (1700) middle rates could not be read (page served the 9am session only)",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[1]"
+    },
+    {
+      "checked_url": null,
+      "detail": "This gap line talks about a data feed or a page that could not be read, not about what is missing for readers.",
+      "doc": "editions/2026-11-27",
+      "item": "Gold: ... the board shows Alpha Vantage live spot at 10:42 MYT Friday",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[4]"
+    },
+    {
+      "checked_url": null,
+      "detail": "This gap line talks about a data feed or a page that could not be read, not about what is missing for readers.",
+      "doc": "editions/2026-11-27",
+      "item": "Alpha Vantage TREASURY_YIELD's latest daily row was 24 Nov, so it was not used.",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[6]"
+    },
+    {
+      "checked_url": null,
+      "detail": "CNBC supplies 15 of the 16 reported items.",
+      "doc": "reads/us-2026-11-27",
+      "item": "US read",
+      "part": "main",
+      "problem": "source_spread",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "All 16 reported items rest on CNBC and Bloomberg pages that could not be opened for checking.",
+      "doc": "reads/us-2026-11-27",
+      "item": "US read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Mentions sites that could not be reached; a gap should say what is missing for readers.",
+      "doc": "reads/us-2026-11-27",
+      "item": "Reuters, AP, WSJ and FT could not be reached from this session...",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[3]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/us-2026-11-27",
+      "item": "UST 2Y 4.65% (Wed 25 Nov, US session, approx.)",
+      "key": "ust",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[3]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/us-2026-11-27",
+      "item": "UST 10Y 4.866%, -3bp (Wed 25 Nov, US session)",
+      "key": "ust",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[4]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/us-2026-11-27",
+      "item": "Dollar index 103.7 (Thu 26 Nov, Asian trading)",
+      "key": "dxy",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[5]"
+    },
+    {
+      "checked_url": null,
+      "detail": "No reported item in the China read says the Hang Seng hit multi-month lows.",
+      "doc": "reads/cn-2026-11-27",
+      "item": "The November AI rout took the Hang Seng to multi-month lows; it was trading near 22,200 by Thursday.",
+      "part": "main",
+      "problem": "inference_mislabelled",
+      "severity": "warning",
+      "where": "developments[1]"
+    },
+    {
+      "checked_url": null,
+      "detail": "5 of the 6 reported items rest on CNBC and SCMP pages that could not be opened for checking.",
+      "doc": "reads/cn-2026-11-27",
+      "item": "China read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Mentions pages that could not be opened; a gap should say what is missing for readers.",
+      "doc": "reads/cn-2026-11-27",
+      "item": "USD/CNY and 1-year LPR not confirmed this run; Reuters, Caixin and PBOC pages could not be opened directly.",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[2]"
+    },
+    {
+      "checked_url": null,
+      "detail": "CNBC supplies 6 of the 8 reported items.",
+      "doc": "reads/eu-2026-11-27",
+      "item": "Europe read",
+      "part": "main",
+      "problem": "source_spread",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "7 of the 8 reported items rest on CNBC and Bloomberg pages that could not be opened for checking.",
+      "doc": "reads/eu-2026-11-27",
+      "item": "Europe read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Mentions sites that could not be reached; a gap should say what is missing for readers.",
+      "doc": "reads/eu-2026-11-27",
+      "item": "Stoxx 600, DAX and FTSE 100 closing levels not confirmed (Reuters and FT unreachable).",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[0]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/eu-2026-11-27",
+      "item": "EUR/USD 1.097 (Thu 26 Nov, Asian trading)",
+      "key": "eurusd",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[1]"
+    },
+    {
+      "checked_url": "https://www.japantimes.co.jp/business/2026/11/10/economy/boj-summary-opinions-october/",
+      "detail": "The Japan Times story was published on 10 Nov 2026, not for the 26 Nov session, yet the development is marked new. The content matches the page.",
+      "doc": "reads/jp-2026-11-27",
+      "item": "The summary of the BoJ's October meeting suggested many board members see a near-term hike as necessary...",
+      "part": "main",
+      "problem": "wrong_date",
+      "severity": "error",
+      "where": "developments[1]"
+    },
+    {
+      "checked_url": null,
+      "detail": "CNBC supplies 5 of the 8 reported items.",
+      "doc": "reads/jp-2026-11-27",
+      "item": "Japan read",
+      "part": "main",
+      "problem": "source_spread",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "5 of the 8 reported items rest on CNBC pages that could not be opened for checking.",
+      "doc": "reads/jp-2026-11-27",
+      "item": "Japan read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/jp-2026-11-27",
+      "item": "USD/JPY 159.06 (Thu 26 Nov, Asian trading)",
+      "key": "usdjpy",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[2]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Bloomberg supplies both reported items.",
+      "doc": "reads/sg-2026-11-27",
+      "item": "Singapore read",
+      "part": "main",
+      "problem": "source_spread",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Both reported items rest on a Bloomberg page that could not be opened for checking.",
+      "doc": "reads/sg-2026-11-27",
+      "item": "Singapore read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "No reported item in the Singapore read gives Singapore's trade balance with the US.",
+      "doc": "reads/sg-2026-11-27",
+      "item": "For a trade hub with a US trade deficit, this is a political signal more than a direct earnings hit",
+      "part": "main",
+      "problem": "inference_mislabelled",
+      "severity": "warning",
+      "where": "points[1]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Mentions sites that could not be reached; a gap should say what is missing for readers.",
+      "doc": "reads/sg-2026-11-27",
+      "item": "STI close, USD/SGD and SORA not confirmed: Business Times, Straits Times, CNA and MAS pages could not be reached from this session.",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[0]"
+    },
+    {
+      "checked_url": null,
+      "detail": "CNBC supplies 15 of the 17 reported items.",
+      "doc": "reads/gl-2026-11-27",
+      "item": "Global read",
+      "part": "main",
+      "problem": "source_spread",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "16 of the 17 reported items rest on CNBC and Bloomberg pages that could not be opened for checking.",
+      "doc": "reads/gl-2026-11-27",
+      "item": "Global read",
+      "part": "main",
+      "problem": "low_verifiability",
+      "severity": "warning",
+      "where": "read"
+    },
+    {
+      "checked_url": null,
+      "detail": "Mentions sites that could not be reached; a gap should say what is missing for readers.",
+      "doc": "reads/gl-2026-11-27",
+      "item": "Reuters, AP, FT, WSJ and the Singapore outlets could not be reached from this session.",
+      "part": "main",
+      "problem": "gap_wording",
+      "severity": "warning",
+      "where": "gaps[2]"
+    },
+    {
+      "checked_url": null,
+      "detail": "Not a closing value, and the as_of does not say intraday.",
+      "doc": "reads/gl-2026-11-27",
+      "item": "Dollar index 103.7 (Thu 26 Nov, Asian trading)",
+      "key": "dxy",
+      "part": "main",
+      "problem": "intraday_unlabelled",
+      "severity": "warning",
+      "where": "numbers[5]"
+    }
+  ],
+  "run": "am",
+  "summary": "58 of 125 items match their sources. The 10 errors: seven ringgit rates on the board follow Bernama's 6pm close or BNM's 9am rate instead of BNM's 5pm rate, two US figures (10-year yield change, dollar index change) differ from the US read, and one Japan development comes from a 10 Nov story. 52 items rest on CNBC, Bloomberg and SCMP pages that could not be opened for checking.",
+  "unverifiable": [
+    {
+      "doc": "editions/2026-11-27",
+      "item": "Gold US$3,623.09 live spot",
+      "part": "main",
+      "reason": "live data feed, no page to check",
+      "where": "markets[4]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "The S&P 500 fell as much as 3.2% and the Nasdaq as much as 4.6% on Wednesday before recovering; the S&P closed down 0.25% at 7,182.78, the N",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[0]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Tech fell as the lift from Jensen Huang's return as Nvidia CEO faded and failed to calm worries about whether the AI trade can last.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[1]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "October PCE inflation rose to 3.8% a year from 3.7%, and core PCE was 3.3%, slightly above the 3.2% forecast. Yet the 10-year Treasury yield",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[2]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Hotter core inflation, an upward revision to Q3 GDP and a Fed survey showing sticky inflation cemented expectations of a 25bp Fed hike in De",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[3]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "The White House proposed new 'overcapacity' tariffs on 14 trading partners including China, the EU and India; officials say they are months ",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[4]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Markets now price a 25bp Fed hike in December and another in early 2027 after hot October core PCE and an upgraded Q3 GDP.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[0]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "AI-linked stocks drove a sharp sell-off in November after Nvidia's CEO turmoil and funding worries; Wednesday's late dip-buying pulled the N",
+      "part": "main",
+      "reason": "the site blocks automated reading (robot check)",
+      "where": "developments[1]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; offici",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[2]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "S&P 500 7182.78",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[0]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Nasdaq 23585.8",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[1]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Dow 50182.95",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[2]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "UST 2Y 4.65",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[3]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "UST 10Y 4.866",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[4]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Dollar index (DXY) 103.7",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[5]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "WTI (US$/bbl) 83.68",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[6]"
+    },
+    {
+      "doc": "reads/us-2026-11-27",
+      "item": "Shortened post-Thanksgiving session on NYSE and Nasdaq",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "calendar[0]"
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "item": "China's foreign ministry called 'overcapacity' a false proposition and the commerce ministry urged dialogue, but analysts told SCMP that tra",
+      "part": "main",
+      "reason": "the site blocks automated reading (security check)",
+      "where": "points[1]"
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "item": "The CSI 300 edged up marginally to close at 3,900.55 on Thursday. No catalyst was reported for the move.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[2]"
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "item": "The proposal comes before the truce expires on 10 January 2027; Beijing's response so far is rhetorical, not retaliation.",
+      "part": "main",
+      "reason": "the site blocks automated reading (security check)",
+      "where": "developments[0]"
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "item": "CSI 300 3900.55",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[0]"
+    },
+    {
+      "doc": "reads/cn-2026-11-27",
+      "item": "Hang Seng 22226.88",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[1]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "The Stoxx 600 was about 1.6% higher at 635.80 by midday London time, with all sectors and major bourses positive; the DAX led with a 1.9% ri",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[0]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "Bloomberg reported the Stoxx 600 rallying 1.7% as Wednesday's late US dip-buying pulled the Nasdaq 100 back from the brink of a bear market.",
+      "part": "main",
+      "reason": "the site blocks automated reading (robot check)",
+      "where": "points[1]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "AJ Bell's Russ Mould said the new US tariffs were not as bad as feared but warned against complacency, pointing to oil prices and possible r",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[2]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; offici",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[0]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "The regional tech index bounced 2.5% after losing about 12% this month on AI-bubble worries.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[1]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "Stoxx 600 635.8",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[0]"
+    },
+    {
+      "doc": "reads/eu-2026-11-27",
+      "item": "EUR/USD 1.097",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[1]"
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "item": "The Nikkei 225 rose 0.86% to 57,499.16 and the Topix rose just 0.11% to 3,750.4, a day after the Nikkei fell 2.78% to 57,011.62 in the AI se",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[0]"
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "item": "The yen was around 159.06 per dollar in Asian trading on Thursday, up 0.1%.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[2]"
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "item": "Nikkei 225 57499.16",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[0]"
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "item": "TOPIX 3750.4",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[1]"
+    },
+    {
+      "doc": "reads/jp-2026-11-27",
+      "item": "USD/JPY 159.06",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[2]"
+    },
+    {
+      "doc": "reads/sg-2026-11-27",
+      "item": "The US proposed Section 301 tariffs of up to 20% on Singapore. Trade minister Gan Kim Yong said Singapore was 'very disappointed' and disput",
+      "part": "main",
+      "reason": "the site blocks automated reading (robot check)",
+      "where": "points[0]"
+    },
+    {
+      "doc": "reads/sg-2026-11-27",
+      "item": "Proposed under the overcapacity probe; Singapore plans to help firms adjust, then negotiate.",
+      "part": "main",
+      "reason": "the site blocks automated reading (robot check)",
+      "where": "developments[0]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "The US proposed new 'overcapacity' tariffs on 14 trading partners, mostly 15–20% and up to 35% for Vietnam, which officials say are months f",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[0]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Wall Street erased most of a deep intraday AI sell-off on Wednesday: the S&P 500 closed down 0.25% after falling as much as 3.2%.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[2]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Hot October core PCE inflation cemented expectations of a 25bp Fed hike in December, even as the 10-year Treasury yield fell to about 4.87%.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[3]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Europe's Stoxx 600 rallied about 1.6% intraday, led by tech, and the Nikkei rose 0.86%, while China's CSI 300 barely moved.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "points[4]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "The US proposed new tariffs on 14 trading partners including China, the EU, Japan and India, mostly 15–20% and up to 35% for Vietnam; offici",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[0]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Markets price a 25bp Fed hike in December and another in early 2027 after hot October core PCE data.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[1]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "AI-linked stocks drove a sharp sell-off in November after Nvidia's CEO turmoil and funding worries; Wednesday's late dip-buying pulled the N",
+      "part": "main",
+      "reason": "the site blocks automated reading (robot check)",
+      "where": "developments[2]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Brent rose 3.5% on Wednesday and nearly US$2 more on Thursday to its highest since 6 November, on attacks on shipping and Gulf supply.",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "developments[3]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "S&P 500 7182.78",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[0]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Nikkei 225 57499.16",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[1]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Hang Seng 22226.88",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[2]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Stoxx 600 635.8",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[3]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "UST 10Y 4.866",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[4]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Dollar index (DXY) 103.7",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[5]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Brent (US$/bbl) 94.61",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "numbers[6]"
+    },
+    {
+      "doc": "reads/gl-2026-11-27",
+      "item": "Shortened US session after Thanksgiving",
+      "part": "main",
+      "reason": "the site blocks automated reading (access denied)",
+      "where": "calendar[0]"
+    }
+  ],
+  "v": 1
+}

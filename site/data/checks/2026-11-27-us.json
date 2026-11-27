@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-11-27T16:07:00+08:00",
+  "date": "2026-11-27",
+  "docs": [
+    {
+      "doc": "reads/us-2026-11-27",
+      "errors": 0,
+      "items": 0,
+      "part": "us_open",
+      "published_at": null,
+      "status": "missing",
+      "unverifiable": 0,
+      "verified": 0,
+      "warnings": 0
+    }
+  ],
+  "flags": [],
+  "run": "us_open",
+  "summary": "The US open section for 27 Nov had not been written when this check ran, so there was nothing to check.",
+  "unverifiable": [],
+  "v": 1
+}
