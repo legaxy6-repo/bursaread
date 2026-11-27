@@ -6,25 +6,27 @@
 <style>
 /* Layout: a Swiss reading column on a calm alabaster canvas under a frosted sticky bar. One graphite rate board is the contrast anchor. Chartreuse appears only as micro-moments: the live dot, the "moved" flag, the button hover and the scroll hairline. */
 :root {
-  --bg: #F6F6F4;
-  --surface: #FFFFFF;
-  --ink: #111113;
-  --muted: #6E6E73;
-  --line: #E5E5E7;
-  --line-strong: #C7C7CC;
-  --accent: #111113;
+  /* Dark is the default: soft white on graphite. Light is one tap away (data-dd-theme="light"). */
+  --bg: #121214;
+  --surface: #1B1B1E;
+  --ink: #E8E8EA;
+  --muted: #A1A1A6;
+  --line: #2A2A2E;
+  --line-strong: #3E3E44;
+  --accent: #E8E8EA;
   --signal: #B8E600;
+  --on-signal: #111113;
   --alert: #E84A27;
-  --frost: rgba(246, 246, 244, 0.78);
-  --board: #111113;
-  --board-line: #2C2C30;
+  --frost: rgba(18, 18, 20, 0.8);
+  --board: #1B1B1E;
+  --board-line: #2E2E33;
   --board-fg: #F5F5F7;
-  --board-ink: #F5F5F7;
+  --board-ink: #E8E8EA;
   --board-muted: #A1A1A6;
   --spark: #8E8E93;
-  --up: #111113;
-  --down: #111113;
-  --tip-bg: #FFFFFF;
+  --up: #E8E8EA;
+  --down: #E8E8EA;
+  --tip-bg: #F5F5F7;
   --tip-ink: #111113;
 
   --f-sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -38,6 +40,26 @@
   --s-xl: 1.75rem;
   --s-2xl: clamp(2rem, 4.6vw, 3rem);
   --r: 16px;
+  color-scheme: dark;
+}
+:root[data-dd-theme="light"] {
+  --bg: #F6F6F4;
+  --surface: #FFFFFF;
+  --ink: #111113;
+  --muted: #6E6E73;
+  --line: #E5E5E7;
+  --line-strong: #C7C7CC;
+  --accent: #111113;
+  --frost: rgba(246, 246, 244, 0.78);
+  --board: #111113;
+  --board-line: #2C2C30;
+  --board-fg: #F5F5F7;
+  --board-ink: #F5F5F7;
+  --board-muted: #A1A1A6;
+  --up: #111113;
+  --down: #111113;
+  --tip-bg: #FFFFFF;
+  --tip-ink: #111113;
   color-scheme: light;
 }
 
@@ -90,6 +112,15 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; }
 .dd-progress span { display: block; height: 100%; background: var(--signal); transform-origin: left center; transform: scaleX(0); }
 
+/* Theme switch */
+.dd-mast-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.dd-theme {
+  font: 500 var(--s-xs)/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; min-height: 36px; padding: 0 0.9rem; cursor: pointer;
+  transition: border-color 320ms var(--ease);
+}
+.dd-theme:hover { border-color: var(--line-strong); }
+
 /* Masthead */
 .dd-mast { display: flex; flex-direction: column; gap: 0.75rem; }
 .dd-kicker, .dd-eyebrow { margin: 0; font: 500 var(--s-xs)/1.4 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -128,7 +159,7 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-step.dd-sowhat .dd-node { color: var(--ink); }
 
 /* Rate board: the graphite anchor */
-.dd-board { position: relative; background: var(--board); color: var(--board-ink); border-radius: 20px; padding: 1.25rem 1.375rem 1.375rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.dd-board { position: relative; background: var(--board); color: var(--board-ink); border: 1px solid var(--board-line); border-radius: 20px; padding: 1.25rem 1.375rem 1.375rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .dd-bgroup { display: flex; flex-direction: column; }
 .dd-bgroup h3 { margin: 0 0 0.35rem; font: 500 var(--s-xs)/1.4 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--board-muted); }
 .dd-row {
@@ -145,7 +176,7 @@ a:hover { text-decoration-color: var(--ink); }
 .dd-r-meta a { color: var(--board-ink); text-decoration-color: var(--board-muted); }
 .dd-r-spark { grid-area: spark; height: 30px; min-width: 0; position: relative; }
 .dd-r-spark svg { display: block; overflow: visible; touch-action: none; }
-.dd-moved { display: inline-block; margin-left: 0.45rem; font: 500 0.625rem/1.6 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--signal); border-radius: 4px; padding: 0 0.3rem; vertical-align: 0.1em; }
+.dd-moved { display: inline-block; margin-left: 0.45rem; font: 500 0.625rem/1.6 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-signal); background: var(--signal); border-radius: 4px; padding: 0 0.3rem; vertical-align: 0.1em; }
 .dd-tip { position: absolute; z-index: 3; pointer-events: none; background: var(--tip-bg); color: var(--tip-ink); font: 500 var(--s-xs)/1.3 var(--f-mono); padding: 0.3rem 0.55rem; border-radius: 8px; white-space: nowrap; box-shadow: 0 2px 12px rgba(17, 17, 19, 0.28); }
 .dd-board-foot { display: flex; flex-direction: column; gap: 0.5rem; font-size: var(--s-sm); color: var(--board-ink); border-top: 1px solid var(--board-line); padding-top: 0.9rem; }
 .dd-board-foot p { margin: 0; }
@@ -222,7 +253,7 @@ a:hover { text-decoration-color: var(--ink); }
   background: var(--ink); color: var(--surface); cursor: pointer;
   transition: background-color 420ms var(--ease), color 420ms var(--ease), border-color 420ms var(--ease);
 }
-.dd-btn:hover:not(:disabled) { background: var(--signal); border-color: var(--signal); color: var(--ink); }
+.dd-btn:hover:not(:disabled) { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
 .dd-btn:disabled { opacity: 0.4; cursor: default; }
 .dd-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.6rem; }
 .dd-tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 0.8rem 0.95rem; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; transition: border-color 420ms var(--ease); }
@@ -268,7 +299,10 @@ a:hover { text-decoration-color: var(--ink); }
 
 <div class="dd-wrap">
   <div class="dd-mast" id="masthead">
-    <p class="dd-kicker">Daily read &middot; Malaysia time</p>
+    <div class="dd-mast-top">
+      <p class="dd-kicker">Daily read &middot; Malaysia time</p>
+      <button type="button" class="dd-theme" id="theme-toggle">Light mode</button>
+    </div>
     <h1 id="ed-title">Daily Desk</h1>
     <p class="dd-covers" id="ed-covers">The world's markets summarised, and what they mean for Malaysia, every business day before the open.</p>
   </div>
@@ -1247,6 +1281,22 @@ a:hover { text-decoration-color: var(--ink); }
     window.claude.use("mcp").then(function (m) { LV.mcp = m; LV.ready = true; renderLive(); })
       .catch(function () { LV.ready = true; renderLive(); });
   }
+
+  /* Theme: dark by default, remembered in this browser */
+  var theme = "dark";
+  try { var savedTheme = localStorage.getItem("dd-theme"); if (savedTheme === "light" || savedTheme === "dark") theme = savedTheme; } catch (e) { /* storage unavailable */ }
+  function applyTheme() {
+    document.documentElement.setAttribute("data-dd-theme", theme);
+    var tb = $("theme-toggle");
+    tb.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+    tb.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+  applyTheme();
+  $("theme-toggle").addEventListener("click", function () {
+    theme = theme === "dark" ? "light" : "dark";
+    applyTheme();
+    try { localStorage.setItem("dd-theme", theme); } catch (e) { /* not remembered */ }
+  });
 
   var bar = $("progress-bar"), ticking = false;
   function progress() {
